@@ -1,5 +1,5 @@
 <footer class="main-footer">
-    <strong>RFOAMIS | Insight</strong>
+    <strong>RFOAMiS | Insight</strong>
      &copy; <script>
         document.write(new Date().getFullYear())
     </script>
