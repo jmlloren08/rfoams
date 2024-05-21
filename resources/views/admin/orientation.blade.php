@@ -105,8 +105,14 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.lgus') }}" class="nav-link">
-                                <i class="nav-icon fas fa-city"></i>
+                                <i class="nav-icon fas fa-university"></i>
                                 <p>LGUs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.rfos') }}" class="nav-link">
+                                <i class="nav-icon fas fa-city"></i>
+                                <p>RFOs</p>
                             </a>
                         </li>
                         <li class="nav-header">Roles</li>
@@ -187,8 +193,6 @@
     <script src="{{ url('backend/assets/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ url('backend/assets/dist/js/demo.js') }}"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ url('backend/assets/dist/js/pages/dashboard.js') }}"></script>
 </body>
 
 </html>

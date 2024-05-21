@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lgus', function (Blueprint $table) {
+        Schema::create('refregion', function (Blueprint $table) {
             $table->id();
+            $table->integer('psgcCode');
+            $table->string('regDesc');
+            $table->integer('regCode')->unique();
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lgus');
+        Schema::dropIfExists('refregion');
     }
 };

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>RFOAMiS | eBOSS Page</title>
+    <title>RFOAMiS | RFO Page</title>
     <!-- {{ url('backend/assets/') }} -->
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -73,7 +73,7 @@
                         </li>
                         <li class="nav-header">NAVIGATION</li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.eboss') }}" class="nav-link active">
+                            <a href="{{ route('admin.eboss') }}" class="nav-link">
                                 <i class="nav-icon fas fa-laptop-house"></i>
                                 <p>eBOSS</p>
                             </a>
@@ -98,13 +98,19 @@
                         </li>
                         <li class="nav-header">MANAGEMENT</li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.agencies') }}" class="nav-link">
+                                <i class="nav-icon fas fa-building"></i>
+                                <p>Agencies</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.lgus') }}" class="nav-link">
                                 <i class="nav-icon fas fa-university"></i>
                                 <p>LGUs</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.rfos') }}" class="nav-link">
+                            <a href="{{ route('admin.rfos') }}" class="nav-link active">
                                 <i class="nav-icon fas fa-city"></i>
                                 <p>RFOs</p>
                             </a>
@@ -129,12 +135,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">eBOSS</h1>
+                            <h1 class="m-0">RFOs</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">eBOSS</li>
+                                <li class="breadcrumb-item active">RFOs</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->

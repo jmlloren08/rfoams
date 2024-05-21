@@ -72,8 +72,14 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.lgus') }}" class="nav-link">
-                        <i class="nav-icon fas fa-city"></i>
+                        <i class="nav-icon fas fa-university"></i>
                         <p>LGUs</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.rfos') }}" class="nav-link">
+                        <i class="nav-icon fas fa-city"></i>
+                        <p>RFOs</p>
                     </a>
                 </li>
                 <li class="nav-header">Roles</li>

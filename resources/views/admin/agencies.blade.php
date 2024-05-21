@@ -4,8 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>RFOAMiS | Agencies Page</title>
-    <!-- {{ url('backend/assets/') }} -->
+    <!-- jQuery -->
+    <script src="{{ url('backend/assets/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ url('backend/assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- DataTables -->
+    <link href="{{ url('backend/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -16,8 +22,6 @@
     <link rel="stylesheet" href="{{ url('backend/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ url('backend/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="{{ url('backend/assets/plugins/jqvmap/jqvmap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ url('backend/assets/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
@@ -105,8 +109,14 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.lgus') }}" class="nav-link">
-                                <i class="nav-icon fas fa-city"></i>
+                                <i class="nav-icon fas fa-university"></i>
                                 <p>LGUs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.rfos') }}" class="nav-link">
+                                <i class="nav-icon fas fa-city"></i>
+                                <p>RFOs</p>
                             </a>
                         </li>
                         <li class="nav-header">Roles</li>
@@ -129,12 +139,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Agencies</h1>
+                            <h1 class="m-0">Departments/Agencies</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Agencies</li>
+                                <li class="breadcrumb-item active">Departments/Agencies</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -144,9 +154,29 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Small boxes (Stat box) -->
-                    <div class="row"></div>
-                    <!-- /.row -->
+                    <div class="row">
+                        <!-- regions -->
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title mb-4">Departments/Agencies</h4>
+                                    <div class="table-responsive">
+                                        <table id="dataTableDepartmentAgency" class="table table-centered mb-0 align-middle table-hover table-nowrap">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>DEPARTMENT/AGENCY</th>
+                                                    <th>ADDRESS</th>
+                                                    <th>CONTACT_INFORMATION</th>
+                                                    <th>ACTION</th>
+                                                </tr>
+                                            </thead><!-- end thead -->
+                                        </table> <!-- end table -->
+                                    </div>
+                                </div><!-- end card -->
+                            </div><!-- end card -->
+                        </div><!-- end col -->
+                    </div><!-- end row -->
             </section>
             <!-- /.content -->
         </div>
@@ -154,24 +184,25 @@
         @include('admin.body.footer')
     </div>
     <!-- ./wrapper -->
-
-    <!-- jQuery -->
-    <script src="{{ url('backend/assets/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{{ url('backend/assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- custom js -->
+    <script>
+        let getDataFromDepartmentAgencyURL = "{{ route('admin.agencies.getDataFromDepartmentAgency') }}";
+        let editDataFromDepartmentAgencyURL = "/admin/agencies";
+    </script>
+    <script src="{{ url('backend/assets/custom/js/department-agency.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
+    <!-- Required datatable js -->
+    <script src="{{ url('backend/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('backend/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ url('backend/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ url('backend/assets/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- Sparkline -->
     <script src="{{ url('backend/assets/plugins/sparklines/sparkline.js') }}"></script>
-    <!-- JQVMap -->
-    <script src="{{ url('backend/assets/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ url('backend/assets/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
     <!-- jQuery Knob Chart -->
     <script src="{{ url('backend/assets/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
     <!-- daterangepicker -->
@@ -187,8 +218,6 @@
     <script src="{{ url('backend/assets/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ url('backend/assets/dist/js/demo.js') }}"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ url('backend/assets/dist/js/pages/dashboard.js') }}"></script>
 </body>
 
 </html>
