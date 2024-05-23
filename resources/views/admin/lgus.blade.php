@@ -158,14 +158,19 @@
                     <div class="row">
                         <!-- regions -->
                         <div class="col-xl-12">
-                            <div class="card">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Regions
+                                    </h3>
+                                </div>
                                 <div class="card-body">
-                                    <h4 class="card-title mb-4">Regions</h4>
                                     <div class="table-responsive">
                                         <table id="dataTableRefRegion" class="table table-centered mb-0 align-middle table-hover table-nowrap">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th style="display: none;">#</th>
                                                     <th>PSGCCODE</th>
                                                     <th>REGION</th>
                                                     <th>REGCODE</th>
@@ -181,14 +186,19 @@
                     <!-- province -->
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="card">
+                            <div class="card card-info card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Provinces
+                                    </h3>
+                                </div>
                                 <div class="card-body">
-                                    <h4 class="card-title mb-4">Provinces</h4>
                                     <div class="table-responsive">
                                         <table id="dataTableRefProvince" class="table table-centered mb-0 align-middle table-hover table-nowrap">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th style="display: none;">#</th>
                                                     <th>PSGCCODE</th>
                                                     <th>PROVINCES</th>
                                                     <th>REGCODE</th>
@@ -205,14 +215,19 @@
                     <!-- city/municipality -->
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="card">
+                            <div class="card card-success card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Cities/Municipalities
+                                    </h3>
+                                </div>
                                 <div class="card-body">
-                                    <h4 class="card-title mb-4">Cities/Municipalities</h4>
                                     <div class="table-responsive">
                                         <table id="dataTableRefCityMun" class="table table-centered mb-0 align-middle table-hover table-nowrap">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th style="display: none;">#</th>
                                                     <th>PSGCCODE</th>
                                                     <th>CITIES/MUNICIPALITIES</th>
                                                     <th>REGCODE</th>
@@ -230,14 +245,19 @@
                     <!-- Barangays -->
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="card">
+                            <div class="card card-warning card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Barangays
+                                    </h3>
+                                </div>
                                 <div class="card-body">
-                                    <h4 class="card-title mb-4">Barangays</h4>
                                     <div class="table-responsive">
                                         <table id="dataTableRefBarangay" class="table table-centered mb-0 align-middle table-hover table-nowrap">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th style="display: none;">#</th>
                                                     <th>BRGYCODE</th>
                                                     <th>BARANGAYS</th>
                                                     <th>REGCODE</th>
@@ -253,6 +273,7 @@
                         </div><!-- end col -->
                     </div>
                     <!-- end table -->
+                </div>
             </section>
             <!-- /.content -->
         </div>

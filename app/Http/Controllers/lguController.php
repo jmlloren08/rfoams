@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LGUs;
 use App\Models\RefBrgy;
 use App\Models\RefCityMun;
 use App\Models\RefProvince;
 use App\Models\RefRegion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class lguController extends Controller
 {
     public function index()
     {
+        $userType = Auth::user()->roles;
+        if (is_null($userType) || empty($userType) || $userType === 'Guest') {
+            return view('admin.guest');
+        }
         return view('admin.lgus');
     }
     public function getDataFromRefRegion(Request $request)

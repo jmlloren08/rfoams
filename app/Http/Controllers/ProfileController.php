@@ -16,6 +16,10 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $userType = Auth::user()->roles;
+        if (is_null($userType) || empty($userType) || $userType === 'Guest') {
+            return view('admin.guest');
+        }
         return view('profile.edit', [
             'user' => $request->user(),
         ]);

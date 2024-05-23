@@ -25,14 +25,12 @@
         <h2 class="headline text-danger">500</h2>
 
         <div class="error-content">
-          <h3><i class="fas fa-exclamation-triangle text-danger"></i> Oops! Something went wrong.</h3>
+          <h3><i class="fas fa-exclamation-triangle text-danger"></i> Sorry! You are not allowed to access this page.</h3>
 
           <p>
-            We will work on fixing that right away.
-            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+            You don't have permission to access this. Please contact a website administrator if this is correct.
           </p>
-
-          <form class="search-form">
+          <!-- <form class="search-form">
             <div class="input-group">
               <input type="text" name="search" class="form-control" placeholder="Search">
 
@@ -41,8 +39,7 @@
                 </button>
               </div>
             </div>
-            <!-- /.input-group -->
-          </form>
+          </form> -->
         </div>
       </div>
       <!-- /.error-page -->

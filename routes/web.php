@@ -37,6 +37,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/lgus/getDataFromRefCityMun', [lguController::class, 'getDataFromRefCityMun'])->name('admin.lgus.getDataFromRefCityMun');
     Route::post('/admin/lgus/getDataFromRefBarangay', [lguController::class, 'getDataFromRefBarangay'])->name('admin.lgus.getDataFromRefBarangay');
     Route::post('/admin/agencies/getDataFromDepartmentAgency', [agenciesController::class, 'getDataFromDepartmentAgency'])->name('admin.agencies.getDataFromDepartmentAgency');
+    Route::post('/admin/rfos/getDataFromRFOs', [rfoController::class, 'getDataFromRFOs'])->name('admin.rfos.getDataFromRFOs');
+    Route::post('/admin/users/getDataFromUsers', [userController::class, 'getDataFromUsers'])->name('admin.users.getDataFromUsers');
+    // store data
+    Route::post('/admin/rfos', [rfoController::class, 'store'])->name('admin.rfos.store');
+    // update data
+    Route::put('/admin/rfos/{id}', [rfoController::class, 'update']);
+    Route::put('/admin/users/{id}', [userController::class, 'update']);
+    // remove user assigned role
+    Route::put('/admin/users/{id}', [userController::class, 'removeAssignedRole']);
+    // get data
+    Route::get('/admin/rfos/{id}', [rfoController::class, 'edit']);
+    Route::get('/admin/users/{id}', [userController::class, 'edit']);
+    // delete data
+    Route::delete('/admin/rfos/{id}', [rfoController::class, 'delete']);
+    Route::delete('/admin/users/{id}', [userController::class, 'delete']);
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

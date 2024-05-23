@@ -14,7 +14,7 @@ $(document).ready(function () {
                     }
                 },
                 columns: [{
-                    data: 'id',
+                    data: 'id', visible: false
                 },
                 {
                     data: 'department_agencies',

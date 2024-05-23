@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\DepartmentAgency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class agenciesController extends Controller
 {
     public function index()
     {
+        $userType = Auth::user()->roles;
+        if (is_null($userType) || empty($userType) || $userType === 'Guest') {
+            return view('admin.guest');
+        }
         return view('admin.agencies');
     }
     public function getDataFromDepartmentAgency(Request $request)

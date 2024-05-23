@@ -14,7 +14,7 @@ $(document).ready(function () {
                     }
                 },
                 columns: [{
-                    data: 'id',
+                    data: 'id', visible: false
                 },
                 {
                     data: 'psgcCode',
@@ -58,7 +58,7 @@ $(document).ready(function () {
                     }
                 },
                 columns: [{
-                    data: 'id',
+                    data: 'id', visible: false
                 },
                 {
                     data: 'psgcCode',
@@ -105,7 +105,7 @@ $(document).ready(function () {
                     }
                 },
                 columns: [{
-                    data: 'id',
+                    data: 'id', visible: false
                 },
                 {
                     data: 'psgcCode',
@@ -155,7 +155,7 @@ $(document).ready(function () {
                     }
                 },
                 columns: [{
-                    data: 'id',
+                    data: 'id', visible: false
                 },
                 {
                     data: 'brgyCode',

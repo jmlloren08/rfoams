@@ -157,14 +157,19 @@
                     <div class="row">
                         <!-- regions -->
                         <div class="col-xl-12">
-                            <div class="card">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Departments/Agencies
+                                    </h3>
+                                </div>
                                 <div class="card-body">
-                                    <h4 class="card-title mb-4">Departments/Agencies</h4>
                                     <div class="table-responsive">
                                         <table id="dataTableDepartmentAgency" class="table table-centered mb-0 align-middle table-hover table-nowrap">
                                             <thead class="table-light">
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th style="display: none;">#</th>
                                                     <th>DEPARTMENT/AGENCY</th>
                                                     <th>ADDRESS</th>
                                                     <th>CONTACT_INFORMATION</th>
@@ -177,6 +182,7 @@
                             </div><!-- end card -->
                         </div><!-- end col -->
                     </div><!-- end row -->
+                </div>
             </section>
             <!-- /.content -->
         </div>

@@ -153,6 +153,7 @@
                     <!-- Small boxes (Stat box) -->
                     <div class="row"></div>
                     <!-- /.row -->
+                </div>
             </section>
             <!-- /.content -->
         </div>

@@ -98,6 +98,12 @@
                         </li>
                         <li class="nav-header">MANAGEMENT</li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.agencies') }}" class="nav-link">
+                                <i class="nav-icon fas fa-building"></i>
+                                <p>Agencies</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.lgus') }}" class="nav-link">
                                 <i class="nav-icon fas fa-university"></i>
                                 <p>LGUs</p>
@@ -147,6 +153,7 @@
                     <!-- Small boxes (Stat box) -->
                     <div class="row"></div>
                     <!-- /.row -->
+                </div>
             </section>
             <!-- /.content -->
         </div>

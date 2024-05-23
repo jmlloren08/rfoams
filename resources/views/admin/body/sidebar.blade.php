@@ -38,6 +38,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                @if (Auth::user()->roles !== 'Guest' && Auth::user()->roles !== NULL)
                 <li class="nav-header">NAVIGATION</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.eboss') }}" class="nav-link">
@@ -63,6 +64,7 @@
                         <p>Commendation</p>
                     </a>
                 </li>
+                @if (Auth::user()->roles === 'Admin')
                 <li class="nav-header">MANAGEMENT</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.agencies') }}" class="nav-link">
@@ -89,6 +91,8 @@
                         <p>Users</p>
                     </a>
                 </li>
+                @endif
+                @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
