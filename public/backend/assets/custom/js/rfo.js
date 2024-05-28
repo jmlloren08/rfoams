@@ -131,7 +131,7 @@ $(function () {
                 });
             }
         }
-    }); //end of adding/updating product
+    }); //end of adding/updating rfos
     // get data
     $(document).on("click", "#btnEdit", function (e) {
         let row = $(this).closest("tr");

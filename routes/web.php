@@ -39,8 +39,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/agencies/getDataFromDepartmentAgency', [agenciesController::class, 'getDataFromDepartmentAgency'])->name('admin.agencies.getDataFromDepartmentAgency');
     Route::post('/admin/rfos/getDataFromRFOs', [rfoController::class, 'getDataFromRFOs'])->name('admin.rfos.getDataFromRFOs');
     Route::post('/admin/users/getDataFromUsers', [userController::class, 'getDataFromUsers'])->name('admin.users.getDataFromUsers');
+    Route::post('/admin/eboss/getDataFromeBOSS', [ebossController::class, 'getDataFromeBOSS'])->name('admin.eboss.getDataFromeBOSS');
     // store data
     Route::post('/admin/rfos', [rfoController::class, 'store'])->name('admin.rfos.store');
+    Route::post('/admin/eboss', [ebossController::class, 'store'])->name('admin.eboss.store');
     // update data
     Route::put('/admin/rfos/{id}', [rfoController::class, 'update']);
     Route::put('/admin/users/{id}', [userController::class, 'update']);
@@ -49,6 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // get data
     Route::get('/admin/rfos/{id}', [rfoController::class, 'edit']);
     Route::get('/admin/users/{id}', [userController::class, 'edit']);
+    Route::get('/get-provinces-by-region', [ebossController::class, 'getProvincesByRegion']);
+    Route::get('/get-city-municipality-by-province', [ebossController::class, 'getCityMuncipalityByProvinceURL']);
     // delete data
     Route::delete('/admin/rfos/{id}', [rfoController::class, 'delete']);
     Route::delete('/admin/users/{id}', [userController::class, 'delete']);
