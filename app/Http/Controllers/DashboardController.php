@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\eBOSS;
 
 class DashboardController extends Controller
 {
@@ -13,6 +14,11 @@ class DashboardController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
-        return view('admin.dashboard');
+        
+        $counteBOSS = eBOSS::count('date_of_inspection');
+
+        return view('admin.dashboard', [
+            'counteBOSS' => $counteBOSS
+        ]);
     }
 }

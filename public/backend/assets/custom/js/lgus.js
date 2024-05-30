@@ -13,27 +13,20 @@ $(document).ready(function () {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 },
-                columns: [{
-                    data: 'id', visible: false
-                },
-                {
-                    data: 'psgcCode',
-                },
-                {
-                    data: 'regDesc',
-                },
-                {
-                    data: 'regCode',
-                },
-                {
-                    data: '',
-                    defaultContent: `<td class="text-right py-0 align-middle">
+                columns: [
+                    { data: 'id', visible: false },
+                    { data: 'psgcCode' },
+                    { data: 'regDesc' },
+                    { data: 'regCode' },
+                    {
+                        data: '',
+                        defaultContent: `<td class="text-right py-0 align-middle">
                     <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" id="btnEdit" title="Edit region"><i class="fas fa-edit"></i></a>
                     <a class="btn btn-danger" id="btnDelete" title="Delete region"><i class="fas fa-times-circle"></i></a>
                     </div>
                     </td>`
-                }
+                    }
                 ],
                 paging: true,
                 lengthChange: true,
@@ -57,30 +50,21 @@ $(document).ready(function () {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 },
-                columns: [{
-                    data: 'id', visible: false
-                },
-                {
-                    data: 'psgcCode',
-                },
-                {
-                    data: 'provDesc',
-                },
-                {
-                    data: 'regCode',
-                },
-                {
-                    data: 'provCode',
-                },
-                {
-                    data: '',
-                    defaultContent: `<td class="text-right py-0 align-middle">
+                columns: [
+                    { data: 'id', visible: false },
+                    { data: 'psgcCode' },
+                    { data: 'provDesc' },
+                    { data: 'regCode' },
+                    { data: 'provCode' },
+                    {
+                        data: '',
+                        defaultContent: `<td class="text-right py-0 align-middle">
                     <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" id="btnEdit" title="Edit province"><i class="fas fa-edit"></i></a>
                     <a class="btn btn-danger" id="btnDelete" title="Delete province"><i class="fas fa-times-circle"></i></a>
                     </div>
                     </td>`
-                }
+                    }
                 ],
                 paging: true,
                 lengthChange: true,
@@ -104,33 +88,22 @@ $(document).ready(function () {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 },
-                columns: [{
-                    data: 'id', visible: false
-                },
-                {
-                    data: 'psgcCode',
-                },
-                {
-                    data: 'citymunDesc',
-                },
-                {
-                    data: 'regCode',
-                },
-                {
-                    data: 'provCode',
-                },
-                {
-                    data: 'citymunCode',
-                },
-                {
-                    data: '',
-                    defaultContent: `<td class="text-right py-0 align-middle">
+                columns: [
+                    { data: 'id', visible: false },
+                    { data: 'psgcCode' },
+                    { data: 'citymunDesc' },
+                    { data: 'regCode' },
+                    { data: 'provCode' },
+                    { data: 'citymunCode' },
+                    {
+                        data: '',
+                        defaultContent: `<td class="text-right py-0 align-middle">
                     <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" id="btnEdit" title="Edit city/municipality"><i class="fas fa-edit"></i></a>
                     <a class="btn btn-danger" id="btnDelete" title="Delete city/municipality"><i class="fas fa-times-circle"></i></a>
                     </div>
                     </td>`
-                }
+                    }
                 ],
                 paging: true,
                 lengthChange: true,
@@ -154,33 +127,22 @@ $(document).ready(function () {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 },
-                columns: [{
-                    data: 'id', visible: false
-                },
-                {
-                    data: 'brgyCode',
-                },
-                {
-                    data: 'brgyDesc',
-                },
-                {
-                    data: 'regCode',
-                },
-                {
-                    data: 'provCode',
-                },
-                {
-                    data: 'citymunCode',
-                },
-                {
-                    data: '',
-                    defaultContent: `<td class="text-right py-0 align-middle">
+                columns: [
+                    { data: 'id', visible: false },
+                    { data: 'brgyCode' },
+                    { data: 'brgyDesc' },
+                    { data: 'regCode' },
+                    { data: 'provCode' },
+                    { data: 'citymunCode' },
+                    {
+                        data: '',
+                        defaultContent: `<td class="text-right py-0 align-middle">
                     <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" id="btnEdit" title="Edit barangay"><i class="fas fa-edit"></i></a>
                     <a class="btn btn-danger" id="btnDelete" title="Delete barangay"><i class="fas fa-times-circle"></i></a>
                     </div>
                     </td>`
-                }
+                    }
                 ],
                 paging: true,
                 lengthChange: true,

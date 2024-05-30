@@ -46,11 +46,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // update data
     Route::put('/admin/rfos/{id}', [rfoController::class, 'update']);
     Route::put('/admin/users/{id}', [userController::class, 'update']);
+    Route::put('/admin/eboss/{id}', [ebossController::class, 'update']);
     // remove user assigned role
     Route::put('/admin/users/{id}', [userController::class, 'removeAssignedRole']);
     // get data
     Route::get('/admin/rfos/{id}', [rfoController::class, 'edit']);
     Route::get('/admin/users/{id}', [userController::class, 'edit']);
+    Route::get('/admin/eboss/{id}', [ebossController::class, 'edit']);
     Route::get('/get-provinces-by-region', [ebossController::class, 'getProvincesByRegion']);
     Route::get('/get-city-municipality-by-province', [ebossController::class, 'getCityMuncipalityByProvinceURL']);
     // delete data

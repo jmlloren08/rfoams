@@ -11,49 +11,44 @@ $(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         },
-        columns: [{
-            data: 'id', visible: false
-        },
-        {
-            data: 'name',
-        },
-        {
-            data: 'email',
-        },
-        {
-            data: 'roles',
-            render: function (data) {
-                if (data === 'Admin') {
-                    return '<span class="badge bg-success">' + data + '</span>';
-                } else if (data === 'User') {
-                    return '<span class="badge bg-primary">' + data + '</span>';
-                } else {
-                    return '<span class="badge bg-warning">' + data + '</span>';
+        columns: [
+            { data: 'id', visible: false },
+            { data: 'name' },
+            { data: 'email' },
+            {
+                data: 'roles',
+                render: function (data) {
+                    if (data === 'Admin') {
+                        return '<span class="badge bg-success">' + data + '</span>';
+                    } else if (data === 'User') {
+                        return '<span class="badge bg-primary">' + data + '</span>';
+                    } else {
+                        return '<span class="badge bg-warning">' + data + '</span>';
+                    }
                 }
-            }
-        },
-        {
-            data: 'created_at',
-            render: function (data) {
-                return moment(data).format('YYYY-MM-DD HH:mm:ss');
-            }
-        },
-        {
-            data: 'updated_at',
-            render: function (data) {
-                return moment(data).format('YYYY-MM-DD HH:mm:ss');
-            }
-        },
-        {
-            data: '',
-            defaultContent: `<td class="text-right py-0 align-middle">
+            },
+            {
+                data: 'created_at',
+                render: function (data) {
+                    return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                }
+            },
+            {
+                data: 'updated_at',
+                render: function (data) {
+                    return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                }
+            },
+            {
+                data: '',
+                defaultContent: `<td class="text-right py-0 align-middle">
                     <div class="btn-group btn-group-sm">
                     <a class="btn btn-info" id="btnAssign" title="Assign role"><i class="fas fa-user-check"></i></a>
                     <a class="btn btn-warning" id="btnRemove" title="Remove role"><i class="fas fa-user-times"></i></a>
                     <a class="btn btn-danger" id="btnDelete" title="Delete user"><i class="fas fa-user-slash"></i></a>
                     </div>
                     </td>`
-        }
+            }
         ],
         paging: true,
         lengthChange: true,

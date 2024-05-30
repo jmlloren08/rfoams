@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RFOs;
+use App\Models\RFOsV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -27,10 +27,10 @@ class rfoController extends Controller
                 'focal_person'      => ['required', 'string', 'max:255'],
                 'position'          => ['required', 'string', 'max:255'],
                 'contact_number'    => ['required', 'string', 'regex:/^09\d{9}$/'],
-                'email_address'     => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . RFOs::class],
+                'email_address'     => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . RFOsV2::class],
             ]);
             // save record
-            $rfo = new RFOs;
+            $rfo = new RFOsV2;
             $rfo->rfo               = $request->rfo;
             $rfo->focal_person      = $request->focal_person;
             $rfo->position          = $request->position;
@@ -51,7 +51,7 @@ class rfoController extends Controller
     public function edit($id)
     {
         try {
-            $data = RFOs::where('id', $id)->first();
+            $data = RFOsV2::where('id', $id)->first();
 
             if (!$data) {
                 return response()->json(['errors' => 'Data not found.'], 404);
@@ -72,10 +72,10 @@ class rfoController extends Controller
                 'focal_person'      => ['required', 'string', 'max:255'],
                 'position'          => ['required', 'string', 'max:255'],
                 'contact_number'    => ['required', 'string', 'regex:/^09\d{9}$/'],
-                'email_address'     => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . RFOs::class],
+                'email_address'     => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . RFOsV2::class],
             ]);
 
-            $rfos = RFOs::findOrFail($id);
+            $rfos = RFOsV2::findOrFail($id);
 
             $rfos->rfo              = $request->rfo;
             $rfos->focal_person     = $request->focal_person;
@@ -94,7 +94,7 @@ class rfoController extends Controller
     public function delete($id)
     {
         try {
-            RFOs::where('id', $id)->delete();
+            RFOsV2::where('id', $id)->delete();
 
             return response()->json(['success' => 'Data deleted successfully.'], 200);
         } catch (\Exception $e) {
@@ -114,7 +114,7 @@ class rfoController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = RFOs::query();
+            $query          = RFOsV2::query();
 
             if (!empty($searchValue)) {
                 $query->whereAny([

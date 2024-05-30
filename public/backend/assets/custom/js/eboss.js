@@ -161,7 +161,7 @@ $(function () {
         } else {
             formData.set('deadline_of_action_plan', formData.get('deadline_of_action_plan'));
         }
-        // check if submission is date or not applicabler
+        // check if submission is date or not applicable
         if ($('#not_applicable_doap').is(':checked')) {
             formData.set('submission_of_action_plan', 'Not applicable');
         } else {
@@ -247,6 +247,41 @@ $(function () {
             }
         }
     }); //end of adding/updating eboss
+    // get data
+    $(document).on("click", "#btnEdit", function (e) {
+        let row = $(this).closest("tr");
+        let data = tableeBOSS.row(row).data();
+        let id = data.id;
+        $.ajax({
+            url: `${editeBOSSURL}/${id}`,
+            type: "GET",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                $("#modal-add-new-eboss").modal("show");
+                $("#id").val(response.id);
+                $("#date_of_inspection").val(response.date_of_inspection);
+                $("#region").val(response.region);
+                $("#province").val(response.province);
+                $("#city_municipality").val(response.city_municipality);
+                $("#eboss_submission").val(response.eboss_submission);
+                $("#type_of_boss").val(response.type_of_boss);
+                $("#deadline_of_action_plan").val(response.deadline_of_action_plan);
+                $("#submission_of_action_plan").val(response.submission_of_action_plan);
+                $("#remarks").val(response.remarks);
+                $("#bplo_head").val(response.bplo_head);
+                $("#contact_no").val(response.contact_no);
+            },
+            error: function (e) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: e.responseJSON.errors
+                });
+            }
+        });
+    });
     // check validation
     $(document).ready(function () {
         let form = $(".needs-validation");

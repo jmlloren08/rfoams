@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('refregion', function (Blueprint $table) {
+        Schema::create('ref_regions', function (Blueprint $table) {
             $table->id();
             $table->integer('psgcCode');
             $table->string('regDesc');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('refregion');
+        Schema::dropIfExists('ref_regions');
     }
 };

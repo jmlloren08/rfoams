@@ -25,7 +25,7 @@ class RefCityMun extends Model
 
     public function refregion()
     {
-        return $this->belongsTo(RefRegion::class);
+        return $this->belongsTo(RefRegionV2::class);
     }
     public function refprovince()
     {

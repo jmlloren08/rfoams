@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\eBOSS;
 use App\Models\RefCityMun;
 use App\Models\RefProvince;
-use App\Models\RefRegion;
+use App\Models\RefRegionV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -19,15 +19,10 @@ class ebossController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
-        $ref_regions = RefRegion::select('regDesc', 'regCode')->get();
-        $counteBOSS = eBOSS::select('date_of_inspection')
-            ->selectRaw('count(*) as count')
-            ->groupBy('date_of_inspection')
-            ->get();
+        $regions = RefRegionV2::select('regDesc', 'regCode')->get();
 
         return view('admin.eboss', [
-            'ref_regions'   => $ref_regions,
-            'counteBOSS'    => $counteBOSS
+            'regions'   => $regions
         ]);
     }
     public function store(Request $request)
@@ -45,19 +40,19 @@ class ebossController extends Controller
                 'contact_no'                => ['nullable', 'string', 'max:255']
             ]);
             // save record
-            $rfo = new eBOSS;
-            $rfo->date_of_inspection        = $request->date_of_inspection;
-            $rfo->city_municipality         = $request->city_municipality;
-            $rfo->province                  = $request->province;
-            $rfo->region                    = $request->region;
-            $rfo->eboss_submission          = $request->eboss_submission;
-            $rfo->type_of_boss              = $request->type_of_boss;
-            $rfo->deadline_of_action_plan   = $request->deadline_of_action_plan;
-            $rfo->submission_of_action_plan = $request->submission_of_action_plan;
-            $rfo->remarks                   = $request->remarks;
-            $rfo->bplo_head                 = $request->bplo_head;
-            $rfo->contact_no                = $request->contact_no;
-            $rfo->save();
+            $inspection = new eBOSS;
+            $inspection->date_of_inspection        = $request->date_of_inspection;
+            $inspection->city_municipality         = $request->city_municipality;
+            $inspection->province                  = $request->province;
+            $inspection->region                    = $request->region;
+            $inspection->eboss_submission          = $request->eboss_submission;
+            $inspection->type_of_boss              = $request->type_of_boss;
+            $inspection->deadline_of_action_plan   = $request->deadline_of_action_plan;
+            $inspection->submission_of_action_plan = $request->submission_of_action_plan;
+            $inspection->remarks                   = $request->remarks;
+            $inspection->bplo_head                 = $request->bplo_head;
+            $inspection->contact_no                = $request->contact_no;
+            $inspection->save();
             // return response
             return response()->json(['success' => 'Data added successfully.'], 200);
         } catch (ValidationException $e) {
@@ -66,6 +61,58 @@ class ebossController extends Controller
         } catch (\Exception $e) {
 
             Log::error("Error adding eBOSS: " . $e->getMessage());
+            return response()->json(['errors' => 'Internal server error'], 500);
+        }
+    }
+    public function edit($id)
+    {
+        try {
+            $data = eBOSS::where('id', $id)->first();
+
+            if (!$data) {
+                return response()->json(['errors' => 'Data not found.'], 404);
+            }
+
+            return response()->json($data);
+        } catch (\Exception $e) {
+            Log::error("Error getting data: " . $e->getMessage());
+            return response()->json(['errors' => 'Internal server error'], 500);
+        }
+    }
+    public function update(Request $request, $id)
+    {
+        try {
+
+            $request->validate([
+                'date_of_inspection'        => ['required', 'date'],
+                'city_municipality'         => ['required', 'string', 'max:255'],
+                'province'                  => ['required', 'string', 'max:255'],
+                'region'                    => ['required', 'string', 'max:255'],
+                'type_of_boss'              => ['required', 'string', 'max:255'],
+                'remarks'                   => ['nullable', 'string', 'max:255'],
+                'bplo_head'                 => ['nullable', 'string', 'max:255'],
+                'contact_no'                => ['nullable', 'string', 'max:255']
+            ]);
+
+            $inspection = eBOSS::findOrFail($id);
+
+            $inspection->date_of_inspection        = $request->date_of_inspection;
+            $inspection->city_municipality         = $request->city_municipality;
+            $inspection->province                  = $request->province;
+            $inspection->region                    = $request->region;
+            $inspection->eboss_submission          = $request->has('eboss_submission') && $request->eboss_submission != null ? $request->eboss_submission : 'No submission';
+            $inspection->type_of_boss              = $request->type_of_boss;
+            $inspection->deadline_of_action_plan   = $request->has('deadline_of_action_plan') && $request->deadline_of_action_plan != null ? $request->deadline_of_action_plan : 'Not applicable';
+            $inspection->submission_of_action_plan = $request->has('submission_of_action_plan') && $request->submission_of_action_plan != null ? $request->submission_of_action_plan : 'Not applicable';
+            $inspection->remarks                   = $request->remarks;
+            $inspection->bplo_head                 = $request->bplo_head;
+            $inspection->contact_no                = $request->contact_no;
+            $inspection->save();
+
+            return response()->json(['success' =>  'Data updated successfully.']);
+        } catch (\Exception $e) {
+
+            Log::error("Error updating data: " . $e->getMessage());
             return response()->json(['errors' => 'Internal server error'], 500);
         }
     }
@@ -84,14 +131,14 @@ class ebossController extends Controller
             // join
             $query->join('ref_city_muns', 'e_b_o_s_s.city_municipality', '=', 'ref_city_muns.citymunCode')
                 ->join('ref_provinces', 'e_b_o_s_s.province', '=', 'ref_provinces.provCode')
-                ->join('ref_regions', 'e_b_o_s_s.region', '=', 'ref_regions.regCode');
+                ->join('ref_region_v2_s', 'e_b_o_s_s.region', '=', 'ref_region_v2_s.regCode');
             // search functionality
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
                     $q->where('e_b_o_s_s.date_of_inspection', 'like', "%$searchValue%")
                         ->orWhere('ref_city_muns.citymunDesc', 'like', "%$searchValue%")
                         ->orWhere('ref_provinces.provDesc', 'like', "%$searchValue%")
-                        ->orWhere('ref_regions.regDesc', 'like', "%$searchValue%")
+                        ->orWhere('ref_region_v2_s.regDesc', 'like', "%$searchValue%")
                         ->orWhere('e_b_o_s_s.eboss_submission', 'like', "%$searchValue%")
                         ->orWhere('e_b_o_s_s.type_of_boss', 'like', "%$searchValue%")
                         ->orWhere('e_b_o_s_s.deadline_of_action_plan', 'like', "%$searchValue%")
@@ -104,7 +151,7 @@ class ebossController extends Controller
             // get the total records before pagination and filtering
             $totalRecords = $query->count();
             // select only the necessary columns
-            $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_regions.regDesc');
+            $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc');
             // order the results
             $query->orderBy($orderColumn, $orderDirection);
             // get total records after filtering

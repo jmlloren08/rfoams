@@ -81,6 +81,7 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
+                        @if (Auth::user()->roles !== 'Guest' && Auth::user()->roles !== NULL)
                         <li class="nav-header">NAVIGATION</li>
                         <li class="nav-item">
                             <a href="{{ route('admin.eboss') }}" class="nav-link active">
@@ -106,6 +107,7 @@
                                 <p>Commendation</p>
                             </a>
                         </li>
+                        @if (Auth::user()->roles === 'Admin')
                         <li class="nav-header">MANAGEMENT</li>
                         <li class="nav-item">
                             <a href="{{ route('admin.agencies') }}" class="nav-link">
@@ -132,6 +134,8 @@
                                 <p>Users</p>
                             </a>
                         </li>
+                        @endif
+                        @endif
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -184,7 +188,7 @@
                                         <label for="region">Region</label>
                                         <select class="form-control custom-select" name="region" id="region" required>
                                             <option value="" selected disabled>Choose</option>
-                                            @foreach ($ref_regions as $region)
+                                            @foreach ($regions as $region)
                                             <option value="{{ $region->regCode }}">{{ $region->regDesc }}</option>
                                             @endforeach
                                         </select>

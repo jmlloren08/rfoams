@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RefBrgy;
 use App\Models\RefCityMun;
 use App\Models\RefProvince;
-use App\Models\RefRegion;
+use App\Models\RefRegionV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +31,7 @@ class lguController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = RefRegion::query();
+            $query          = RefRegionV2::query();
 
             if (!empty($searchValue)) {
                 $query->whereAny([

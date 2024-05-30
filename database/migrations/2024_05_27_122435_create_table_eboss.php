@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('city_municipality');
             $table->string('province');
             $table->string('region');
-            $table->date('date_submitted');
+            $table->string('eboss_submission');
             $table->string('type_of_boss');
-            $table->date('deadline_of_action_plan');
-            $table->date('submission_of_action_plan');
+            $table->string('deadline_of_action_plan');
+            $table->string('submission_of_action_plan');
             $table->string('remarks');
             $table->string('bplo_head');
             $table->string('contact_no');
