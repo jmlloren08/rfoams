@@ -160,6 +160,7 @@
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
+
             <!-- /.content-header -->
             <div class="modal fade" id="modal-add-new-eboss" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-add-new-eboss-label" aria-hidden="true">
                 <div class="modal-dialog">
@@ -333,6 +334,123 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    <!-- card -->
+                    <div class="row mb-2">
+                        <!-- full-automated -->
+                        <div class="col-lg-3">
+                            <div class="card bg-gradient-primary">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <p class="d-flex flex-column">
+                                            <span>Per Year</span>
+                                        </p>
+                                    </div>
+                                    <div class="position-relative mb-4">
+                                        <canvas id="fa-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-end">
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-white" data-color="#fff"></i> 2023
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-dark" data-color="#343a40"></i> 2024
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- partly-automated -->
+                        <div class="col-lg-3">
+                            <div class="card bg-gradient-info">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <p class="d-flex flex-column">
+                                            <span>Per Year</span>
+                                        </p>
+                                    </div>
+                                    <div class="position-relative mb-4">
+                                        <canvas id="pa-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-end">
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-white" data-color="#fff"></i> 2023
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-dark" data-color="#343a40"></i> 2024
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- physical-collocated -->
+                        <div class="col-lg-3">
+                            <div class="card bg-gradient-warning">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <p class="d-flex flex-column">
+                                            <span>Per Year</span>
+                                        </p>
+                                    </div>
+                                    <div class="position-relative mb-4">
+                                        <canvas id="pc-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-end">
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-white" data-color="#fff"></i> 2023
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-dark" data-color="#343a40"></i> 2024
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- no-collocated -->
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <p class="d-flex flex-column">
+                                            <span>Per Year</span>
+                                        </p>
+                                    </div>
+                                    <div class="position-relative mb-4">
+                                        <canvas id="eboss-chart" height="200"></canvas>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-end">
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-primary" data-color="#007bff"></i> 2023
+                                        </span>
+                                        <span class="mr-2">
+                                            <i class="fas fa-square text-info" data-color="#17a2b8"></i> 2024
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- card-partly-automated -->
+                    <!-- button -->
                     <div class="row mb-4">
                         <div class="col-xl-3">
                             <!-- button trigger modal -->
@@ -419,7 +537,6 @@
             });
         });
     </script>
-    <script src="{{ url('backend/assets/custom/js/eboss.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
@@ -451,8 +568,15 @@
     <script src="{{ url('backend/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ url('backend/assets/dist/js/adminlte.js') }}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ url('backend/assets/dist/js/demo.js') }}"></script>
+    <!-- custom js -->
+    <script>
+        var fullyAutomated2023 = @json($fullyAutomated2023);
+        var fullyAutomated2024 = @json($fullyAutomated2024);
+        var partlyAutomated2023 = @json($partlyAutomated2023);
+        var partlyAutomated2024 = @json($partlyAutomated2024);
+    </script>
+    </script>
+    <script src="{{ url('backend/assets/custom/js/eboss.js') }}"></script>
 </body>
 
 </html>

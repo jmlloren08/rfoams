@@ -19,10 +19,31 @@ class ebossController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
+
         $regions = RefRegionV2::select('regDesc', 'regCode')->get();
 
+        $fullyAutomated2023 = eBOSS::where('type_of_boss', 'Fully-Automated')
+            ->whereYear('date_of_inspection', 2023)
+            ->count();
+
+        $fullyAutomated2024 = eBOSS::where('type_of_boss', 'Fully-Automated')
+            ->whereYear('date_of_inspection', 2024)
+            ->count();
+
+        $partlyAutomated2023 = eBOSS::where('type_of_boss', 'Partly-Automated')
+            ->whereYear('date_of_inspection', 2023)
+            ->count();
+
+        $partlyAutomated2024 = eBOSS::where('type_of_boss', 'Partly-Automated')
+            ->whereYear('date_of_inspection', 2024)
+            ->count();
+
         return view('admin.eboss', [
-            'regions'   => $regions
+            'regions'               => $regions,
+            'fullyAutomated2023'    => $fullyAutomated2023,
+            'fullyAutomated2024'    => $fullyAutomated2024,
+            'partlyAutomated2023'   => $partlyAutomated2023,
+            'partlyAutomated2024'   => $partlyAutomated2024
         ]);
     }
     public function store(Request $request)
@@ -76,6 +97,18 @@ class ebossController extends Controller
             return response()->json($data);
         } catch (\Exception $e) {
             Log::error("Error getting data: " . $e->getMessage());
+            return response()->json(['errors' => 'Internal server error'], 500);
+        }
+    }
+    public function delete($id)
+    {
+        try {
+            eBOSS::where('id', $id)->delete();
+
+            return response()->json(['success' => 'Data deleted successfully.'], 200);
+        } catch (\Exception $e) {
+
+            Log::error("Error deleting data: " . $e->getMessage());
             return response()->json(['errors' => 'Internal server error'], 500);
         }
     }

@@ -62,8 +62,12 @@
     <script src="{{ url('backend/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ url('backend/assets/dist/js/adminlte.js') }}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ url('backend/assets/dist/js/demo.js') }}"></script>
+    <!-- custom js -->
+    <script>
+        var chartData = @json($chartData);
+        var types = @json($types);
+    </script>
+    <script src="{{ url('backend/assets/custom/js/eboss-chart.js') }}"></script>
 </body>
 
 </html>

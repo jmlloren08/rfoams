@@ -282,6 +282,47 @@ $(function () {
             }
         });
     });
+    // delete data
+    $(document).on("click", "#btnDelete", function (e) {
+        let row = $(this).closest("tr");
+        let data = tableeBOSS.row(row).data();
+        let id = data.id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to revert this.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `${editeBOSSURL}/${id}`,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (s) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: s.success
+                        }).then(() => {
+                            tableeBOSS.ajax.reload();
+                        });
+                    },
+                    error: function (e) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: e.responseJSON.errors
+                        });
+                    }
+                });
+            }
+        });
+    });
     // check validation
     $(document).ready(function () {
         let form = $(".needs-validation");
@@ -320,4 +361,149 @@ $(function () {
     $("#modal-add-new-eboss").on('hidden.bs.modal', function (e) {
         clearForm();
     }); //end function
+});
+// chart
+$(document).ready(function () {
+    setTimeout(function () {
+        // fully-automated
+        $(function () {
+            var ticksStyle = {
+                fontColor: '#495057',
+                fontStyle: 'bold'
+            }
+            var mode = 'index'
+            var intersect = true
+            var colors = [];
+            $('.fa-square').each(function () {
+                colors.push($(this).data('color'));
+            });
+            var chartLabels = ['Fully-Automated'];
+            var chartDataSets = [
+                {
+                    label: '2023',
+                    backgroundColor: colors[0],
+                    borderColor: colors[0],
+                    data: [fullyAutomated2023]
+                },
+                {
+                    label: '2024',
+                    backgroundColor: colors[1],
+                    borderColor: colors[1],
+                    data: [fullyAutomated2024]
+                }
+            ];
+            var $faChart = $('#fa-chart')
+            var faChart = new Chart($faChart, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: chartDataSets
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    hover: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                display: true,
+                                lineWidth: '4px',
+                                color: 'rgba(0, 0, 0, .2)',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: $.extend({
+                                beginAtZero: true
+                            }, ticksStyle)
+                        }],
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: true
+                            },
+                            ticks: ticksStyle
+                        }]
+                    }
+                }
+            });
+        });
+        // partly-automated
+        $(function () {
+            var ticksStyle = {
+                fontColor: '#495057',
+                fontStyle: 'bold'
+            }
+            var mode = 'index'
+            var intersect = true
+            var colors = [];
+            $('.fa-square').each(function () {
+                colors.push($(this).data('color'));
+            });
+            var chartLabels = ['Partly-Automated'];
+            var chartDataSets = [
+                {
+                    label: '2023',
+                    backgroundColor: colors[0],
+                    borderColor: colors[0],
+                    data: [partlyAutomated2023]
+                },
+                {
+                    label: '2024',
+                    backgroundColor: colors[1],
+                    borderColor: colors[1],
+                    data: [partlyAutomated2024]
+                }
+            ];
+            var $paChart = $('#pa-chart')
+            var paChart = new Chart($paChart, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: chartDataSets
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    hover: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                display: true,
+                                lineWidth: '4px',
+                                color: 'rgba(0, 0, 0, .2)',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: $.extend({
+                                beginAtZero: true
+                            }, ticksStyle)
+                        }],
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: true
+                            },
+                            ticks: ticksStyle
+                        }]
+                    }
+                }
+            });
+        });
+    }, 500);
 });

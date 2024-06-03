@@ -22,14 +22,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
             <div class="row">
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>{{ $counteBOSS }}</h3>
-
                             <p>eBOSS Inspection</p>
                         </div>
                         <div class="icon">
@@ -38,13 +35,10 @@
                         <a href="{{ route('admin.eboss') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
                             <h3>53</h3>
-
                             <p>Citizen's Charter Inspection</p>
                         </div>
                         <div class="icon">
@@ -53,13 +47,10 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>44</h3>
-
                             <p>Orientations</p>
                         </div>
                         <div class="icon">
@@ -68,13 +59,10 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
                             <h3>65</h3>
-
                             <p>Commendations</p>
                         </div>
                         <div class="icon">
@@ -83,9 +71,92 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
             </div>
-            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Overall eBOSS status</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span>Per Region</span>
+                                </p>
+                            </div>
+                            <div class="position-relative mb-4">
+                                <canvas id="eboss-chart" height="200"></canvas>
+                            </div>
+                            <div class="d-flex flex-row justify-content-end">
+                                <span class="mr-2">
+                                    <i class="fas fa-square text-primary" data-color="#007bff"></i> Fully-Automated
+                                </span>
+                                <span class="mr-2">
+                                    <i class="fas fa-square text-info" data-color="#17a2b8"></i> Partly-Automated
+                                </span>
+                                <span class="mr-2">
+                                    <i class="fas fa-square text-warning" data-color="#ffc107"></i> Physical/Collocated BOSS
+                                </span>
+                                <span>
+                                    <i class="fas fa-square text-danger" data-color="#dc3545"></i> No Collocated Boss
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Overall CC status</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span>Per Region</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Overall Orientation</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span>Per Region</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Overall Commendation</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span>Per Region</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </section>
     <!-- /.content -->
 </div>

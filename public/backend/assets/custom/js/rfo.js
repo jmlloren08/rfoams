@@ -161,7 +161,7 @@ $(function () {
             }
         });
     });
-    // delete product
+    // delete data
     $(document).on("click", "#btnDelete", function (e) {
         let row = $(this).closest("tr");
         let data = tableRFOs.row(row).data();
