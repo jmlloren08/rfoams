@@ -107,8 +107,20 @@
                                 <p>Commendation</p>
                             </a>
                         </li>
-                        @if (Auth::user()->roles === 'Admin')
                         <li class="nav-header">MANAGEMENT</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-thumbs-up"></i>
+                                <p>For Approval</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-undo"></i>
+                                <p>Returned</p>
+                            </a>
+                        </li>
+                        @if (Auth::user()->roles === 'Admin')
                         <li class="nav-item">
                             <a href="{{ route('admin.agencies') }}" class="nav-link">
                                 <i class="nav-icon fas fa-building"></i>
@@ -509,7 +521,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-list"></i>
-                                    eBOSS
+                                    eBOSS Approved List
                                 </h3>
                             </div>
                             <div class="card-body">

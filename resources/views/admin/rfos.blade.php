@@ -81,6 +81,7 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
+                        @if (Auth::user()->roles !== 'Guest' && Auth::user()->roles !== NULL)
                         <li class="nav-header">NAVIGATION</li>
                         <li class="nav-item">
                             <a href="{{ route('admin.eboss') }}" class="nav-link">
@@ -108,6 +109,19 @@
                         </li>
                         <li class="nav-header">MANAGEMENT</li>
                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-thumbs-up"></i>
+                                <p>For Approval</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-undo"></i>
+                                <p>Returned</p>
+                            </a>
+                        </li>
+                        @if (Auth::user()->roles === 'Admin')
+                        <li class="nav-item">
                             <a href="{{ route('admin.agencies') }}" class="nav-link">
                                 <i class="nav-icon fas fa-building"></i>
                                 <p>Agencies</p>
@@ -132,6 +146,8 @@
                                 <p>Users</p>
                             </a>
                         </li>
+                        @endif
+                        @endif
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -176,7 +192,7 @@
                                             <option value="" selected disabled>Select RFO</option>
                                             <script>
                                                 var selectRole = document.getElementById('rfo');
-                                                var values = ['Southern Luzon', 'Northern Luzon','Central Luzon', 'Western Visayas','Eastern Visayas','Northern Mindanao','Western Mindanao','Eastern Mindanao'];
+                                                var values = ['Southern Luzon', 'Northern Luzon', 'Central Luzon', 'Western Visayas', 'Eastern Visayas', 'Northern Mindanao', 'Western Mindanao', 'Eastern Mindanao'];
                                                 values.forEach(function(value) {
                                                     var option = document.createElement('option');
                                                     option.value = value;
