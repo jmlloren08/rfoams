@@ -338,16 +338,27 @@
                     <div class="row mb-2">
                         <!-- full-automated -->
                         <div class="col-lg-3">
-                            <div class="card bg-gradient-primary">
+                            <div class="card card-primary">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                        <h3 class="card-title">Fully-Automated</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <p class="d-flex flex-column">
-                                            <span>Per Year</span>
+                                            <span class="text-bold text-lg">Per Year</span>
+                                            <span>Total: {{ $fullyAutomated2023 + $fullyAutomated2024 }}</span>
+                                        </p>
+                                        <p class="ml-auto d-flex flex-column text-right">
+                                            @if ($fullyAutomated2023 != 0) <span class="text-{{ ($fullyAutomated2024 > $fullyAutomated2023) ? 'success' : 'danger' }}">
+                                                <i class="fas fa-{{ ($fullyAutomated2024 > $fullyAutomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                                {{ number_format((abs($fullyAutomated2024 - $fullyAutomated2023) / $fullyAutomated2023)* 100, 2)}}%
+                                            </span>
+                                            @else
+                                            <span class="text-muted">No data for 2023</span>
+                                            @endif
+                                            <span class="text-muted">Since last year</span>
                                         </p>
                                     </div>
                                     <div class="position-relative mb-4">
@@ -355,10 +366,10 @@
                                     </div>
                                     <div class="d-flex flex-row justify-content-end">
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-white" data-color="#fff"></i> 2023
+                                            <i class="fas fa-square text-teal" data-color="#20c997"></i> 2023
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-dark" data-color="#343a40"></i> 2024
+                                            <i class="fas fa-square text-orange" data-color="#fd7e14"></i> 2024
                                         </span>
                                     </div>
                                 </div>
@@ -366,16 +377,27 @@
                         </div>
                         <!-- partly-automated -->
                         <div class="col-lg-3">
-                            <div class="card bg-gradient-info">
+                            <div class="card card-info">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                        <h3 class="card-title">Partly-Automated</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <p class="d-flex flex-column">
-                                            <span>Per Year</span>
+                                            <span class="text-bold text-lg">Per Year</span>
+                                            <span>Total: {{ $partlyAutomated2023 + $partlyAutomated2024 }}</span>
+                                        </p>
+                                        <p class="ml-auto d-flex flex-column text-right">
+                                            @if ($partlyAutomated2023 != 0) <span class="text-{{ ($partlyAutomated2024 > $partlyAutomated2023) ? 'success' : 'danger' }}">
+                                                <i class="fas fa-{{ ($partlyAutomated2024 > $partlyAutomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                                {{ number_format((abs($partlyAutomated2024 - $partlyAutomated2023) / $partlyAutomated2023) * 100, 2)}}%
+                                            </span>
+                                            @else
+                                            <span class="text-muted">No data for 2023</span>
+                                            @endif
+                                            <span class="text-muted">Since last year</span>
                                         </p>
                                     </div>
                                     <div class="position-relative mb-4">
@@ -383,10 +405,10 @@
                                     </div>
                                     <div class="d-flex flex-row justify-content-end">
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-white" data-color="#fff"></i> 2023
+                                            <i class="fas fa-square text-teal" data-color="#20c997"></i> 2023
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-dark" data-color="#343a40"></i> 2024
+                                            <i class="fas fa-square text-orange" data-color="#fd7e14"></i> 2024
                                         </span>
                                     </div>
                                 </div>
@@ -394,16 +416,27 @@
                         </div>
                         <!-- physical-collocated -->
                         <div class="col-lg-3">
-                            <div class="card bg-gradient-warning">
+                            <div class="card card-warning">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                        <h3 class="card-title">Physical/Collocated BOSS</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <p class="d-flex flex-column">
-                                            <span>Per Year</span>
+                                            <span class="text-bold text-lg">Per Year</span>
+                                            <span>Total: {{ $physicalCollocated2023 + $physicalCollocated2024 }}</span>
+                                        </p>
+                                        <p class="ml-auto d-flex flex-column text-right">
+                                            @if ($physicalCollocated2023 != 0) <span class="text-{{ ($physicalCollocated2024 > $physicalCollocated2023) ? 'success' : 'danger' }}">
+                                                <i class="fas fa-{{ ($physicalCollocated2024 > $physicalCollocated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                                {{ number_format((abs($physicalCollocated2024 - $physicalCollocated2023) / $physicalCollocated2023) * 100, 2)}}%
+                                            </span>
+                                            @else
+                                            <span class="text-muted">No data for 2023</span>
+                                            @endif
+                                            <span class="text-muted">Since last year</span>
                                         </p>
                                     </div>
                                     <div class="position-relative mb-4">
@@ -411,10 +444,10 @@
                                     </div>
                                     <div class="d-flex flex-row justify-content-end">
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-white" data-color="#fff"></i> 2023
+                                            <i class="fas fa-square text-teal" data-color="#20c997"></i> 2023
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-dark" data-color="#343a40"></i> 2024
+                                            <i class="fas fa-square text-orange" data-color="#fd7e14"></i> 2024
                                         </span>
                                     </div>
                                 </div>
@@ -422,27 +455,38 @@
                         </div>
                         <!-- no-collocated -->
                         <div class="col-lg-3">
-                            <div class="card">
+                            <div class="card card-danger">
                                 <div class="card-header border-0">
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="card-title">Overall eBOSS status</h3>
+                                        <h3 class="card-title">No Collocated BOSS</h3>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <p class="d-flex flex-column">
-                                            <span>Per Year</span>
+                                            <span class="text-bold text-lg">Per Year</span>
+                                            <span>Total: {{ $noCollocatedBOSS2023 + $noCollocatedBOSS2024 }}</span>
+                                        </p>
+                                        <p class="ml-auto d-flex flex-column text-right">
+                                            @if ($noCollocatedBOSS2023 != 0) <span class="text-{{ ($noCollocatedBOSS2024 > $noCollocatedBOSS2024) ? 'success' : 'danger' }}">
+                                                <i class="fas fa-{{ ($noCollocatedBOSS2024 > $noCollocatedBOSS2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                                {{ number_format((abs($noCollocatedBOSS2024 - $noCollocatedBOSS2023) / $noCollocatedBOSS2023) * 100, 2)}}%
+                                            </span>
+                                            @else
+                                            <span class="text-muted">No data for 2023</span>
+                                            @endif
+                                            <span class="text-muted">Since last year</span>
                                         </p>
                                     </div>
                                     <div class="position-relative mb-4">
-                                        <canvas id="eboss-chart" height="200"></canvas>
+                                        <canvas id="nc-chart" height="200"></canvas>
                                     </div>
                                     <div class="d-flex flex-row justify-content-end">
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-primary" data-color="#007bff"></i> 2023
+                                            <i class="fas fa-square text-teal" data-color="#20c997"></i> 2023
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-square text-info" data-color="#17a2b8"></i> 2024
+                                            <i class="fas fa-square text-orange" data-color="#fd7e14"></i> 2024
                                         </span>
                                     </div>
                                 </div>
@@ -574,6 +618,10 @@
         var fullyAutomated2024 = @json($fullyAutomated2024);
         var partlyAutomated2023 = @json($partlyAutomated2023);
         var partlyAutomated2024 = @json($partlyAutomated2024);
+        var physicalCollocated2023 = @json($physicalCollocated2023);
+        var physicalCollocated2024 = @json($physicalCollocated2024);
+        var noCollocatedBOSS2023 = @json($noCollocatedBOSS2023);
+        var noCollocatedBOSS2024 = @json($noCollocatedBOSS2024);
     </script>
     </script>
     <script src="{{ url('backend/assets/custom/js/eboss.js') }}"></script>

@@ -19,11 +19,11 @@ $(function () {
                 data: 'roles',
                 render: function (data) {
                     if (data === 'Admin') {
-                        return '<span class="badge bg-success">' + data + '</span>';
+                        return `<span class="badge bg-success"> ${data} </span>`;
                     } else if (data === 'User') {
-                        return '<span class="badge bg-primary">' + data + '</span>';
+                        return `<span class="badge bg-primary"> ${data} </span>`;
                     } else {
-                        return '<span class="badge bg-warning">' + data + '</span>';
+                        return `<span class="badge bg-warning"> ${data} </span>`;
                     }
                 }
             },

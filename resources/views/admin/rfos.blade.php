@@ -172,7 +172,19 @@
                                 <div class="card-body">
                                     <input type="hidden" id="id" name="id">
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control @if ($errors->has('rfo')) is-invalid @endif" id="rfo" name="rfo" placeholder="Regional Field Office" required>
+                                        <select class="form-control custom-select @if ($errors->has('rfo')) is-invalid @endif" name="rfo" id="rfo" required>
+                                            <option value="" selected disabled>Select RFO</option>
+                                            <script>
+                                                var selectRole = document.getElementById('rfo');
+                                                var values = ['Southern Luzon', 'Northern Luzon','Central Luzon', 'Western Visayas','Eastern Visayas','Northern Mindanao','Western Mindanao','Eastern Mindanao'];
+                                                values.forEach(function(value) {
+                                                    var option = document.createElement('option');
+                                                    option.value = value;
+                                                    option.innerHTML = value;
+                                                    selectRole.appendChild(option);
+                                                });
+                                            </script>
+                                        </select>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-city"></span>

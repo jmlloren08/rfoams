@@ -22,28 +22,28 @@ class ebossController extends Controller
 
         $regions = RefRegionV2::select('regDesc', 'regCode')->get();
 
-        $fullyAutomated2023 = eBOSS::where('type_of_boss', 'Fully-Automated')
-            ->whereYear('date_of_inspection', 2023)
-            ->count();
-
-        $fullyAutomated2024 = eBOSS::where('type_of_boss', 'Fully-Automated')
-            ->whereYear('date_of_inspection', 2024)
-            ->count();
-
-        $partlyAutomated2023 = eBOSS::where('type_of_boss', 'Partly-Automated')
-            ->whereYear('date_of_inspection', 2023)
-            ->count();
-
-        $partlyAutomated2024 = eBOSS::where('type_of_boss', 'Partly-Automated')
-            ->whereYear('date_of_inspection', 2024)
-            ->count();
+        $counts = eBOSS::selectRaw("
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyAutomated2023,
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as fullyAutomated2024,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as partlyAutomated2023,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as partlyAutomated2024,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as physicalCollocated2023,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as physicalCollocated2024,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as noCollocatedBOSS2023,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as noCollocatedBOSS2024
+            ")
+            ->first();
 
         return view('admin.eboss', [
-            'regions'               => $regions,
-            'fullyAutomated2023'    => $fullyAutomated2023,
-            'fullyAutomated2024'    => $fullyAutomated2024,
-            'partlyAutomated2023'   => $partlyAutomated2023,
-            'partlyAutomated2024'   => $partlyAutomated2024
+            'regions'                   => $regions,
+            'fullyAutomated2023'        => $counts->fullyAutomated2023,
+            'fullyAutomated2024'        => $counts->fullyAutomated2024,
+            'partlyAutomated2023'       => $counts->partlyAutomated2023,
+            'partlyAutomated2024'       => $counts->partlyAutomated2024,
+            'physicalCollocated2023'    => $counts->physicalCollocated2023,
+            'physicalCollocated2024'    => $counts->physicalCollocated2024,
+            'noCollocatedBOSS2023'      => $counts->noCollocatedBOSS2023,
+            'noCollocatedBOSS2024'      => $counts->noCollocatedBOSS2024
         ]);
     }
     public function store(Request $request)

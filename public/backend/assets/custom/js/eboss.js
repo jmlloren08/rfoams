@@ -21,9 +21,9 @@ $(function () {
                 data: 'eboss_submission',
                 render: function (data) {
                     if (data === 'No submission') {
-                        return '<span class="badge bg-danger">' + data + '</span>';
+                        return `<span class="badge bg-danger"> ${data} </span>`;
                     } else {
-                        return '<span class="badge bg-success">' + data + '</span>';
+                        return `<span class="badge bg-success"> ${data} </span>`;
                     }
                 }
             },
@@ -31,9 +31,13 @@ $(function () {
                 data: 'type_of_boss',
                 render: function (data) {
                     if (data === 'Fully-Automated') {
-                        return '<span class="badge bg-primary">' + data + '</span>';
+                        return `<span class="badge bg-primary"> ${data} </span>`;
+                    } else if (data === 'Partly-Automated') {
+                        return `<span class="badge bg-info"> ${data} </span>`;
+                    } else if (data === 'Physical/Collocated BOSS') {
+                        return `<span class="badge bg-warning"> ${data} </span>`;
                     } else {
-                        return data;
+                        return `<span class="badge bg-danger"> ${data} </span>`;
                     }
                 }
             },
@@ -41,9 +45,9 @@ $(function () {
                 data: 'deadline_of_action_plan',
                 render: function (data) {
                     if (data === 'Not applicable') {
-                        return '<span class="badge bg-warning">' + data + '</span>';
+                        return `<span class="badge bg-warning"> ${data} </span>`;
                     } else {
-                        return '<span class="badge bg-success">' + data + '</span>';
+                        return `<span class="badge bg-success"> ${data} </span>`;
                     }
                 }
             },
@@ -53,11 +57,11 @@ $(function () {
                     const submissionDate = new Date(data.submission_of_action_plan);
                     const deadlineDate = new Date(data.deadline_of_action_plan);
                     if (data.submission_of_action_plan === 'Not applicable') {
-                        return '<span class="badge bg-warning">' + data.submission_of_action_plan + '</span>';
+                        return `'<span class="badge bg-warning"> ${data.submission_of_action_plan} </span>`;
                     } else if (submissionDate <= deadlineDate) {
-                        return '<span class="badge bg-success">' + data.submission_of_action_plan + '</span>';
+                        return `<span class="badge bg-success"> ${data.submission_of_action_plan} </span>`;
                     } else {
-                        return '<span class="badge bg-danger">' + data.submission_of_action_plan + '</span>';
+                        return `<span class="badge bg-danger"> ${data.submission_of_action_plan} </span>`;
                     }
                 }
             },
@@ -464,6 +468,146 @@ $(document).ready(function () {
             ];
             var $paChart = $('#pa-chart')
             var paChart = new Chart($paChart, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: chartDataSets
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    hover: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                display: true,
+                                lineWidth: '4px',
+                                color: 'rgba(0, 0, 0, .2)',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: $.extend({
+                                beginAtZero: true
+                            }, ticksStyle)
+                        }],
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: true
+                            },
+                            ticks: ticksStyle
+                        }]
+                    }
+                }
+            });
+        });
+        // physical-collocated
+        $(function () {
+            var ticksStyle = {
+                fontColor: '#495057',
+                fontStyle: 'bold'
+            }
+            var mode = 'index'
+            var intersect = true
+            var colors = [];
+            $('.fa-square').each(function () {
+                colors.push($(this).data('color'));
+            });
+            var chartLabels = ['Physical/Collocated BOSS'];
+            var chartDataSets = [
+                {
+                    label: '2023',
+                    backgroundColor: colors[0],
+                    borderColor: colors[0],
+                    data: [physicalCollocated2023]
+                },
+                {
+                    label: '2024',
+                    backgroundColor: colors[1],
+                    borderColor: colors[1],
+                    data: [physicalCollocated2024]
+                }
+            ];
+            var $pcChart = $('#pc-chart')
+            var pcChart = new Chart($pcChart, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: chartDataSets
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    hover: {
+                        mode: mode,
+                        intersect: intersect
+                    },
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                display: true,
+                                lineWidth: '4px',
+                                color: 'rgba(0, 0, 0, .2)',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: $.extend({
+                                beginAtZero: true
+                            }, ticksStyle)
+                        }],
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: true
+                            },
+                            ticks: ticksStyle
+                        }]
+                    }
+                }
+            });
+        });
+        // no-collocated
+        $(function () {
+            var ticksStyle = {
+                fontColor: '#495057',
+                fontStyle: 'bold'
+            }
+            var mode = 'index'
+            var intersect = true
+            var colors = [];
+            $('.fa-square').each(function () {
+                colors.push($(this).data('color'));
+            });
+            var chartLabels = ['No Collocated BOSS'];
+            var chartDataSets = [
+                {
+                    label: '2023',
+                    backgroundColor: colors[0],
+                    borderColor: colors[0],
+                    data: [noCollocatedBOSS2023]
+                },
+                {
+                    label: '2024',
+                    backgroundColor: colors[1],
+                    borderColor: colors[1],
+                    data: [noCollocatedBOSS2024]
+                }
+            ];
+            var $ncChart = $('#nc-chart')
+            var ncChart = new Chart($ncChart, {
                 type: 'bar',
                 data: {
                     labels: chartLabels,

@@ -200,7 +200,7 @@
                                             <option value="" selected disabled>Select role</option>
                                             <script>
                                                 var selectRole = document.getElementById('roles');
-                                                var values = ['User', 'Admin'];
+                                                var values = ['User', 'Admin', 'Super-Admin'];
                                                 values.forEach(function(value) {
                                                     var option = document.createElement('option');
                                                     option.value = value;
