@@ -40,14 +40,24 @@ $(function () {
                 }
             },
             {
-                data: '',
-                defaultContent: `<td class="text-right py-0 align-middle">
-                    <div class="btn-group btn-group-sm">
-                    <a class="btn btn-info" id="btnAssign" title="Assign role"><i class="fas fa-user-check"></i></a>
-                    <a class="btn btn-warning" id="btnRemove" title="Remove role"><i class="fas fa-user-times"></i></a>
-                    <a class="btn btn-danger" id="btnDelete" title="Delete user"><i class="fas fa-user-slash"></i></a>
-                    </div>
-                    </td>`
+                data: 'roles',
+                render: function (data) {
+                    if (!data || data === '' || data === null) {
+                        return `<td class="text-right py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                        <a class="btn btn-info" id="btnAssign" title="Assign role"><i class="fas fa-user-check"></i></a>
+                        <a class="btn btn-danger" id="btnDelete" title="Delete user"><i class="fas fa-user-slash"></i></a>
+                        </div>
+                        </td>`
+                    } else {
+                        return `<td class="text-right py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                        <a class="btn btn-warning" id="btnRemove" title="Remove role"><i class="fas fa-user-times"></i></a>
+                        <a class="btn btn-danger" id="btnDelete" title="Delete user"><i class="fas fa-user-slash"></i></a>
+                        </div>
+                        </td>`
+                    }
+                }
             }
         ],
         paging: true,

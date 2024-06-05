@@ -15,6 +15,7 @@ class userController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
+
         return view('admin.users');
     }
     public function edit($id)

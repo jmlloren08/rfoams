@@ -6,6 +6,7 @@ use App\Models\eBOSS;
 use App\Models\RefCityMun;
 use App\Models\RefProvince;
 use App\Models\RefRegionV2;
+use App\Models\RFOsV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -19,8 +20,13 @@ class ebossController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
+        $user_id = Auth::user()->id;
+        // get the regions for the logged in user
+        $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
 
-        $regions = RefRegionV2::select('regDesc', 'regCode')->get();
+        $regions = RefRegionV2::select('regDesc', 'regCode')
+            ->whereIn('regCode', $regionData)
+            ->get();
 
         $counts = eBOSS::selectRaw("
             SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyAutomated2023,
@@ -32,6 +38,7 @@ class ebossController extends Controller
             SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as noCollocatedBOSS2023,
             SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as noCollocatedBOSS2024
             ")
+            ->whereIn('region', $regionData)
             ->first();
 
         return view('admin.eboss', [
@@ -184,7 +191,11 @@ class ebossController extends Controller
             // get the total records before pagination and filtering
             $totalRecords = $query->count();
             // select only the necessary columns
-            $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc');
+            $user_id = Auth::user()->id;
+            // get the regions for the logged in user
+            $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+            $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc')
+                ->whereIn('e_b_o_s_s.region', $regionData);
             // order the results
             $query->orderBy($orderColumn, $orderDirection);
             // get total records after filtering

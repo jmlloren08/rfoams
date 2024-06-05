@@ -137,7 +137,7 @@
                                 <p>RFOs</p>
                             </a>
                         </li>
-                        <li class="nav-header">Roles</li>
+                        <li class="nav-header">Roles and Assignment</li>
                         <li class="nav-item">
                             <a href="{{ route('admin.users') }}" class="nav-link active">
                                 <i class="nav-icon fas fa-users-cog"></i>

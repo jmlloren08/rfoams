@@ -11,45 +11,33 @@ $(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         },
-        columns: [{
-            data: 'id', visible: false
-        },
-        {
-            data: 'rfo',
-        },
-        {
-            data: 'focal_person',
-        },
-        {
-            data: 'position',
-        },
-        {
-            data: 'contact_number',
-        },
-        {
-            data: 'email_address',
-        },
-        {
-            data: 'created_at',
-            render: function (data) {
-                return moment(data).format('YYYY-MM-DD HH:mm:ss');
-            }
-        },
-        {
-            data: 'updated_at',
-            render: function (data) {
-                return moment(data).format('YYYY-MM-DD HH:mm:ss');
-            }
-        },
-        {
-            data: '',
-            defaultContent: `<td class="text-right py-0 align-middle">
+        columns: [
+            { data: 'id', visible: false },
+            { data: 'rfo' },
+            { data: 'name' },
+            { data: 'position' },
+            { data: 'contact_number' },
+            { data: 'regDesc' },
+            {
+                data: 'created_at',
+                render: function (data) {
+                    return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                }
+            },
+            {
+                data: 'updated_at',
+                render: function (data) {
+                    return moment(data).format('YYYY-MM-DD HH:mm:ss');
+                }
+            },
+            {
+                data: '',
+                defaultContent: `<td class="text-right py-0 align-middle">
                     <div class="btn-group btn-group-sm">
-                    <a class="btn btn-info" id="btnEdit" title="Edit RFO"><i class="fas fa-edit"></i></a>
                     <a class="btn btn-danger" id="btnDelete" title="Delete RFO"><i class="fas fa-times-circle"></i></a>
                     </div>
                     </td>`
-        }
+            }
         ],
         paging: true,
         lengthChange: true,
@@ -98,10 +86,10 @@ $(function () {
             } else {
                 let rfoData = {
                     rfo: formData.get('rfo'),
-                    focal_person: formData.get('focal_person'),
+                    user_id: formData.get('user_id'),
                     position: formData.get('position'),
                     contact_number: formData.get('contact_number'),
-                    email_address: formData.get('email_address')
+                    regCode: formData.get('regCode')
                 };
                 $.ajax({
                     url: `${updateRFOsURL}/${id}`,
@@ -150,7 +138,7 @@ $(function () {
                 $("#focal_person").val(response.focal_person);
                 $("#position").val(response.position);
                 $("#contact_number").val(response.contact_number);
-                $("#email_address").val(response.email_address);
+                $("#regCode").val(response.regCode);
             },
             error: function (e) {
                 Swal.fire({

@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{ url('backend/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ url('backend/assets/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('backend/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ url('backend/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
@@ -139,7 +142,7 @@
                                 <p>RFOs</p>
                             </a>
                         </li>
-                        <li class="nav-header">Roles</li>
+                        <li class="nav-header">Roles and Assignment</li>
                         <li class="nav-item">
                             <a href="{{ route('admin.users') }}" class="nav-link">
                                 <i class="nav-icon fas fa-users-cog"></i>
@@ -213,15 +216,20 @@
                                         @endif
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control @if ($errors->has('focal_person')) is-invalid @endif" id="focal_person" name="focal_person" placeholder="Focal Person" required>
+                                        <select class="form-control custom-select @if ($errors->has('user_id')) is-invalid @endif" name="user_id" id="user_id" required>
+                                            <option value="" selected disabled>Select user</option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-user-tie"></span>
                                             </div>
                                         </div>
-                                        @if ($errors->has('focal_person'))
+                                        @if ($errors->has('user_id'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('focal_person') }}
+                                            {{ $errors->first('user_id') }}
                                         </div>
                                         @endif
                                     </div>
@@ -238,7 +246,7 @@
                                         </div>
                                         @endif
                                     </div>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-2">
                                         <input type="number" class="form-control @if ($errors->has('contact_number')) is-invalid @endif" id="contact_number" name="contact_number" placeholder="Contact Number (e.g. 09123456789)" required>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -252,15 +260,15 @@
                                         @endif
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input type="email" class="form-control @if ($errors->has('email_address')) is-invalid @endif" id="email_address" name="email_address" placeholder="Email Address" required>
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <span class="fas fa-envelope"></span>
-                                            </div>
-                                        </div>
-                                        @if ($errors->has('email_address'))
+                                        <label>Assign region(s)</label>
+                                        <select name="regCode[]" id="regCode[]" class="select2 @if ($errors->has('regCode')) is-invalid @endif" multiple="multiple" data-placeholder="Search region" style="width: 100%;">
+                                            @foreach ($regions as $region)
+                                            <option value="{{ $region->regCode }}">{{ $region->regDesc }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('regCode'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('email_address') }}
+                                            {{ $errors->first('regCode') }}
                                         </div>
                                         @endif
                                     </div>
@@ -307,7 +315,7 @@
                                                 <th>FOCAL_PERSON</th>
                                                 <th>POSITION</th>
                                                 <th>CONTACT_NUMBER</th>
-                                                <th>EMAIL_ADDRESS</th>
+                                                <th>ASSIGNED_REGIONS</th>
                                                 <th>CREATED_AT</th>
                                                 <th>UPDATED_AT</th>
                                                 <th>ACTION</th>
@@ -347,6 +355,8 @@
     <script src="{{ url('backend/assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ url('backend/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ url('backend/assets/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ url('backend/assets/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- Sparkline -->
@@ -369,6 +379,17 @@
     <script src="{{ url('backend/assets/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ url('backend/assets/dist/js/demo.js') }}"></script>
+    <!-- page scripts -->
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
+        });
+    </script>
 </body>
 
 </html>
