@@ -17,18 +17,16 @@ class ebossController extends Controller
     public function index()
     {
         $userType = Auth::user()->roles;
-        if (is_null($userType) || empty($userType) || $userType === 'Guest') {
+        if (is_null($userType) || empty($userType)) {
             return view('admin.guest');
         }
         $user_id = Auth::user()->id;
         // get the regions for the logged in user
         $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+        if ($userType === 'Administrator') {
 
-        $regions = RefRegionV2::select('regDesc', 'regCode')
-            ->whereIn('regCode', $regionData)
-            ->get();
-
-        $counts = eBOSS::selectRaw("
+            $regions = RefRegionV2::select('regDesc', 'regCode')->get();
+            $counts = eBOSS::selectRaw("
             SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyAutomated2023,
             SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as fullyAutomated2024,
             SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as partlyAutomated2023,
@@ -38,8 +36,25 @@ class ebossController extends Controller
             SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as noCollocatedBOSS2023,
             SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as noCollocatedBOSS2024
             ")
-            ->whereIn('region', $regionData)
-            ->first();
+                ->first();
+        } else {
+
+            $regions = RefRegionV2::select('regDesc', 'regCode')
+                ->whereIn('regCode', $regionData)
+                ->get();
+            $counts = eBOSS::selectRaw("
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyAutomated2023,
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as fullyAutomated2024,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as partlyAutomated2023,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as partlyAutomated2024,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as physicalCollocated2023,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as physicalCollocated2024,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as noCollocatedBOSS2023,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as noCollocatedBOSS2024
+            ")
+                ->whereIn('region', $regionData)
+                ->first();
+        }
 
         return view('admin.eboss', [
             'regions'                   => $regions,
@@ -192,10 +207,15 @@ class ebossController extends Controller
             $totalRecords = $query->count();
             // select only the necessary columns
             $user_id = Auth::user()->id;
+            $userType = Auth::user()->roles;
             // get the regions for the logged in user
             $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
-            $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc')
-                ->whereIn('e_b_o_s_s.region', $regionData);
+            if ($userType === 'Administrator') {
+                $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc');
+            } else {
+                $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc')
+                    ->whereIn('e_b_o_s_s.region', $regionData);
+            }
             // order the results
             $query->orderBy($orderColumn, $orderDirection);
             // get total records after filtering

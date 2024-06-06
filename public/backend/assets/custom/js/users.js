@@ -16,9 +16,19 @@ $(function () {
             { data: 'name' },
             { data: 'email' },
             {
+                data: 'email_verified_at',
+                render: function (data) {
+                    if (!data || data === '' || data === null) {
+                        return `<span class="badge bg-danger">Unverified</span>`;
+                    } else {
+                        return `<span class="badge bg-success">Verified</span>`;
+                    }
+                }
+            },
+            {
                 data: 'roles',
                 render: function (data) {
-                    if (data === 'Admin') {
+                    if (data === 'Administrator') {
                         return `<span class="badge bg-success"> ${data} </span>`;
                     } else if (data === 'User') {
                         return `<span class="badge bg-primary"> ${data} </span>`;

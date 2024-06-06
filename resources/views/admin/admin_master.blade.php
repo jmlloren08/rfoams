@@ -63,11 +63,13 @@
     <!-- AdminLTE App -->
     <script src="{{ url('backend/assets/dist/js/adminlte.js') }}"></script>
     <!-- custom js -->
+    @if (!is_null(Auth::user()->roles))
     <script>
         var chartData = @json($chartData);
         var types = @json($types);
     </script>
     <script src="{{ url('backend/assets/custom/js/eboss-chart.js') }}"></script>
+    @endif
 </body>
 
 </html>

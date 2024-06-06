@@ -110,7 +110,7 @@
                                 <p>Returned</p>
                             </a>
                         </li>
-                        @if (Auth::user()->roles === 'Admin')
+                        @if (Auth::user()->roles === 'Administrator')
                         <li class="nav-item">
                             <a href="{{ route('admin.agencies') }}" class="nav-link">
                                 <i class="nav-icon fas fa-building"></i>
@@ -166,9 +166,14 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Small boxes (Stat box) -->
-                    <div class="row"></div>
-                    <!-- /.row -->
+                    <div class="row mb-4">
+                        <div class="col-xl-3">
+                            <!-- button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-new-orientation">
+                                New Orientation
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
             <!-- /.content -->

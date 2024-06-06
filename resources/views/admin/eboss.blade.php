@@ -120,7 +120,7 @@
                                 <p>Returned</p>
                             </a>
                         </li>
-                        @if (Auth::user()->roles === 'Admin')
+                        @if (Auth::user()->roles === 'Administrator')
                         <li class="nav-item">
                             <a href="{{ route('admin.agencies') }}" class="nav-link">
                                 <i class="nav-icon fas fa-building"></i>
@@ -367,6 +367,8 @@
                                                 <i class="fas fa-{{ ($fullyAutomated2024 > $fullyAutomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
                                                 {{ number_format((abs($fullyAutomated2024 - $fullyAutomated2023) / $fullyAutomated2023)* 100, 2)}}%
                                             </span>
+                                            @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                            <span class="text-muted">No data</span>
                                             @else
                                             <span class="text-muted">No data for 2023</span>
                                             @endif
@@ -406,6 +408,8 @@
                                                 <i class="fas fa-{{ ($partlyAutomated2024 > $partlyAutomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
                                                 {{ number_format((abs($partlyAutomated2024 - $partlyAutomated2023) / $partlyAutomated2023) * 100, 2)}}%
                                             </span>
+                                            @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                            <span class="text-muted">No data</span>
                                             @else
                                             <span class="text-muted">No data for 2023</span>
                                             @endif
@@ -445,6 +449,8 @@
                                                 <i class="fas fa-{{ ($physicalCollocated2024 > $physicalCollocated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
                                                 {{ number_format((abs($physicalCollocated2024 - $physicalCollocated2023) / $physicalCollocated2023) * 100, 2)}}%
                                             </span>
+                                            @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                            <span class="text-muted">No data</span>
                                             @else
                                             <span class="text-muted">No data for 2023</span>
                                             @endif
@@ -484,6 +490,8 @@
                                                 <i class="fas fa-{{ ($noCollocatedBOSS2024 > $noCollocatedBOSS2023) ? 'arrow-up' : 'arrow-down' }}"></i>
                                                 {{ number_format((abs($noCollocatedBOSS2024 - $noCollocatedBOSS2023) / $noCollocatedBOSS2023) * 100, 2)}}%
                                             </span>
+                                            @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                            <span class="text-muted">No data</span>
                                             @else
                                             <span class="text-muted">No data for 2023</span>
                                             @endif
@@ -505,11 +513,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- card-partly-automated -->
                     <!-- button -->
                     <div class="row mb-4">
                         <div class="col-xl-3">
-                            <!-- button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-new-eboss">
                                 New Inspection
                             </button>

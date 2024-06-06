@@ -118,7 +118,7 @@
                                 <p>Returned</p>
                             </a>
                         </li>
-                        @if (Auth::user()->roles === 'Admin')
+                        @if (Auth::user()->roles === 'Administrator')
                         <li class="nav-item">
                             <a href="{{ route('admin.agencies') }}" class="nav-link">
                                 <i class="nav-icon fas fa-building"></i>
@@ -216,7 +216,7 @@
                                             <option value="" selected disabled>Select role</option>
                                             <script>
                                                 var selectRole = document.getElementById('roles');
-                                                var values = ['User', 'Admin', 'Super-Admin'];
+                                                var values = ['User', 'Administrator', 'Super-Administrator'];
                                                 values.forEach(function(value) {
                                                     var option = document.createElement('option');
                                                     option.value = value;
@@ -276,6 +276,7 @@
                                                 <th style="display: none;">#</th>
                                                 <th>NAME</th>
                                                 <th>EMAIL_ADDRESS</th>
+                                                <th>STATUS</th>
                                                 <th>ROLES</th>
                                                 <th>CREATED_AT</th>
                                                 <th>UPDATED_AT</th>

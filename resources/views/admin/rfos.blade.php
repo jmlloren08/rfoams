@@ -123,7 +123,7 @@
                                 <p>Returned</p>
                             </a>
                         </li>
-                        @if (Auth::user()->roles === 'Admin')
+                        @if (Auth::user()->roles === 'Administrator')
                         <li class="nav-item">
                             <a href="{{ route('admin.agencies') }}" class="nav-link">
                                 <i class="nav-icon fas fa-building"></i>
