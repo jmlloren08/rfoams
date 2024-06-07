@@ -211,7 +211,7 @@
         let getDataFromDepartmentAgencyURL = "{{ route('admin.agencies.getDataFromDepartmentAgency') }}";
         let editDataFromDepartmentAgencyURL = "/admin/agencies";
     </script>
-    <script src="{{ url('backend/assets/custom/js/department-agency.js') }}"></script>
+    <script src="{{ url('backend/assets/custom/js/da.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)

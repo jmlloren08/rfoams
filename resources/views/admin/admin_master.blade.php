@@ -68,7 +68,7 @@
         var chartData = @json($chartData);
         var types = @json($types);
     </script>
-    <script src="{{ url('backend/assets/custom/js/eboss-chart.js') }}"></script>
+    <script src="{{ url('backend/assets/custom/js/ec.min.js') }}"></script>
     @endif
 </body>
 

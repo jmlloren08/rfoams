@@ -303,7 +303,7 @@
         let updateUsersURL = "/admin/users";
         let removeUserURL = "/admin/users";
     </script>
-    <script src="{{ url('backend/assets/custom/js/users.js') }}"></script>
+    <script src="{{ url('backend/assets/custom/js/usrs.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)

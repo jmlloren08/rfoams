@@ -305,7 +305,7 @@
         let getDataFromRefBarangayURL = "{{ route('admin.lgus.getDataFromRefBarangay') }}";
         let editDataFromRefRegionURL = "/admin/lgus";
     </script>
-    <script src="{{ url('backend/assets/custom/js/lgus.js') }}"></script>
+    <script src="{{ url('backend/assets/custom/js/lgus.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)

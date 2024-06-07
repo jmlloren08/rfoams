@@ -642,7 +642,7 @@
         var noCollocatedBOSS2024 = @json($noCollocatedBOSS2024);
     </script>
     </script>
-    <script src="{{ url('backend/assets/custom/js/eboss.js') }}"></script>
+    <script src="{{ url('backend/assets/custom/js/e.min.js') }}"></script>
 </body>
 
 </html>
