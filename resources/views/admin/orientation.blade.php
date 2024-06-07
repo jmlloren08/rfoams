@@ -172,6 +172,7 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-new-orientation">
                                 New Orientation
                             </button>
+                            <p>This page is currently under development. Thank you for your patient!</p>
                         </div>
                     </div>
                 </div>
