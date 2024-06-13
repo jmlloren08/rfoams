@@ -24,7 +24,7 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">{{ Auth::user()->name }}<br>{{ Auth::user()->email }}<br>{{ Auth::user()->roles }}</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
+                <a href="{{ route('admin.profile') }}" class="dropdown-item">
                     <i class="fas fa-id-badge mr-2"></i> Profile
                 </a>
                 <div class="dropdown-divider"></div>

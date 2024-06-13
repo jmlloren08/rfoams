@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ebossController;
 use App\Http\Controllers\lguController;
 use App\Http\Controllers\orientationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\rfoController;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
@@ -40,28 +41,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/rfos/getDataFromRFOs', [rfoController::class, 'getDataFromRFOs'])->name('admin.rfos.getDataFromRFOs');
     Route::post('/admin/users/getDataFromUsers', [userController::class, 'getDataFromUsers'])->name('admin.users.getDataFromUsers');
     Route::post('/admin/eboss/getDataFromeBOSS', [ebossController::class, 'getDataFromeBOSS'])->name('admin.eboss.getDataFromeBOSS');
+    Route::post('/admin/commendation/getDataFromCommendation', [commendationController::class, 'getDataFromCommendation'])->name('admin.commendation.getDataFromCommendation');
     // store data
     Route::post('/admin/rfos', [rfoController::class, 'store'])->name('admin.rfos.store');
     Route::post('/admin/eboss', [ebossController::class, 'store'])->name('admin.eboss.store');
+    Route::post('/admin/commendation', [commendationController::class, 'store'])->name('admin.commendation.store');
     // update data
     Route::put('/admin/rfos/{id}', [rfoController::class, 'update']);
     Route::put('/admin/users/{id}', [userController::class, 'update']);
     Route::put('/admin/eboss/{id}', [ebossController::class, 'update']);
+    Route::put('/admin/commendation/{id}', [commendationController::class, 'update']);
     // remove user assigned role
     Route::put('/admin/users/{id}', [userController::class, 'removeAssignedRole']);
     // get data
     Route::get('/admin/rfos/{id}', [rfoController::class, 'edit']);
     Route::get('/admin/users/{id}', [userController::class, 'edit']);
     Route::get('/admin/eboss/{id}', [ebossController::class, 'edit']);
+    Route::get('/admin/commendation/{id}', [commendationController::class, 'edit']);
     Route::get('/get-provinces-by-region', [ebossController::class, 'getProvincesByRegion']);
-    Route::get('/get-city-municipality-by-province', [ebossController::class, 'getCityMuncipalityByProvinceURL']);
+    Route::get('/get-city-municipality-by-province', [ebossController::class, 'getCityMunicipalityByProvince']);
+    Route::get('/get-provinces-by-region', [commendationController::class, 'getProvincesByRegion']);
+    Route::get('/get-city-municipality-by-province', [commendationController::class, 'getCityMunicipalityByProvince']);
     // delete data
     Route::delete('/admin/rfos/{id}', [rfoController::class, 'delete']);
     Route::delete('/admin/users/{id}', [userController::class, 'delete']);
     Route::delete('/admin/eboss/{id}', [ebossController::class, 'delete']);
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/admin/commendation/{id}', [commendationController::class, 'delete']);
+    // profile
+    Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('admin.profile');
+    Route::patch('/admin/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('admin.profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

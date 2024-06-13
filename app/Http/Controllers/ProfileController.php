@@ -20,7 +20,7 @@ class ProfileController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
-        return view('profile.edit', [
+        return view('admin.profile', [
             'user' => $request->user(),
         ]);
     }
@@ -38,7 +38,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('admin.profile')->with('status', 'profile-updated');
     }
 
     /**

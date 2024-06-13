@@ -297,35 +297,37 @@
                         </div>
                     </div>
                     <!-- regions -->
-                    <div class="col-xl-12">
-                        <div class="card card-primary card-outline">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    <i class="fas fa-list"></i>
-                                    Regional Field Office/s
-                                </h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="dataTableRFOs" class="table table-centered mb-0 align-middle table-hover table-nowrap">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th style="display: none;">#</th>
-                                                <th>RFO</th>
-                                                <th>FOCAL_PERSON</th>
-                                                <th>POSITION</th>
-                                                <th>CONTACT_NUMBER</th>
-                                                <th>ASSIGNED_REGIONS</th>
-                                                <th>CREATED_AT</th>
-                                                <th>UPDATED_AT</th>
-                                                <th>ACTION</th>
-                                            </tr>
-                                        </thead><!-- end thead -->
-                                    </table> <!-- end table -->
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Regional Field Office/s
+                                    </h3>
                                 </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="dataTableRFOs" class="table table-centered mb-0 align-middle table-hover table-nowrap">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="display: none;">#</th>
+                                                    <th>RFO</th>
+                                                    <th>FOCAL_PERSON</th>
+                                                    <th>POSITION</th>
+                                                    <th>CONTACT_NUMBER</th>
+                                                    <th>ASSIGNED_REGIONS</th>
+                                                    <th>CREATED_AT</th>
+                                                    <th>UPDATED_AT</th>
+                                                    <th>ACTION</th>
+                                                </tr>
+                                            </thead><!-- end thead -->
+                                        </table> <!-- end table -->
+                                    </div>
+                                </div><!-- end card -->
                             </div><!-- end card -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
+                        </div><!-- end col -->
+                    </div>
                 </div>
             </section>
             <!-- /.content -->

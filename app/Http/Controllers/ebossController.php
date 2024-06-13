@@ -245,11 +245,11 @@ class ebossController extends Controller
         $provinces = RefProvince::where('regCode', $regionCode)->get();
         return response()->json($provinces);
     }
-    public function getCityMuncipalityByProvinceURL(Request $request)
+    public function getCityMunicipalityByProvince(Request $request)
     {
         $provinceCode = $request->province;
-        $citymunicipaliy = RefCityMun::where('provCode', $provinceCode)->get();
+        $citymunicipality = RefCityMun::where('provCode', $provinceCode)->get();
 
-        return response()->json($citymunicipaliy);
+        return response()->json($citymunicipality);
     }
 }

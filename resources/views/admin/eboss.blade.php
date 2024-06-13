@@ -172,8 +172,8 @@
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
-
             <!-- /.content-header -->
+            <!-- modal -->
             <div class="modal fade" id="modal-add-new-eboss" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modal-add-new-eboss-label" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -341,8 +341,8 @@
                     </div>
                     <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
+            <!-- /.modal-dialog -->
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
@@ -514,6 +514,7 @@
                         </div>
                     </div>
                     <!-- button -->
+                    @if (Auth::user()->roles === 'User')
                     <div class="row mb-4">
                         <div class="col-xl-3">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-new-eboss">
@@ -521,40 +522,43 @@
                             </button>
                         </div>
                     </div>
+                    @endif
                     <!-- regions -->
-                    <div class="col-xl-12">
-                        <div class="card card-primary card-outline">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    <i class="fas fa-list"></i>
-                                    eBOSS Approved List
-                                </h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="dataTableeBOSS" class="table table-centered mb-0 align-middle table-hover table-nowrap">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th style="display: none;">#</th>
-                                                <th>DATE_OF_INSPECTION</th>
-                                                <th>CITY/MUNICIPALITY</th>
-                                                <th>PROVINCE</th>
-                                                <th>REGION</th>
-                                                <th>DATE_SUBMITTED</th>
-                                                <th>TYPE_OF_BOSS</th>
-                                                <th>DEADLINE_OF_ACTION_PLAN</th>
-                                                <th>SUBMISSION_OF_ACTION_PLAN</th>
-                                                <th>REMARKS</th>
-                                                <th>BPLO_HEAD</th>
-                                                <th>CONTACT_NO</th>
-                                                <th>ACTION</th>
-                                            </tr>
-                                        </thead><!-- end thead -->
-                                    </table> <!-- end table -->
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card card-primary card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-list"></i>
+                                        Approved List
+                                    </h3>
                                 </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="dataTableeBOSS" class="table table-centered mb-0 align-middle table-hover table-nowrap">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="display: none;">#</th>
+                                                    <th>DATE_OF_INSPECTION</th>
+                                                    <th>CITY/MUNICIPALITY</th>
+                                                    <th>PROVINCE</th>
+                                                    <th>REGION</th>
+                                                    <th>DATE_SUBMITTED</th>
+                                                    <th>TYPE_OF_BOSS</th>
+                                                    <th>DEADLINE_OF_ACTION_PLAN</th>
+                                                    <th>SUBMISSION_OF_ACTION_PLAN</th>
+                                                    <th>REMARKS</th>
+                                                    <th>BPLO_HEAD</th>
+                                                    <th>CONTACT_NO</th>
+                                                    <th>ACTION</th>
+                                                </tr>
+                                            </thead><!-- end thead -->
+                                        </table> <!-- end table -->
+                                    </div>
+                                </div><!-- end card -->
                             </div><!-- end card -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
+                        </div><!-- end col -->
+                    </div>
                 </div>
             </section>
             <!-- /.content -->
