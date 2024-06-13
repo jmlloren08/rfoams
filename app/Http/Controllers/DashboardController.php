@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\eBOSS;
 use App\Models\RFOsV2;
+use App\Models\Commendation;
 
 class DashboardController extends Controller
 {
@@ -22,6 +23,7 @@ class DashboardController extends Controller
         if ($userType === 'Administrator') {
             // get count all eBOSS
             $counteBOSS = eBOSS::count('date_of_inspection');
+            $countCommendation = Commendation::count('date_of_commendation');
             // get count type_of_boss per region
             $data = eBOSS::select('ref_region_v2_s.regDesc as region', 'type_of_boss')
                 ->selectRaw('count(*) as count')
@@ -31,6 +33,7 @@ class DashboardController extends Controller
         } else {
             // get count eBOSS per region
             $counteBOSS = eBOSS::whereIn('region', $regionData)->count('date_of_inspection');
+            $countCommendation = Commendation::whereIn('region', $regionData)->count('date_of_commendation');
             // get count type_of_boss per region
             $data = eBOSS::select('ref_region_v2_s.regDesc as region', 'type_of_boss')
                 ->whereIn('e_b_o_s_s.region', $regionData)
@@ -76,6 +79,7 @@ class DashboardController extends Controller
         }
         return view('admin.dashboard', [
             'counteBOSS'                => $counteBOSS,
+            'countCommendation'         => $countCommendation,
             'fullyAutomated'            => $fullyAutomated,
             'partlyAutomated'           => $partlyAutomated,
             'physicalCollocatedBOSS'    => $physicalCollocatedBOSS,
