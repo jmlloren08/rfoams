@@ -111,4 +111,16 @@ class userController extends Controller
             return response()->json(['message' => 'Internal server error'], 500);
         }
     }
+    public function delete($id)
+    {
+        try {
+            User::where('id', $id)->delete();
+            
+            return response()->json(['success' => 'Data deleted successfully.'], 200);
+        } catch (\Exception $e) {
+
+            Log::error("Error deleting data: " . $e->getMessage());
+            return response()->json(['errors' => 'Internal server error'], 500);
+        }
+    }
 }

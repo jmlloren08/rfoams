@@ -188,6 +188,47 @@ $(function () {
             }
         });
     });
+    // delete data
+    $(document).on("click", "#btnDelete", function (e) {
+        let row = $(this).closest("tr");
+        let data = tableUsers.row(row).data();
+        let id = data.id;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to revert this.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `${deleteUserURL}/${id}`,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (s) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: s.success
+                        }).then(() => {
+                            tableUsers.ajax.reload();
+                        });
+                    },
+                    error: function (e) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: e.responseJSON.errors
+                        });
+                    }
+                });
+            }
+        });
+    });
     // check validation
     $(document).ready(function () {
         let form = $(".needs-validation");
