@@ -1,6 +1,29 @@
-'use strict';
-// load eboss
 $(function () {
+    'use strict'
+    $('#no_submission').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#eboss_submission').val('');
+            $('#eboss_submission').prop('disabled', true);
+        } else {
+            $('#eboss_submission').prop('disabled', false);
+        }
+    });
+    $('#not_applicable_doap').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#deadline_of_action_plan').val('');
+            $('#deadline_of_action_plan').prop('disabled', true);
+        } else {
+            $('#deadline_of_action_plan').prop('disabled', false);
+        }
+    });
+    $('#not_applicable_soap').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('#submission_of_action_plan').val('');
+            $('#submission_of_action_plan').prop('disabled', true);
+        } else {
+            $('#submission_of_action_plan').prop('disabled', false);
+        }
+    });
     let tableeBOSS = $("#dataTableeBOSS").DataTable({
         processing: true,
         serverSide: true,
@@ -171,9 +194,6 @@ $(function () {
         } else {
             formData.set('submission_of_action_plan', formData.get('submission_of_action_plan'));
         }
-        // for (var pair of formData.entries()) {
-        //     console.log(pair[0]+ ': ' + pair[1]);
-        // }
         // add
         if (this.checkValidity()) {
             if (!id) {

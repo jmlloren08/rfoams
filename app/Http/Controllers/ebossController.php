@@ -20,6 +20,7 @@ class ebossController extends Controller
         if (is_null($userType) || empty($userType)) {
             return view('admin.guest');
         }
+        // get the id of the logged in user
         $user_id = Auth::user()->id;
         // get the regions for the logged in user
         $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
@@ -182,11 +183,11 @@ class ebossController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = eBOSS::query();
-            // join
-            $query->join('ref_city_muns', 'e_b_o_s_s.city_municipality', '=', 'ref_city_muns.citymunCode')
+            $query          = eBOSS::query()
+                ->join('ref_city_muns', 'e_b_o_s_s.city_municipality', '=', 'ref_city_muns.citymunCode')
                 ->join('ref_provinces', 'e_b_o_s_s.province', '=', 'ref_provinces.provCode')
                 ->join('ref_region_v2_s', 'e_b_o_s_s.region', '=', 'ref_region_v2_s.regCode');
+
             // search functionality
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
@@ -231,7 +232,7 @@ class ebossController extends Controller
                 'recordsFiltered'   => $filteredRecords,
                 'data'              => $eboss
             ];
-
+            // send response json
             return response()->json($response, 200);
         } catch (\Exception $e) {
 

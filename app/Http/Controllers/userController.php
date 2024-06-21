@@ -43,7 +43,7 @@ class userController extends Controller
 
             $role = User::findOrFail($id);
 
-            $role->roles    = $request->roles;
+            $role->roles = $request->roles;
             $role->save();
 
             return response()->json(['assigned' =>  'User role was successfully assigned.'], 200);
@@ -80,7 +80,7 @@ class userController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = User::query();
+            $query = User::query();
 
             if (!empty($searchValue)) {
                 $query->whereAny([
@@ -95,7 +95,7 @@ class userController extends Controller
             $filteredRecords = $query->count();
             $users = $query->skip($start)
                 ->take($length)
-                ->get(['*']);
+                ->get();
 
             $response = [
                 'draw'              => intval($draw),
@@ -115,7 +115,7 @@ class userController extends Controller
     {
         try {
             User::where('id', $id)->delete();
-            
+
             return response()->json(['success' => 'Data deleted successfully.'], 200);
         } catch (\Exception $e) {
 

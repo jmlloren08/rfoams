@@ -36,7 +36,31 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
-                    <div class="small-box bg-primary">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{ $countCommendation }}</h3>
+                            <p>Commendation</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ribbon-a"></i>
+                        </div>
+                        <a href="{{ route('admin.commendation')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{ $countOrientationIA }}</h3>
+                            <p>Orientations</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-android-people"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
                         <div class="inner">
                             <h3>0</h3>
                             <p>Citizen's Charter Inspection</p>
@@ -47,37 +71,13 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>0</h3>
-                            <p>Orientations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-android-people"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{ $countCommendation }}</h3>
-                            <p>Commendations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-ribbon-a"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Overall eBOSS status</h3>
+                                <h3 class="card-title">Overall eBOSS</h3>
                             </div>
                         </div>
                         <div class="card-body">
@@ -107,17 +107,20 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="card">
+                    <div class="card bg-gradient-info">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Overall CC status</h3>
+                                <h3 class="card-title">Overall Commendation</h3>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="d-flex">
                                 <p class="d-flex flex-column">
-                                    <span>Per Region</span>
+                                    <span>Per Month</span>
                                 </p>
+                            </div>
+                            <div class="position-relative mb-4">
+                                <canvas id="commendation-chart" height="200"></canvas>
                             </div>
                         </div>
                     </div>
@@ -144,7 +147,7 @@
                     <div class="card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Overall Commendation</h3>
+                                <h3 class="card-title">Overall CC Status</h3>
                             </div>
                         </div>
                         <div class="card-body">
@@ -161,4 +164,15 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+@endsection
+@section('page-scripts')
+@if (!is_null(Auth::user()->roles))
+<script>
+    let chartData = @json($chartData);
+    let types = @json($types);
+    let commendationsData = @json($commendationsData);
+</script>
+<script src="{{ url('backend/assets/custom/js/eboss-chart.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/commendation-chart.js') }}"></script>
+@endif
 @endsection

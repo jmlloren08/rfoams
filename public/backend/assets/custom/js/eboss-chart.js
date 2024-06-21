@@ -1,7 +1,7 @@
-'use strict'
-$(document).ready(function () {
-    setTimeout(function () {
-        $(function () {
+$(document).ready(() => {
+    setTimeout(() => {
+        $(() => {
+            'use strict'
             var ticksStyle = {
                 fontColor: '#495057',
                 fontStyle: 'bold'
@@ -69,5 +69,5 @@ $(document).ready(function () {
                 }
             });
         });
-    }, 500);
+    }, 1000);
 });

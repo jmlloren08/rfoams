@@ -84,9 +84,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.citizens-charter') }}" class="nav-link">
-                                <i class="nav-icon far fa-newspaper"></i>
-                                <p> Citizen's Charter</p>
+                            <a href="{{ route('admin.commendation') }}" class="nav-link">
+                                <i class="nav-icon fas fa-award"></i>
+                                <p>Commendation</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -96,9 +96,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.commendation') }}" class="nav-link">
-                                <i class="nav-icon fas fa-award"></i>
-                                <p>Commendation</p>
+                            <a href="{{ route('admin.citizens-charter') }}" class="nav-link">
+                                <i class="nav-icon far fa-newspaper"></i>
+                                <p> Citizen's Charter</p>
                             </a>
                         </li>
                         <li class="nav-header">MANAGEMENT</li>

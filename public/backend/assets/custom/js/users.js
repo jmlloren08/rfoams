@@ -1,6 +1,6 @@
-'use strict';
 // load RFOs
 $(function () {
+    'use strict'
     let tableUsers = $("#dataTableUsers").DataTable({
         processing: true,
         serverSide: true,

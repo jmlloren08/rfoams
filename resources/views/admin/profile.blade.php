@@ -88,21 +88,38 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.citizens-charter') }}" class="nav-link">
-                                <i class="nav-icon far fa-newspaper"></i>
-                                <p> Citizen's Charter</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.orientation') }}" class="nav-link">
-                                <i class="nav-icon fas fa-chalkboard-teacher"></i>
-                                <p>Orientation</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ route('admin.commendation') }}" class="nav-link">
                                 <i class="nav-icon fas fa-award"></i>
                                 <p>Commendation</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-close">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                                <p>
+                                    Orientation
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orientation-inspected-agencies')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Inspected Agencies</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.orientation-overall') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Overall</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.citizens-charter') }}" class="nav-link">
+                                <i class="nav-icon far fa-newspaper"></i>
+                                <p> Citizen's Charter</p>
                             </a>
                         </li>
                         <li class="nav-header">MANAGEMENT</li>
