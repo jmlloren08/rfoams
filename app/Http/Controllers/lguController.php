@@ -9,6 +9,7 @@ use App\Models\RefRegionV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AuditTrail;
 
 class lguController extends Controller
 {
@@ -18,6 +19,11 @@ class lguController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
+        // log
+        AuditTrail::create([
+            'user_id' => Auth::user()->id,
+            'event' => 'User viewed LGUs Page.'
+        ]);
         return view('admin.lgus');
     }
     public function getDataFromRefRegion(Request $request)

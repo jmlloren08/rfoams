@@ -1,5 +1,5 @@
 $(function () {
-    'use-strict'
+    'use strict'
     let tableCommendation = $('#dataTableCommendation').DataTable({
         processing: true,
         serverSide: true,

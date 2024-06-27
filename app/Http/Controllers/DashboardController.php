@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrientationInspectedAgencies;
+use App\Models\OrientationOverall;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\eBOSS;
 use App\Models\RFOsV2;
 use App\Models\Commendation;
+use App\Models\AuditTrail;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $userType = Auth::user()->roles;
-        if (is_null($userType) || empty($userType)) {
+        if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
         $user_id = Auth::user()->id;
@@ -24,8 +26,11 @@ class DashboardController extends Controller
         if ($userType === 'Administrator') {
             // get count all eBOSS
             $counteBOSS = eBOSS::count('date_of_inspection');
+            // get count all commendation
             $countCommendation = Commendation::count('date_of_commendation');
+            // get count all orientation IA and overall
             $countOrientationIA = OrientationInspectedAgencies::count('agency_lgu');
+            $countOrientationOverall = OrientationOverall::count('orientation_date');
             // get count type_of_boss per region
             $data = eBOSS::select('ref_region_v2_s.regDesc as region', 'type_of_boss')
                 ->selectRaw('count(*) as count')
@@ -38,16 +43,44 @@ class DashboardController extends Controller
                 ->get()
                 ->pluck('count', 'month')
                 ->toArray();
-
             $commendationsData = array_fill(1, 12, 0);
             foreach ($commendations as $month => $count) {
                 $commendationsData[$month] = $count;
             }
+            // get count yes/no by program
+            // list of programs
+            $programs = [
+                'is_ra_11032',
+                'is_cart',
+                'is_programs_and_services',
+                'is_cc_orientation',
+                'is_cc_workshop',
+                'is_bpm_workshop',
+                'is_ria',
+                'is_eboss',
+                'is_csm',
+                'is_reeng'
+            ];
+            // initialize arrays to hold the counts
+            $programsData = [];
+            foreach ($programs as $program) {
+                $countYes = OrientationOverall::where($program, 'Yes')->count();
+                $countNo = OrientationOverall::where($program, 'No')->count();
+                $programsData[] = [
+                    'programs'  => $programs,
+                    'countYes'  => $countYes,
+                    'countNo'   => $countNo
+                ];
+            }
         } else {
             // get count eBOSS per region
             $counteBOSS = eBOSS::whereIn('region', $regionData)->count('date_of_inspection');
+            // get count commendation per region
             $countCommendation = Commendation::whereIn('region', $regionData)->count('date_of_commendation');
+            // get count orientationIA per region
             $countOrientationIA = OrientationInspectedAgencies::whereIn('region', $regionData)->count('agency_lgu');
+            // get count orientationOverall per region
+            $countOrientationOverall = OrientationOverall::whereIn('region', $regionData)->count('orientation_date');
             // get count type_of_boss per region
             $data = eBOSS::select('ref_region_v2_s.regDesc as region', 'type_of_boss')
                 ->whereIn('e_b_o_s_s.region', $regionData)
@@ -65,6 +98,35 @@ class DashboardController extends Controller
             $commendationsData = array_fill(1, 12, 0);
             foreach ($commendations as $month => $count) {
                 $commendationsData[$month] = $count;
+            }
+            // get count yes/no by program
+            // list of programs
+            $programs = [
+                'is_ra_11032',
+                'is_cart',
+                'is_programs_and_services',
+                'is_cc_orientation',
+                'is_cc_workshop',
+                'is_bpm_workshop',
+                'is_ria',
+                'is_eboss',
+                'is_csm',
+                'is_reeng'
+            ];
+            // initialize arrays to hold the counts
+            $programsData = [];
+            foreach ($programs as $program) {
+                $countYes = OrientationOverall::whereIn('region', $regionData)
+                    ->where($program, 'Yes')
+                    ->count();
+                $countNo = OrientationOverall::whereIn('region', $regionData)
+                    ->where($program, 'No')
+                    ->count();
+                $programsData[] = [
+                    'programs'  => $programs,
+                    'countYes'  => $countYes,
+                    'countNo'   => $countNo
+                ];
             }
         }
         // initialize
@@ -102,17 +164,24 @@ class DashboardController extends Controller
                 'data'      => $regionData
             ];
         }
+        // log
+        AuditTrail::create([
+            'user_id' => Auth::user()->id,
+            'event' => 'User viewed Dashboard Page.'
+        ]);
         return view('admin.dashboard', [
             'counteBOSS'                => $counteBOSS,
             'countCommendation'         => $countCommendation,
             'countOrientationIA'        => $countOrientationIA,
+            'countOrientationOverall'   => $countOrientationOverall,
             'fullyAutomated'            => $fullyAutomated,
             'partlyAutomated'           => $partlyAutomated,
             'physicalCollocatedBOSS'    => $physicalCollocatedBOSS,
             'noCollocatedBOSS'          => $noCollocatedBOSS,
             'chartData'                 => $chartDataFormatted,
             'types'                     => $types,
-            'commendationsData'         => $commendationsData
+            'commendationsData'         => $commendationsData,
+            'programsData'              => $programsData
         ]);
     }
 }

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use App\Models\AuditTrail;
 
 class orientationIAController extends Controller
 {
@@ -32,7 +33,13 @@ class orientationIAController extends Controller
                 ->whereIn('regCode', $regionData)
                 ->get();
         }
+
         $agencies_lgus = DepartmentAgency::select('id', 'department_agencies')->get();
+        // log
+        AuditTrail::create([
+            'user_id' => Auth::user()->id,
+            'event' => 'User viewed Overall (Inspected Agencies) Page.'
+        ]);
         return view('admin.orientation-inspected-agencies', [
             'regions' => $regions,
             'agencies_lgus' => $agencies_lgus
@@ -74,14 +81,18 @@ class orientationIAController extends Controller
             $orientationIA->re_engineering                                      = $request->re_engineering;
             $orientationIA->cc_workshop                                         = $request->cc_workshop;
             $orientationIA->save();
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User added new data (Orientation - Inspected Agencies Page).'
+            ]);
             return response()->json(['success' => 'Data added successfully.'], 200);
         } catch (ValidationException $e) {
 
             return response()->json(['errors' => $e->getMessage()], 422);
         } catch (\Exception $e) {
 
-            Log::error("Error adding commendation: " . $e->getMessage());
+            Log::error("Error adding orientation (inspected agencies): " . $e->getMessage());
             return response()->json(['errors' => 'Internal server error'], 500);
         }
     }
@@ -93,7 +104,11 @@ class orientationIAController extends Controller
             if (!$data) {
                 return response()->json(['errors' => 'Data not found'], 404);
             }
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User edit data for updating (Orientation - Inspected Agencies Page).'
+            ]);
             return response()->json($data);
         } catch (\Exception $e) {
             Log::error("Error getting data: " . $e->getMessage());
@@ -103,8 +118,13 @@ class orientationIAController extends Controller
     public function delete($id)
     {
         try {
-            OrientationInspectedAgencies::where('id', $id)->delete();
 
+            OrientationInspectedAgencies::where('id', $id)->delete();
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User removed data (Orientation - Inspected Agencies Page).'
+            ]);
             return response()->json(['success' => 'Data deleted successfully.'], 200);
         } catch (\Exception $e) {
             Log::error("Error deleting data: " . $e->getMessage());
@@ -146,7 +166,11 @@ class orientationIAController extends Controller
             $orientationIA->re_engineering                                      = $request->re_engineering;
             $orientationIA->cc_workshop                                         = $request->cc_workshop;
             $orientationIA->save();
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User modified data (Orientation - Inspected Agencies Page).'
+            ]);
             return response()->json(['success' => 'Data updated successfully.'], 200);
         } catch (\Exception $e) {
 
@@ -233,6 +257,7 @@ class orientationIAController extends Controller
     {
         $regionCode = $request->region;
         $provinces = RefProvince::where('regCode', $regionCode)->get();
+
         return response()->json($provinces);
     }
     public function getCityMunicipalityByProvince(Request $request)

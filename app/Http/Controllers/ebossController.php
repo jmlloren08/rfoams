@@ -11,13 +11,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use App\Models\AuditTrail;
 
 class ebossController extends Controller
 {
     public function index()
     {
         $userType = Auth::user()->roles;
-        if (is_null($userType) || empty($userType)) {
+        if (is_null($userType) || empty($userType) || $userType === 'Guest') {
+
             return view('admin.guest');
         }
         // get the id of the logged in user
@@ -56,7 +58,11 @@ class ebossController extends Controller
                 ->whereIn('region', $regionData)
                 ->first();
         }
-
+        // log
+        AuditTrail::create([
+            'user_id' => Auth::user()->id,
+            'event' => 'User viewed eBOSS Page.'
+        ]);
         return view('admin.eboss', [
             'regions'                   => $regions,
             'fullyAutomated2023'        => $counts->fullyAutomated2023,
@@ -97,6 +103,11 @@ class ebossController extends Controller
             $inspection->bplo_head                 = $request->bplo_head;
             $inspection->contact_no                = $request->contact_no;
             $inspection->save();
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User added new data (eBOSS Page).'
+            ]);
             // return response
             return response()->json(['success' => 'Data added successfully.'], 200);
         } catch (ValidationException $e) {
@@ -116,7 +127,11 @@ class ebossController extends Controller
             if (!$data) {
                 return response()->json(['errors' => 'Data not found.'], 404);
             }
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User edit data for updating (eBOSS Page).'
+            ]);
             return response()->json($data);
         } catch (\Exception $e) {
             Log::error("Error getting data: " . $e->getMessage());
@@ -127,7 +142,11 @@ class ebossController extends Controller
     {
         try {
             eBOSS::where('id', $id)->delete();
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User removed data (eBOSS Page).'
+            ]);
             return response()->json(['success' => 'Data deleted successfully.'], 200);
         } catch (\Exception $e) {
 
@@ -164,7 +183,11 @@ class ebossController extends Controller
             $inspection->bplo_head                 = $request->bplo_head;
             $inspection->contact_no                = $request->contact_no;
             $inspection->save();
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User modified data (eBOSS Page).'
+            ]);
             return response()->json(['success' =>  'Data updated successfully.']);
         } catch (\Exception $e) {
 

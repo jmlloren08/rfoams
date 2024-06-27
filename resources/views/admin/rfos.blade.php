@@ -151,10 +151,10 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="dataTableRFOs" class="table table-centered mb-0 align-middle table-hover table-nowrap">
+                                <table id="dataTableRFOs" class="table table-hover table-striped table-bordered">
                                     <thead class="table-light">
                                         <tr>
-                                            <th style="display: none;">#</th>
+                                            <th>#</th>
                                             <th>RFO</th>
                                             <th>FOCAL_PERSON</th>
                                             <th>POSITION</th>

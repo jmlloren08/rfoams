@@ -50,13 +50,13 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{ $countOrientationIA }}</h3>
+                            <h3>{{ $countOrientationIA + $countOrientationOverall }}</h3>
                             <p>Orientations</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-android-people"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('admin.orientation-overalls') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
@@ -127,23 +127,21 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Overall Orientation</h3>
+                                <h3 class="card-title">Orientation (Compliance with R.A. 11032, and other programs)</h3>
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex">
-                                <p class="d-flex flex-column">
-                                    <span>Per Region</span>
-                                </p>
+                            <div class="chart">
+                                <canvas id="orientation-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <!-- <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
@@ -158,7 +156,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
     </section>
     <!-- /.content -->
@@ -171,8 +169,12 @@
     let chartData = @json($chartData);
     let types = @json($types);
     let commendationsData = @json($commendationsData);
+    let programsData = @json($programsData);
+    let countYes = programsData.map(item => item.countYes);
+    let countNo = programsData.map(item => item.countNo);
 </script>
 <script src="{{ url('backend/assets/custom/js/eboss-chart.js') }}"></script>
 <script src="{{ url('backend/assets/custom/js/commendation-chart.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/orientation-chart.js') }}"></script>
 @endif
 @endsection

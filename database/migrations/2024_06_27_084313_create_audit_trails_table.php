@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('department_agencies', function (Blueprint $table) {
+        Schema::create('audit_trails', function (Blueprint $table) {
             $table->id();
-            $table->string('department_agencies');
-            $table->string('address');
-            $table->string('contact_number');
             $table->timestamps();
+            $table->integer('user_id');
+            $table->string('event');
+            $table->string('ip_address')->nullable();
+            $table->string('location')->nullable();
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('department_agencies');
+        Schema::dropIfExists('audit_trails');
     }
 };

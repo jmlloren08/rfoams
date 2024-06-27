@@ -50,8 +50,8 @@
                         <p>Commendation</p>
                     </a>
                 </li>
-                <li class="nav-item menu-{{ Request::is('admin/orientation-inspected-agencies') || Request::is('admin/orientation-overall') ? 'open' : 'close' }}">
-                    <a href="#" class="nav-link {{ Request::is('admin/orientation-inspected-agencies') || Request::is('admin/orientation-overall') ? 'active' : '' }} ">
+                <li class="nav-item menu-{{ Request::is('admin/orientation-inspected-agencies') || Request::is('admin/orientation-overalls') ? 'open' : 'close' }}">
+                    <a href="#" class="nav-link {{ Request::is('admin/orientation-inspected-agencies') || Request::is('admin/orientation-overalls') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-chalkboard-teacher"></i>
                         <p>
                             Orientation
@@ -66,7 +66,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.orientation-overall') }}" class="nav-link {{ Request::is('admin/orientation-overall') ? 'active' : '' }} ">
+                            <a href="{{ route('admin.orientation-overalls') }}" class="nav-link {{ Request::is('admin/orientation-overalls') ? 'active' : '' }} ">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Overall</p>
                             </a>
@@ -74,7 +74,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.citizens-charter') }}" class="nav-link {{ Request::is('admin/citizen-charter') ? 'active' : '' }} ">
+                    <a href="{{ route('admin.citizens-charter') }}" class="nav-link {{ Request::is('admin/citizens-charter') ? 'active' : '' }} ">
                         <i class="nav-icon far fa-newspaper"></i>
                         <p> Citizen's Charter</p>
                     </a>
@@ -94,7 +94,7 @@
                 </li>
                 @if (Auth::user()->roles === 'Administrator')
                 <li class="nav-item">
-                    <a href="{{ route('admin.agencies') }}" class="nav-link {{ Request::is('admin/for-approval') ? 'active' : '' }} ">
+                    <a href="{{ route('admin.agencies') }}" class="nav-link {{ Request::is('admin/agencies') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-building"></i>
                         <p>Agencies</p>
                     </a>
@@ -111,11 +111,18 @@
                         <p>RFOs</p>
                     </a>
                 </li>
-                <li class="nav-header">Roles</li>
+                <li class="nav-header">Roles and Assignment</li>
                 <li class="nav-item">
                     <a href="{{ route('admin.users') }}" class="nav-link {{ Request::is('admin/users') ? 'active' : '' }} ">
                         <i class="nav-icon fas fa-users-cog"></i>
                         <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-header">Settings</li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.audit') }}" class="nav-link {{ Request::is('admin/audit') ? 'active' : '' }} ">
+                        <i class="nav-icon fas fa-history"></i>
+                        <p>Audit Trail</p>
                     </a>
                 </li>
                 @endif

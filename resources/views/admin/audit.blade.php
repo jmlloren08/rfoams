@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Orientation (Overall)</h1>
+                    <h1 class="m-0">Audit Trail</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Orientation (Overall)</li>
+                        <li class="breadcrumb-item active">Audit Trail</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -22,45 +22,29 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- button -->
-            @if (Auth::user()->roles === 'User')
-            <div class="row mb-4">
-                <div class="col-xl-3">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-new-commendation">
-                        Add New
-                    </button>
-                </div>
-            </div>
-            @endif
-            <!-- regions -->
+            <!-- start table -->
+            <!-- Barangays -->
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-danger card-outline">
                         <div class="card-header">
                             <h3 class="card-title">
                                 <i class="fas fa-list"></i>
-                                Approved List
+                                Log
                             </h3>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="dataTableCommendation" class="table table-centered mb-0 align-middle table-hover table-nowrap">
+                                <table id="dataTableAuditLogs" class="table table-centered mb-0 align-middle table-hover table-nowrap">
                                     <thead class="table-light">
                                         <tr>
-                                            <th style="display: none;">#</th>
-                                            <th>DATE_OF_COMMENDATION</th>
-                                            <th>LGU_NAME</th>
-                                            <th>CITY/MUNICIPALITY</th>
-                                            <th>REGION</th>
-                                            <th>DATE_OF_INSPECTION</th>
-                                            <th>SERVICE_PROVIDER</th>
-                                            <th>VALIDATION_1</th>
-                                            <th>REMARKS</th>
-                                            <th>VALIDATION_2</th>
-                                            <th>REMARKS</th>
-                                            <th>OTHER_ACTIVITY</th>
-                                            <th>BRGYS</th>
-                                            <th>ACTION</th>
+                                            <th>#</th>
+                                            <th>CREATED_AT</th>
+                                            <th>UPDATED_AT</th>
+                                            <th>USER</th>
+                                            <th>EVENT</th>
+                                            <th>IP_ADDRESS</th>
+                                            <th>LOCATION</th>
                                         </tr>
                                     </thead><!-- end thead -->
                                 </table> <!-- end table -->
@@ -69,9 +53,17 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
             </div>
+            <!-- end table -->
         </div>
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+@endsection
+<!-- custom js -->
+@section('page-scripts')
+<script>
+    let getDataFromAuditLogsURL = "{{ route('admin.audit.getDataFromAuditLogs') }}";
+</script>
+<script src="{{ url('backend/assets/custom/js/audit-trail.js') }}"></script>
 @endsection

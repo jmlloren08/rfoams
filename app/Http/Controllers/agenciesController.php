@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuditTrail;
 use App\Models\DepartmentAgency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -15,6 +16,10 @@ class agenciesController extends Controller
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
             return view('admin.guest');
         }
+        AuditTrail::create([
+            'user_id' => Auth::user()->id,
+            'event' => 'User viewed department/agencies page.'
+        ]);
         return view('admin.agencies');
     }
     public function getDataFromDepartmentAgency(Request $request)

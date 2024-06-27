@@ -11,6 +11,7 @@ use App\Models\RefProvince;
 use App\Models\RefCityMun;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use App\Models\AuditTrail;
 
 class commendationController extends Controller
 {
@@ -30,6 +31,10 @@ class commendationController extends Controller
                 ->whereIn('regCode', $regionData)
                 ->get();
         }
+        AuditTrail::create([
+            'user_id' => Auth::user()->id,
+            'event' => 'User viewed commendation page.'
+        ]);
         return view('admin.commendation', [
             'regions' => $regions
         ]);
@@ -60,6 +65,11 @@ class commendationController extends Controller
             $commendation->other_activity       = $request->other_activity;
             $commendation->number_of_brgys      = $request->number_of_brgys;
             $commendation->save();
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User added new data (Commendation Page).'
+            ]);
             // return response
             return response()->json(['success' => 'Data added successfully.'], 200);
         } catch (ValidationException $e) {
@@ -79,7 +89,11 @@ class commendationController extends Controller
             if (!$data) {
                 return response()->json(['errors' => 'Data not found.'], 404);
             }
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User edit data for updating (Commendation Page).'
+            ]);
             return response()->json($data);
         } catch (\Exception $e) {
             Log::error("Error getting data: " . $e->getMessage());
@@ -90,7 +104,11 @@ class commendationController extends Controller
     {
         try {
             Commendation::where('id', $id)->delete();
-
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User removed data (Commendation Page).'
+            ]);
             return response()->json(['success' => 'Date deleted successfully.'], 200);
         } catch (\Exception $e) {
 
@@ -125,6 +143,11 @@ class commendationController extends Controller
             $commendation->other_activity       = $request->other_activity;
             $commendation->number_of_brgys      = $request->number_of_brgys;
             $commendation->save();
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User modified data (Commendation Page).'
+            ]);
             // return response
             return response()->json(['success' => 'Data updated successfully.'], 200);
         } catch (ValidationException $e) {

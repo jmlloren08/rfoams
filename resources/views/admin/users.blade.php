@@ -112,7 +112,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="dataTableUsers" class="table table-centered mb-0 align-middle table-hover table-nowrap">
+                                <table id="dataTableUsers" class="table table-hover table-striped table-bordered">
                                     <thead class="table-light">
                                         <tr>
                                             <th style="display: none;">#</th>

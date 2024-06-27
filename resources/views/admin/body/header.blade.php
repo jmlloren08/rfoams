@@ -27,10 +27,12 @@
                 <a href="{{ route('admin.profile') }}" class="dropdown-item">
                     <i class="fas fa-id-badge mr-2"></i> Profile
                 </a>
+                @if (Auth::user()->roles === 'Administrator')
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
                     <i class="fas fa-cog mr-2"></i> Settings
                 </a>
+                @endif
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('admin.logout') }}" class="dropdown-item dropdown-footer"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
             </div>

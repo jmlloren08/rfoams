@@ -33,7 +33,7 @@ $(function () {
                     } else if (data === 'User') {
                         return `<span class="badge bg-primary"> ${data} </span>`;
                     } else {
-                        return `<span class="badge bg-warning"> ${data} </span>`;
+                        return `<span class="badge bg-danger"> ${data} </span>`;
                     }
                 }
             },
@@ -52,7 +52,7 @@ $(function () {
             {
                 data: 'roles',
                 render: function (data) {
-                    if (!data || data === '' || data === null) {
+                    if (!data || data === 'Guest' || data === null) {
                         return `<td class="text-right py-0 align-middle">
                         <div class="btn-group btn-group-sm">
                         <a class="btn btn-info" id="btnAssign" title="Assign role"><i class="fas fa-user-check"></i></a>

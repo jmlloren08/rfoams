@@ -1,10 +1,10 @@
 $(() => {
     'use strict'
-    let tableOrientationIA = $('#dataTableOrientationInspectedAgencies').DataTable({
+    let tableOrientationOverall = $('#dataTableOrientationOverall').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-            url: getDataFromOrientationIAURL,
+            url: getDataFromOrientationOverallURL,
             type: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -12,25 +12,22 @@ $(() => {
         },
         columns: [
             { data: 'id', visible: false },
+            { data: 'orientation_date' },
             { data: 'agency_lgu' },
-            { data: 'date_of_inspection' },
             { data: 'office' },
             { data: 'citymunDesc' },
             { data: 'provDesc' },
             { data: 'regDesc' },
-            { data: 'action_plan_and_inspection_report_date_sent_to_cmeo' },
-            { data: 'feedback_date_sent_to_oddgo' },
-            { data: 'official_report_date_sent_to_oddgo' },
-            { data: 'feedback_date_received_from_oddgo' },
-            { data: 'official_report_date_received_from_oddgo' },
-            { data: 'feedback_date_sent_to_agencies_lgus' },
-            { data: 'official_report_date_sent_to_agencies_lgus' },
-            { data: 'orientation' },
-            { data: 'setup' },
-            { data: 'resource_speakers' },
-            { data: 'bpm_workshop' },
-            { data: 're_engineering' },
-            { data: 'cc_workshop' },
+            { data: 'is_ra_11032' },
+            { data: 'is_cart' },
+            { data: 'is_programs_and_services' },
+            { data: 'is_cc_orientation' },
+            { data: 'is_cc_workshop' },
+            { data: 'is_bpm_workshop' },
+            { data: 'is_ria' },
+            { data: 'is_eboss' },
+            { data: 'is_csm' },
+            { data: 'is_reeng' },
             {
                 data: '',
                 defaultContent: `<td class="text-right py-0 align-middle">
@@ -41,6 +38,25 @@ $(() => {
                     </td>`
             }
         ],
+        createdRow: function (row, data, dataIndex) {
+            function setCellClass(cell, value) {
+                if (value === 'Yes') {
+                    $(cell).addClass('bg-success', 'text-white');
+                } else {
+                    $(cell).addClass('bg-danger', 'text-white');
+                }
+            }
+            setCellClass($('td', row).eq(6), data.is_ra_11032);
+            setCellClass($('td', row).eq(7), data.is_cart);
+            setCellClass($('td', row).eq(8), data.is_programs_and_services);
+            setCellClass($('td', row).eq(9), data.is_cc_orientation);
+            setCellClass($('td', row).eq(10), data.is_cc_workshop);
+            setCellClass($('td', row).eq(11), data.is_bpm_workshop);
+            setCellClass($('td', row).eq(12), data.is_ria);
+            setCellClass($('td', row).eq(13), data.is_eboss);
+            setCellClass($('td', row).eq(14), data.is_csm);
+            setCellClass($('td', row).eq(15), data.is_reeng);
+        },
         paging: true,
         lengthChange: true,
         searching: true,
@@ -106,18 +122,18 @@ $(() => {
             }
         });
     });
-    // add new orientation (inspected agencies)
-    $('#formOrientationIA').submit(function (event) {
+    // add new orientation (overall)
+    $('#formOrientationOverall').submit(function (event) {
         event.preventDefault();
-        let form = $('#formOrientationIA')[0];
+        let form = $('#formOrientationOverall')[0];
         let formData = new FormData(form);
         let id = formData.get('id');
         // validate first before proceed
         if (this.checkValidity()) {
-            // if id is not empty
+            // if id is empty then store
             if (!id) {
                 $.ajax({
-                    url: storeOrientationIAURL,
+                    url: storeOrientationOverallURL,
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -127,69 +143,54 @@ $(() => {
                     contentType: false,
                     success: (s) => {
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: s.success
+                            icon: 'success', title: 'Success', text: s.success
                         }).then(() => {
-                            tableOrientationIA.ajax.reload();
-                            $('#modal-add-new-orientation-ia').modal('hide');
+                            tableOrientationOverall.ajax.reload();
+                            $('#modal-add-new-orientation-overalls').modal('hide');
                         });
                     },
                     error: (e) => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: e.responseJSON.errors
-                        });
+                        Swal.fire({ icon: 'error', title: 'Error', text: e.responseJSON.errors });
                     }
                 });
             } else {
-                // if id is not empty
-                let orientationIAData = {
+                // if id is not empty then update
+                let orientationOverallData = {
+                    orientation_date: formData.get('orientation_date'),
                     agency_lgu: formData.get('agency_lgu'),
-                    date_of_inspection: formData.get('date_of_inspection'),
                     office: formData.get('office'),
                     region: formData.get('region'),
                     province: formData.get('province'),
                     city_municipality: formData.get('city_municipality'),
-                    action_plan_and_inspection_report_date_sent_to_cmeo: formData.get('action_plan_and_inspection_report_date_sent_to_cmeo'),
-                    feedback_date_sent_to_oddgo: formData.get('feedback_date_sent_to_oddgo'),
-                    official_report_date_sent_to_oddgo: formData.get('official_report_date_sent_to_oddgo'),
-                    feedback_date_received_from_oddgo: formData.get('feedback_date_received_from_oddgo'),
-                    official_report_date_received_from_oddgo: formData.get('official_report_date_received_from_oddgo'),
-                    feedback_date_sent_to_agencies_lgus: formData.get('feedback_date_sent_to_agencies_lgus'),
-                    official_report_date_sent_to_agencies_lgus: formData.get('official_report_date_sent_to_agencies_lgus'),
-                    orientation: formData.get('orientation'),
-                    setup: formData.get('setup'),
-                    resource_speakers: formData.get('resource_speakers'),
-                    bpm_workshop: formData.get('bpm_workshop'),
-                    re_engineering: formData.get('re_engineering'),
-                    cc_workshop: formData.get('cc_workshop')
+                    is_ra_11032: formData.get('is_ra_11032'),
+                    is_cart: formData.get('is_cart'),
+                    is_programs_and_services: formData.get('is_programs_and_services'),
+                    is_cc_orientation: formData.get('is_cc_orientation'),
+                    is_cc_workshop: formData.get('is_cc_workshop'),
+                    is_bpm_workshop: formData.get('is_bpm_workshop'),
+                    is_ria: formData.get('is_ria'),
+                    is_eboss: formData.get('is_eboss'),
+                    is_csm: formData.get('is_csm'),
+                    is_reeng: formData.get('is_reeng')
                 };
                 $.ajax({
-                    url: `${updateOrientationIAURL}/${id}`,
+                    url: `${updateOrientationOverallURL}/${id}`,
                     type: 'PUT',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    data: orientationIAData,
+                    data: orientationOverallData,
                     dataType: 'JSON',
                     success: (s) => {
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: s.success
+                            icon: 'success', title: 'Success', text: s.success
                         }).then(() => {
-                            tableOrientationIA.ajax.reload();
-                            $('#modal-add-new-orientation-ia').modal('hide');
+                            tableOrientationOverall.ajax.reload();
+                            $('#modal-add-new-orientation-overalls').modal('hide');
                         });
                     },
                     error: (e) => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: e.responseJSON.errors
-                        });
+                        Swal.fire({ icon: 'error', title: 'Error', text: e.responseJSON.errors });
                     }
                 });
             }
@@ -198,90 +199,71 @@ $(() => {
     // get data for updating
     $(document).on('click', '#btnEdit', function () {
         let row = $(this).closest('tr');
-        let data = tableOrientationIA.row(row).data();
+        let data = tableOrientationOverall.row(row).data();
         let id = data.id;
         $.ajax({
-            url: `${editOrientationIAURL}/${id}`,
+            url: `${editOrientationOverallURL}/${id}`,
             type: 'GET',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: (response) => {
-                $('#modal-add-new-orientation-ia').modal('show');
+                $('#modal-add-new-orientation-overalls').modal('show');
                 $('#id').val(response.id);
+                $('#orientation_date').val(response.orientation_date);
                 $('#agency_lgu').val(response.agency_lgu);
-                $('#date_of_inspection').val(response.date_of_inspection);
                 $('#office').val(response.office);
                 $('#region').val(response.region);
                 $('#province').val(response.province);
                 $('#city_municipality').val(response.city_municipality);
-                $('#action_plan_and_inspection_report_date_sent_to_cmeo').val(response.action_plan_and_inspection_report_date_sent_to_cmeo);
-                $('#feedback_date_sent_to_oddgo').val(response.feedback_date_sent_to_oddgo);
-                $('#official_report_date_sent_to_oddgo').val(response.official_report_date_sent_to_oddgo);
-                $('#feedback_date_received_from_oddgo').val(response.feedback_date_received_from_oddgo);
-                $('#official_report_date_received_from_oddgo').val(response.official_report_date_received_from_oddgo);
-                $('#feedback_date_sent_to_agencies_lgus').val(response.feedback_date_sent_to_agencies_lgus);
-                $('#official_report_date_sent_to_agencies_lgus').val(response.official_report_date_sent_to_agencies_lgus);
-                $('#orientation').val(response.orientation);
-                $('#setup').val(response.setup);
-                $('#resource_speakers').val(response.resource_speakers);
-                $('#bpm_workshop').val(response.bpm_workshop);
-                $('#re_engineering').val(response.re_engineering);
-                $('#cc_workshop').val(response.cc_workshop);
+                $('#is_ra_11032').val(response.is_ra_11032);
+                $('#is_cart').val(response.is_cart);
+                $('#is_programs_and_services').val(response.is_programs_and_services);
+                $('#is_cc_orientation').val(response.is_cc_orientation);
+                $('#is_cc_workshop').val(response.is_cc_workshop);
+                $('#is_bpm_workshop').val(response.is_bpm_workshop);
+                $('#is_ria').val(response.is_ria);
+                $('#is_eboss').val(response.is_eboss);
+                $('#is_csm').val(response.is_csm);
+                $('#is_reeng').val(response.is_reeng);
             },
             error: (e) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: e.responseJSON.errors
-                });
+                Swal.fire({ icon: 'error', title: 'Error', text: e.responseJSON.errors });
             }
         });
     });
     // delete data
     $(document).on('click', '#btnDelete', function (e) {
         let row = $(this).closest('tr');
-        let data = tableOrientationIA.row(row).data();
+        let data = tableOrientationOverall.row(row).data();
         let id = data.id;
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You will not be able to revert this.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            title: 'Are you sure?', text: 'You will not be able to revert this.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `${editOrientationIAURL}/${id}`,
+                    url: `${editOrientationOverallURL}/${id}`,
                     type: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: (s) => {
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: s.success
+                            icon: 'success', title: 'Success', text: s.success
                         }).then(() => {
-                            tableOrientationIA.ajax.reload();
+                            tableOrientationOverall.ajax.reload();
                         });
                     },
                     error: (e) => {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: e.responseJSON.errors
-                        });
+                        Swal.fire({ icon: 'error', title: 'Error', text: e.responseJSON.errors });
                     }
                 });
             }
         });
     });
-    // check validation
+    // check validation form
     $(document).ready(() => {
-        let form = $(".needs-validation");
+        let form = $('.needs-validation');
         form.each(function () {
             $(this).on('submit', function (event) {
                 if (this.checkValidity() === false) {
@@ -295,27 +277,24 @@ $(() => {
     // clear form fields after event
     function clearForm() {
         $('#id').val('');
+        $('#orientation_date').val('');
         $('#agency_lgu').val('');
-        $('#date_of_inspection').val('mm/dd/yyy/');
         $('#office').val('');
         $('#region').val('Choose');
         $('#province').val('Choose');
         $('#city_municipality').val('Choose');
-        $('#action_plan_and_inspection_report_date_sent_to_cmeo').val('mm/dd/yyy/');
-        $('#feedback_date_sent_to_oddgo').val('mm/dd/yyy/');
-        $('#official_report_date_sent_to_oddgo').val('mm/dd/yyy/');
-        $('#feedback_date_received_from_oddgo').val('mm/dd/yyy/');
-        $('#official_report_date_received_from_oddgo').val('mm/dd/yyy/');
-        $('#feedback_date_sent_to_agencies_lgus').val('mm/dd/yyy/');
-        $('#official_report_date_sent_to_agencies_lgus').val('mm/dd/yyy/');
-        $('#orientation').val('');
-        $('#setup').val('');
-        $('#resource_speakers').val('');
-        $('#bpm_workshop').val('');
-        $('#re_engineering').val('');
-        $('#cc_workshop').val('');
+        $('#is_ra_11032').val('Choose');
+        $('#is_cart').val('Choose');
+        $('#is_programs_and_services').val('Choose');
+        $('#is_cc_orientation').val('Choose');
+        $('#is_cc_workshop').val('Choose');
+        $('#is_bpm_workshop').val('Choose');
+        $('#is_ria').val('Choose');
+        $('#is_eboss').val('Choose');
+        $('#is_csm').val('Choose');
+        $('#is_reeng').val('Choose');
     }
-    $('#modal-add-new-orientation-ia').on('hidden.bs.modal', (e) => {
+    $('#modal-add-new-orientation-overalls').on('hidden.bs.modal', (e) => {
         clearForm();
     });
 });

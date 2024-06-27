@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuditTrail;
 use App\Models\RFOsV2;
 use App\Models\User;
 use App\Models\RefRegionV2;
@@ -21,7 +22,11 @@ class rfoController extends Controller
 
         $users = User::select('id', 'name')->get();
         $regions = RefRegionV2::select('regDesc', 'regCode')->get();
-
+        // log
+        AuditTrail::create([
+            'user_id' => Auth::user()->id,
+            'event' => 'User viewed Profile Page.'
+        ]);
         return view('admin.rfos', [
             'users' => $users,
             'regions' => $regions
@@ -55,6 +60,11 @@ class rfoController extends Controller
                 $rfos->regCode           = $regCode;
                 $rfos->save();
             }
+            // log
+            AuditTrail::create([
+                'user_id' => Auth::user()->id,
+                'event' => 'User added new data (RFO Page).'
+            ]);
             // return response
             return response()->json(['success' => 'Data added successfully.'], 200);
         } catch (ValidationException $e) {
@@ -74,7 +84,11 @@ class rfoController extends Controller
             if (!$data) {
                 return response()->json(['errors' => 'Data not found.'], 404);
             }
-
+            // log the login action
+            AuditTrail::create([
+                'user_id'   => Auth::user()->id,
+                'event'     => 'User edit data for updating (RFO Page).'
+            ]);
             return response()->json($data);
         } catch (\Exception $e) {
             Log::error("Error getting data: " . $e->getMessage());
@@ -102,7 +116,11 @@ class rfoController extends Controller
             $rfos->contact_number   = $request->contact_number;
             $rfos->regCode          = $request->regCode;
             $rfos->save();
-
+            // log the login action
+            AuditTrail::create([
+                'user_id'   => Auth::user()->id,
+                'event'     => 'User modified data (RFO Page).'
+            ]);
             return response()->json(['success' =>  'Data updated successfully.']);
         } catch (\Exception $e) {
 
@@ -114,7 +132,11 @@ class rfoController extends Controller
     {
         try {
             RFOsV2::where('id', $id)->delete();
-
+            // log the login action
+            AuditTrail::create([
+                'user_id'   => Auth::user()->id,
+                'event'     => 'User removed data (RFO Page)'
+            ]);
             return response()->json(['success' => 'Data deleted successfully.'], 200);
         } catch (\Exception $e) {
 
