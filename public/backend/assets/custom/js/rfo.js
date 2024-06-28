@@ -1,5 +1,4 @@
-'use strict';
-// load RFOs
+'use strict'
 $(function () {
     let tableRFOs = $("#dataTableRFOs").DataTable({
         processing: true,

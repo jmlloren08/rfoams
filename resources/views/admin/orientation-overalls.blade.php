@@ -389,5 +389,5 @@
         $('#reservation').daterangepicker();
     });
 </script>
-<script src="{{ url('backend/assets/custom/js/orientation-overalls.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/orientation-overalls.min.js') }}"></script>
 @endsection

@@ -230,5 +230,5 @@
     let getProvincesByRegionURL = "/get-provinces-by-region";
     let getCityMunicipalityByProvinceURL = "/get-city-municipality-by-province";
 </script>
-<script src="{{ url('backend/assets/custom/js/commendation.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/commendation.min.js') }}"></script>
 @endsection

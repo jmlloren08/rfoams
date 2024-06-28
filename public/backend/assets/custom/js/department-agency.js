@@ -1,8 +1,7 @@
-'use strict';
-$(document).ready(function () {
-    setTimeout(function () {
+$(document).ready(() => {
+    setTimeout(() => {
         // load departments/agencies
-        $(function () {
+        $(() => {
             let tableDepartmentAgency = $("#dataTableDepartmentAgency").DataTable({
                 processing: true,
                 serverSide: true,

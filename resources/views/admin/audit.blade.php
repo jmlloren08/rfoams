@@ -65,5 +65,5 @@
 <script>
     let getDataFromAuditLogsURL = "{{ route('admin.audit.getDataFromAuditLogs') }}";
 </script>
-<script src="{{ url('backend/assets/custom/js/audit-trail.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/audit-trail.min.js') }}"></script>
 @endsection

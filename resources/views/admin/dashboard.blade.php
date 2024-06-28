@@ -77,7 +77,18 @@
                     <div class="card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Overall eBOSS</h3>
+                                <h3 class="card-title"><i class="fas fa-laptop-code"></i> Overall eBOSS</h3>
+                                <div class="card-tools">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a href="#" class="dropdown-item" id="download-jpg-eboss">Download JPG</a>
+                                            <a href="#" class="dropdown-item" id="export-csv-eboss">Export CSV</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -110,7 +121,18 @@
                     <div class="card bg-gradient-info">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Overall Commendation</h3>
+                                <h3 class="card-title"><i class="fas fa-award"></i> Overall Commendation</h3>
+                                <div class="card-tools">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a href="#" class="dropdown-item" id="download-jpg-commendation">Download JPG</a>
+                                            <a href="#" class="dropdown-item" id="export-csv-commendation">Export CSV</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -131,7 +153,18 @@
                     <div class="card">
                         <div class="card-header border-0">
                             <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Orientation (Compliance with R.A. 11032, and other programs)</h3>
+                                <h3 class="card-title"><i class="fas fa-chart-bar"></i> Orientation (Compliance with R.A. 11032, and other programs)</h3>
+                                <div class="card-tools">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a href="#" class="dropdown-item" id="download-jpg-orientation-overall">Download JPG</a>
+                                            <a href="#" class="dropdown-item" id="export-csv-orientation-overall">Export CSV</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -141,22 +174,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Overall CC Status</h3>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <p class="d-flex flex-column">
-                                    <span>Per Region</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
     </section>
     <!-- /.content -->
@@ -173,8 +190,8 @@
     let countYes = programsData.map(item => item.countYes);
     let countNo = programsData.map(item => item.countNo);
 </script>
-<script src="{{ url('backend/assets/custom/js/eboss-chart.js') }}"></script>
-<script src="{{ url('backend/assets/custom/js/commendation-chart.js') }}"></script>
-<script src="{{ url('backend/assets/custom/js/orientation-chart.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/eboss-chart.min.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/commendation-chart.min.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/orientation-chart.min.js') }}"></script>
 @endif
 @endsection

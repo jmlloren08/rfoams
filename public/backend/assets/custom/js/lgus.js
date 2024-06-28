@@ -1,7 +1,6 @@
-'use strict';
 $(document).ready(function () {
     setTimeout(function () {
-        // load regions
+        'use strict'
         $(function () {
             let tableRegion = $("#dataTableRefRegion").DataTable({
                 processing: true,

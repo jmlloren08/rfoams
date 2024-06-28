@@ -297,5 +297,5 @@
     let getProvincesByRegionURL = "/get-provinces-by-region";
     let getCityMunicipalityByProvinceURL = "/get-city-municipality-by-province";
 </script>
-<script src="{{ url('backend/assets/custom/js/orientation-inspected-agencies.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/orientation-inspected-agencies.min.js') }}"></script>
 @endsection

@@ -147,5 +147,5 @@
     let removeUserURL = "/admin/users";
     let deleteUserURL = "/admin/users";
 </script>
-<script src="{{ url('backend/assets/custom/js/users.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/users.min.js') }}"></script>
 @endsection

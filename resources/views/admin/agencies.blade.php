@@ -62,5 +62,5 @@
     let getDataFromDepartmentAgencyURL = "{{ route('admin.agencies.getDataFromDepartmentAgency') }}";
     let editDataFromDepartmentAgencyURL = "/admin/agencies";
 </script>
-<script src="{{ url('backend/assets/custom/js/da.min.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/department-agencies.min.js') }}"></script>
 @endsection

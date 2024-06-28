@@ -42,10 +42,58 @@ $(document).ready(function () {
                     }]
                 }
             }
-            new Chart(stackedBarChartCanvas, {
+            let orientationStackedBarChart = new Chart(stackedBarChartCanvas, {
                 type: 'bar',
                 data: stackedBarChartData,
                 options: stackedBarChartOptions
+            });
+            // function download csv
+            function downloadCSV(csv, filename) {
+                let csvFile;
+                let downloadLink;
+                // csv file
+                csvFile = new Blob([csv], { type: 'text/csv' });
+                // download link
+                downloadLink = document.createElement('a');
+                // file name
+                downloadLink.download = filename;
+                // create a link to the file
+                downloadLink.href = window.URL.createObjectURL(csvFile);
+                // hide download link
+                downloadLink.style.display = 'none';
+                // add the link to the DOM
+                document.body.appendChild(downloadLink);
+                // click download link
+                downloadLink.click();
+            }
+            // function export chart data to csv
+            function exportOrientationChartDataToCSV(filename) {
+                // initialize
+                let csvData = [];
+                let headers = ['Programs', 'Yes', 'No'];
+
+                csvData.push(headers.join(','));
+
+                // add chart data rows
+                stackedBarChartData.labels.forEach((label, index) => {
+                    let row = [label, stackedBarChartData.datasets[0].data[index], stackedBarChartData.datasets[1].data[index]];
+                    csvData.push(row.join(','));
+                });
+                // convert csv data to string
+                let csvString = csvData.join('\n');
+                // download csv
+                downloadCSV(csvString, filename);
+            }
+            // event listener
+            document.getElementById('export-csv-orientation-overall').addEventListener('click', () => {
+                exportOrientationChartDataToCSV('chart-data-orientation-overall.csv');
+            });
+            // download jpeg
+            document.getElementById('download-jpg-orientation-overall').addEventListener('click', () => {
+                let link = document.createElement('a');
+                link.href = orientationStackedBarChart.toBase64Image();
+                link.download = 'chart-data-orientation-overall.jpeg';
+                link.click();
             });
         });
     }, 1000);

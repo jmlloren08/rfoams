@@ -186,7 +186,7 @@
     let editRFOsURL = "/admin/rfos";
     let updateRFOsURL = "/admin/rfos";
 </script>
-<script src="{{ url('backend/assets/custom/js/rfo.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/rfo.min.js') }}"></script>
 <script>
     $(function() {
         //Initialize Select2 Elements
