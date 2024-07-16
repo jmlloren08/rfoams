@@ -374,10 +374,20 @@
                 <div class="col-xl-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="fas fa-list"></i>
-                                Approved List
-                            </h3>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title"><i class="fas fa-list"></i>Approved List</h3>
+                                <div class="card-tools">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a href="#" class="dropdown-item" id="print-report-eboss">Print Report</a>
+                                            <a href="#" class="dropdown-item" id="export-csv-eboss">Export CSV</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -416,6 +426,7 @@
 @section('page-scripts')
 <script>
     let getDataFromeBOSSURL = "{{ route('admin.eboss.getDataFromeBOSS') }}";
+    let getDataForPrintURL = "{{ route('admin.eboss.getDataForPrint') }}";
     let storeeBOSSURL = "{{ route('admin.eboss.store') }}";
     let editeBOSSURL = "/admin/eboss";
     let updateeBOSSURL = "/admin/eboss";
@@ -430,5 +441,6 @@
     let noCollocatedBOSS2023 = @json($noCollocatedBOSS2023);
     let noCollocatedBOSS2024 = @json($noCollocatedBOSS2024);
 </script>
-<script src="{{ url('backend/assets/custom/js/eboss.min.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/eboss.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/eboss-print-export.js') }}"></script>
 @endsection

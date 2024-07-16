@@ -227,27 +227,38 @@ class ebossController extends Controller
                         ->orWhere('e_b_o_s_s.contact_no', 'like', "%$searchValue%");
                 });
             }
-            // get the total records before pagination and filtering
-            $totalRecords = $query->count();
             // select only the necessary columns
             $user_id = Auth::user()->id;
             $userType = Auth::user()->roles;
             // get the regions for the logged in user
             $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+
             if ($userType === 'Administrator') {
                 $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc');
             } else {
                 $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc')
                     ->whereIn('e_b_o_s_s.region', $regionData);
             }
+
             // order the results
             $query->orderBy($orderColumn, $orderDirection);
-            // get total records after filtering
-            $filteredRecords = $query->count();
-            // pagination
-            $eboss = $query->skip($start)
-                ->take($length)
-                ->get();
+
+            // get the total records before pagination and filtering
+            $totalRecords = $query->count();
+
+            if ($length != -1) {
+                // get total records after filtering
+                $filteredRecords = $query->count();
+
+                // pagination
+                $eboss = $query->skip($start)
+                    ->take($length)
+                    ->get();
+            } else {
+                $filteredRecords = $totalRecords;
+                $eboss = $query->get();
+            }
+
             // prepare the response
             $response = [
                 'draw'              => intval($draw),
@@ -275,5 +286,52 @@ class ebossController extends Controller
         $citymunicipality = RefCityMun::where('provCode', $provinceCode)->get();
 
         return response()->json($citymunicipality);
+    }
+    public function getDataForPrint(Request $request)
+    {
+        try {
+
+            $draw = $request->input('draw');
+            $start = $request->input('start');
+            $length = $request->input('length');
+            $orderColumn = $request->input("columns.{$request->input('order.0.column')}.data");
+            $orderDirection = $request->input('order.0.dir');
+
+            if (!in_array($orderDirection, ['asc', 'desc'])) {
+                $orderDirection = 'desc';
+            }
+
+            $query = eBOSS::query()
+                ->join('ref_city_muns', 'e_b_o_s_s.city_municipality', '=', 'ref_city_muns.citymunCode')
+                ->join('ref_provinces', 'e_b_o_s_s.province', '=', 'ref_provinces.provCode')
+                ->join('ref_region_v2_s', 'e_b_o_s_s.region', '=', 'ref_region_v2_s.regCode');
+
+            $query->orderBy('e_b_o_s_s.' . $orderColumn, $orderDirection);
+
+            $totalRecords = $query->count();
+
+            if ($length != -1) {
+                $filteredRecords = $query->count();
+                $eboss = $query->skip($start)
+                    ->take($length)
+                    ->get();
+            } else {
+                $filteredRecords = $totalRecords;
+                $eboss = $query->get();
+            }
+
+            $response = [
+                'draw' => intval($draw),
+                'recordsTotal' => $totalRecords,
+                'recordsFiltered' => $filteredRecords,
+                'data' => $eboss
+            ];
+            // send response json
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+
+            Log::error("Error fetching data for printing: " . $e->getMessage());
+            return response()->json(['message' => 'Internal server error'], 500);
+        }
     }
 }

@@ -49,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/orientation-inspected-agencies/getDataFromOrientationIA', [orientationIAController::class, 'getDataFromOrientationIA'])->name('admin.orientation-inspected-agencies.getDataFromOrientationIA');
     Route::post('/admin/orientation-overalls/getDataFromOrientationOverall', [orientationOverallController::class, 'getDataFromOrientationOverall'])->name('admin.orientation-overalls.getDataFromOrientationOverall');
     Route::post('/admin/audit/getDataFromAuditLogs', [AuditTrailController::class, 'getDataFromAuditTrail'])->name('admin.audit.getDataFromAuditLogs');
+    Route::post('/admin/eboss/getDataForPrint', [ebossController::class, 'getDataForPrint'])->name('admin.eboss.getDataForPrint');
     // store data
     Route::post('/admin/rfos', [rfoController::class, 'store'])->name('admin.rfos.store');
     Route::post('/admin/eboss', [ebossController::class, 'store'])->name('admin.eboss.store');

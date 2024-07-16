@@ -24,6 +24,7 @@ $(function () {
             $('#submission_of_action_plan').prop('disabled', false);
         }
     });
+
     let tableeBOSS = $("#dataTableeBOSS").DataTable({
         processing: true,
         serverSide: true,
@@ -67,6 +68,9 @@ $(function () {
             {
                 data: 'deadline_of_action_plan',
                 render: function (data) {
+                    if (data === null) {
+                        return 'No data';
+                    }
                     if (data === 'Not applicable') {
                         return `<span class="badge bg-warning"> ${data} </span>`;
                     } else {
@@ -80,17 +84,44 @@ $(function () {
                     const submissionDate = new Date(data.submission_of_action_plan);
                     const deadlineDate = new Date(data.deadline_of_action_plan);
                     if (data.submission_of_action_plan === 'Not applicable') {
-                        return `'<span class="badge bg-warning"> ${data.submission_of_action_plan} </span>`;
+                        return `<span class="badge bg-warning"> ${data.submission_of_action_plan} </span>`;
                     } else if (submissionDate <= deadlineDate) {
                         return `<span class="badge bg-success"> ${data.submission_of_action_plan} </span>`;
                     } else {
-                        return `<span class="badge bg-danger"> ${data.submission_of_action_plan} </span>`;
+                        return `<span class="badge bg-danger"> No data </span>`;
                     }
                 }
             },
-            { data: 'remarks' },
-            { data: 'bplo_head' },
-            { data: 'contact_no' },
+            {
+                data: 'remarks',
+                render: function (data) {
+                    if (data === null) {
+                        return 'No data';
+                    } else {
+                        return data;
+                    }
+                }
+            },
+            {
+                data: 'bplo_head',
+                render: function (data) {
+                    if (data === null) {
+                        return 'No data';
+                    } else {
+                        return data;
+                    }
+                }
+            },
+            {
+                data: 'contact_no',
+                render: function (data) {
+                    if (data === null) {
+                        return 'No data';
+                    } else {
+                        return data;
+                    }
+                }
+            },
             {
                 data: '',
                 defaultContent: `<td class="text-right py-0 align-middle">
@@ -110,7 +141,10 @@ $(function () {
         ],
         info: true,
         autoWidth: true,
-        lengthMenu: [10, 20, 30, 40, 50],
+        lengthMenu: [
+            [10, 20, 30, 40, 50, -1],
+            [10, 20, 30, 40, 50, 'All']
+        ],
         scrollX: true
     });
     // load province where region = ''
