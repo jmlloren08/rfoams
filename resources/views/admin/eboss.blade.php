@@ -441,6 +441,6 @@
     let noCollocatedBOSS2023 = @json($noCollocatedBOSS2023);
     let noCollocatedBOSS2024 = @json($noCollocatedBOSS2024);
 </script>
-<script src="{{ url('backend/assets/custom/js/eboss.js') }}"></script>
-<script src="{{ url('backend/assets/custom/js/eboss-print-export.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/eboss.min.js') }}"></script>
+<script src="{{ url('backend/assets/custom/js/eboss-print-export.min.js') }}"></script>
 @endsection
