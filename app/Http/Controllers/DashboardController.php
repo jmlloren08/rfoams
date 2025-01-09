@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ElectronicBoss;
 use App\Models\OrientationInspectedAgencies;
 use App\Models\OrientationOverall;
-use Illuminate\Http\Request;
+use App\Models\RegionalFieldOffice;
 use Illuminate\Support\Facades\Auth;
-use App\Models\eBOSS;
-use App\Models\RFOsV2;
 use App\Models\Commendation;
 use App\Models\AuditTrail;
 
@@ -21,24 +20,24 @@ class DashboardController extends Controller
         }
         $user_id = Auth::user()->id;
         // get the regions for the logged in user
-        $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+        $regionData = RegionalFieldOffice::where('user_id', $user_id)->pluck('reg_code');
         // get the count of eBOSS inspections for the user's regions
         if ($userType === 'Administrator') {
             // get count all eBOSS
-            $counteBOSS = eBOSS::count('date_of_inspection');
+            $counteBOSS = ElectronicBoss::count('date_of_inspection');
             // get count all commendation
             $countCommendation = Commendation::count('date_of_commendation');
             // get count all orientation IA and overall
             $countOrientationIA = OrientationInspectedAgencies::count('agency_lgu');
             $countOrientationOverall = OrientationOverall::count('orientation_date');
             // get count type_of_boss per region
-            $data = eBOSS::select('ref_region_v2_s.regDesc as region', 'type_of_boss')
+            $data = ElectronicBoss::select('regions.reg_desc as region', 'type_of_boss')
                 ->selectRaw('count(*) as count')
-                ->join('ref_region_v2_s', 'ref_region_v2_s.regCode', '=', 'e_b_o_s_s.region')
-                ->groupBy('ref_region_v2_s.regDesc', 'type_of_boss')
+                ->join('regions', 'regions.reg_code', '=', 'electronic_bosses.region')
+                ->groupBy('regions.reg_desc', 'type_of_boss')
                 ->get();
             // get count date_of_commendation per month
-            $commendations = Commendation::selectRaw('COUNT(*) as count, MONTH(date_of_commendation) as month')
+            $commendations = Commendation::selectRaw('COUNT(*) as count, EXTRACT(MONTH FROM date_of_commendation) as month')
                 ->groupBy('month')
                 ->get()
                 ->pluck('count', 'month')
@@ -74,7 +73,7 @@ class DashboardController extends Controller
             }
         } else {
             // get count eBOSS per region
-            $counteBOSS = eBOSS::whereIn('region', $regionData)->count('date_of_inspection');
+            $counteBOSS = ElectronicBoss::whereIn('region', $regionData)->count('date_of_inspection');
             // get count commendation per region
             $countCommendation = Commendation::whereIn('region', $regionData)->count('date_of_commendation');
             // get count orientationIA per region
@@ -82,14 +81,14 @@ class DashboardController extends Controller
             // get count orientationOverall per region
             $countOrientationOverall = OrientationOverall::whereIn('region', $regionData)->count('orientation_date');
             // get count type_of_boss per region
-            $data = eBOSS::select('ref_region_v2_s.regDesc as region', 'type_of_boss')
-                ->whereIn('e_b_o_s_s.region', $regionData)
-                ->join('ref_region_v2_s', 'ref_region_v2_s.regCode', '=', 'e_b_o_s_s.region')
+            $data = ElectronicBoss::select('regions.reg_desc as region', 'type_of_boss')
+                ->whereIn('electronic_bosses.region', $regionData)
+                ->join('regions', 'regions.reg_code', '=', 'electronic_bosses.region')
                 ->selectRaw('count(*) as count')
-                ->groupBy('ref_region_v2_s.regDesc', 'type_of_boss')
+                ->groupBy('regions.reg_desc', 'type_of_boss')
                 ->get();
             // get count date_of_commendation per month
-            $commendations = Commendation::selectRaw('COUNT(*) as count, MONTH(date_of_commendation) as month')
+            $commendations = Commendation::selectRaw('COUNT(*) as count, EXTRACT(MONTH FROM date_of_commendation) as month')
                 ->whereIn('region', $regionData)
                 ->groupBy('month')
                 ->get()

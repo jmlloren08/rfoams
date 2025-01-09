@@ -1,5 +1,6 @@
 @extends('admin.admin_master')
 @section('admin')
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -48,7 +49,7 @@
                                 <select class="form-control custom-select" name="region" id="region" required>
                                     <option value="" selected disabled>Choose</option>
                                     @foreach ($regions as $region)
-                                    <option value="{{ $region->regCode }}">{{ $region->regDesc }}</option>
+                                    <option value="{{ $region->reg_code }}">{{ $region->reg_desc }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('region'))
@@ -206,14 +207,14 @@
                             <div class="d-flex">
                                 <p class="d-flex flex-column">
                                     <span class="text-bold text-lg">Per Year</span>
-                                    <span>Total: {{ $fullyAutomated2023 + $fullyAutomated2024 }}</span>
+                                    <span>Total: {{ $fullyautomated2023 + $fullyautomated2024 }}</span>
                                 </p>
                                 <p class="ml-auto d-flex flex-column text-right">
-                                    @if ($fullyAutomated2023 != 0) <span class="text-{{ ($fullyAutomated2024 > $fullyAutomated2023) ? 'success' : 'danger' }}">
-                                        <i class="fas fa-{{ ($fullyAutomated2024 > $fullyAutomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
-                                        {{ number_format((abs($fullyAutomated2024 - $fullyAutomated2023) / $fullyAutomated2023)* 100, 2)}}%
+                                    @if ($fullyautomated2023 != 0) <span class="text-{{ ($fullyautomated2024 > $fullyautomated2023) ? 'success' : 'danger' }}">
+                                        <i class="fas fa-{{ ($fullyautomated2024 > $fullyautomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                        {{ number_format((abs($fullyautomated2024 - $fullyautomated2023) / $fullyautomated2023)* 100, 2)}}%
                                     </span>
-                                    @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                    @elseif ($fullyautomated2023 == 0 && $fullyautomated2024 == 0)
                                     <span class="text-muted">No data</span>
                                     @else
                                     <span class="text-muted">No data for 2023</span>
@@ -247,14 +248,14 @@
                             <div class="d-flex">
                                 <p class="d-flex flex-column">
                                     <span class="text-bold text-lg">Per Year</span>
-                                    <span>Total: {{ $partlyAutomated2023 + $partlyAutomated2024 }}</span>
+                                    <span>Total: {{ $partlyautomated2023 + $partlyautomated2024 }}</span>
                                 </p>
                                 <p class="ml-auto d-flex flex-column text-right">
-                                    @if ($partlyAutomated2023 != 0) <span class="text-{{ ($partlyAutomated2024 > $partlyAutomated2023) ? 'success' : 'danger' }}">
-                                        <i class="fas fa-{{ ($partlyAutomated2024 > $partlyAutomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
-                                        {{ number_format((abs($partlyAutomated2024 - $partlyAutomated2023) / $partlyAutomated2023) * 100, 2)}}%
+                                    @if ($partlyautomated2023 != 0) <span class="text-{{ ($partlyautomated2024 > $partlyautomated2023) ? 'success' : 'danger' }}">
+                                        <i class="fas fa-{{ ($partlyautomated2024 > $partlyautomated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                        {{ number_format((abs($partlyautomated2024 - $partlyautomated2023) / $partlyautomated2023) * 100, 2)}}%
                                     </span>
-                                    @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                    @elseif ($fullyautomated2023 == 0 && $fullyautomated2024 == 0)
                                     <span class="text-muted">No data</span>
                                     @else
                                     <span class="text-muted">No data for 2023</span>
@@ -288,14 +289,14 @@
                             <div class="d-flex">
                                 <p class="d-flex flex-column">
                                     <span class="text-bold text-lg">Per Year</span>
-                                    <span>Total: {{ $physicalCollocated2023 + $physicalCollocated2024 }}</span>
+                                    <span>Total: {{ $physicalcollocated2023 + $physicalcollocated2024 }}</span>
                                 </p>
                                 <p class="ml-auto d-flex flex-column text-right">
-                                    @if ($physicalCollocated2023 != 0) <span class="text-{{ ($physicalCollocated2024 > $physicalCollocated2023) ? 'success' : 'danger' }}">
-                                        <i class="fas fa-{{ ($physicalCollocated2024 > $physicalCollocated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
-                                        {{ number_format((abs($physicalCollocated2024 - $physicalCollocated2023) / $physicalCollocated2023) * 100, 2)}}%
+                                    @if ($physicalcollocated2023 != 0) <span class="text-{{ ($physicalcollocated2024 > $physicalcollocated2023) ? 'success' : 'danger' }}">
+                                        <i class="fas fa-{{ ($physicalcollocated2024 > $physicalcollocated2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                        {{ number_format((abs($physicalcollocated2024 - $physicalcollocated2023) / $physicalcollocated2023) * 100, 2)}}%
                                     </span>
-                                    @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                    @elseif ($fullyautomated2023 == 0 && $fullyautomated2024 == 0)
                                     <span class="text-muted">No data</span>
                                     @else
                                     <span class="text-muted">No data for 2023</span>
@@ -329,14 +330,14 @@
                             <div class="d-flex">
                                 <p class="d-flex flex-column">
                                     <span class="text-bold text-lg">Per Year</span>
-                                    <span>Total: {{ $noCollocatedBOSS2023 + $noCollocatedBOSS2024 }}</span>
+                                    <span>Total: {{ $nocollocatedboss2023 + $nocollocatedboss2024 }}</span>
                                 </p>
                                 <p class="ml-auto d-flex flex-column text-right">
-                                    @if ($noCollocatedBOSS2023 != 0) <span class="text-{{ ($noCollocatedBOSS2024 > $noCollocatedBOSS2024) ? 'success' : 'danger' }}">
-                                        <i class="fas fa-{{ ($noCollocatedBOSS2024 > $noCollocatedBOSS2023) ? 'arrow-up' : 'arrow-down' }}"></i>
-                                        {{ number_format((abs($noCollocatedBOSS2024 - $noCollocatedBOSS2023) / $noCollocatedBOSS2023) * 100, 2)}}%
+                                    @if ($nocollocatedboss2023 != 0) <span class="text-{{ ($nocollocatedboss2024 > $nocollocatedboss2024) ? 'success' : 'danger' }}">
+                                        <i class="fas fa-{{ ($nocollocatedboss2024 > $nocollocatedboss2023) ? 'arrow-up' : 'arrow-down' }}"></i>
+                                        {{ number_format((abs($nocollocatedboss2024 - $nocollocatedboss2023) / $nocollocatedboss2023) * 100, 2)}}%
                                     </span>
-                                    @elseif ($fullyAutomated2023 == 0 && $fullyAutomated2024 == 0)
+                                    @elseif ($fullyautomated2023 == 0 && $fullyautomated2024 == 0)
                                     <span class="text-muted">No data</span>
                                     @else
                                     <span class="text-muted">No data for 2023</span>
@@ -424,6 +425,7 @@
 <!-- ./wrapper -->
 <!-- custom js -->
 @section('page-scripts')
+
 <script>
     let getDataFromeBOSSURL = "{{ route('admin.eboss.getDataFromeBOSS') }}";
     let getDataForPrintURL = "{{ route('admin.eboss.getDataForPrint') }}";
@@ -432,15 +434,18 @@
     let updateeBOSSURL = "/admin/eboss";
     let getProvincesByRegionURL = "/get-provinces-by-region";
     let getCityMuncipalityByProvinceURL = "/get-city-municipality-by-province";
-    let fullyAutomated2023 = @json($fullyAutomated2023);
-    let fullyAutomated2024 = @json($fullyAutomated2024);
-    let partlyAutomated2023 = @json($partlyAutomated2023);
-    let partlyAutomated2024 = @json($partlyAutomated2024);
-    let physicalCollocated2023 = @json($physicalCollocated2023);
-    let physicalCollocated2024 = @json($physicalCollocated2024);
-    let noCollocatedBOSS2023 = @json($noCollocatedBOSS2023);
-    let noCollocatedBOSS2024 = @json($noCollocatedBOSS2024);
+
+    let fullyautomated2023 = @json($fullyautomated2023);
+    let fullyautomated2024 = @json($fullyautomated2024);
+    let partlyautomated2023 = @json($partlyautomated2023);
+    let partlyautomated2024 = @json($partlyautomated2024);
+    let physicalcollocated2023 = @json($physicalcollocated2023);
+    let physicalcollocated2024 = @json($physicalcollocated2024);
+    let nocollocatedboss2023 = @json($nocollocatedboss2023);
+    let nocollocatedboss2024 = @json($nocollocatedboss2024);
+
 </script>
+
 <script src="{{ url('backend/assets/custom/js/eboss.min.js') }}"></script>
 <script src="{{ url('backend/assets/custom/js/eboss-print-export.min.js') }}"></script>
 @endsection

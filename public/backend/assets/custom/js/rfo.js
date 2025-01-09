@@ -16,7 +16,7 @@ $(function () {
             { data: 'name' },
             { data: 'position' },
             { data: 'contact_number' },
-            { data: 'regDesc' },
+            { data: 'reg_desc' },
             {
                 data: 'created_at',
                 render: function (data) {
@@ -88,7 +88,7 @@ $(function () {
                     user_id: formData.get('user_id'),
                     position: formData.get('position'),
                     contact_number: formData.get('contact_number'),
-                    regCode: formData.get('regCode')
+                    reg_code: formData.get('reg_code')
                 };
                 $.ajax({
                     url: `${updateRFOsURL}/${id}`,
@@ -137,7 +137,7 @@ $(function () {
                 $("#focal_person").val(response.focal_person);
                 $("#position").val(response.position);
                 $("#contact_number").val(response.contact_number);
-                $("#regCode").val(response.regCode);
+                $("#reg_code").val(response.reg_code);
             },
             error: function (e) {
                 Swal.fire({

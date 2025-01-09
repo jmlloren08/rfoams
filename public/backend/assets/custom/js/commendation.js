@@ -13,9 +13,9 @@ $(function () {
         columns: [
             { data: 'id', visible: false },
             { data: 'date_of_commendation' },
-            { data: 'citymunDesc' },
-            { data: 'provDesc' },
-            { data: 'regDesc' },
+            { data: 'citymun_desc' },
+            { data: 'prov_desc' },
+            { data: 'reg_desc' },
             { data: 'date_of_inspection' },
             { data: 'service_provider' },
             { data: 'first_validation' },
@@ -23,7 +23,7 @@ $(function () {
             { data: 'second_validation' },
             { data: 'remarks_2' },
             { data: 'other_activity' },
-            { data: 'number_of_brgys' },
+            { data: 'number_of_barangays' },
             {
                 data: '',
                 defaultContent: `<td class="text-right py-0 align-middle">
@@ -66,7 +66,7 @@ $(function () {
                 provinceSelect.empty();
                 provinceSelect.append('<option value="" selected disabled>Choose</option>');
                 response.forEach(function (province) {
-                    provinceSelect.append(`<option value = ${province.provCode} > ${province.provDesc} </option>`);
+                    provinceSelect.append(`<option value = ${province.prov_code} > ${province.prov_desc} </option>`);
                 });
             },
             error: function (error) {
@@ -91,7 +91,7 @@ $(function () {
                 citymunicipalitySelect.empty();
                 citymunicipalitySelect.append('<option value="" selected disabled>Choose</option>');
                 response.forEach(function (citymunicipality) {
-                    citymunicipalitySelect.append(`<option value = ${citymunicipality.citymunCode} > ${citymunicipality.citymunDesc} </option>`);
+                    citymunicipalitySelect.append(`<option value = ${citymunicipality.citymun_code} > ${citymunicipality.citymun_desc} </option>`);
                 });
             },
             error: function (error) {
@@ -150,7 +150,7 @@ $(function () {
                     second_validation: formData.get('second_validation'),
                     remarks_2: formData.get('remarks_2'),
                     other_activity: formData.get('other_activity'),
-                    number_of_brgys: formData.get('number_of_brgys')
+                    number_of_barangays: formData.get('number_of_barangays')
                 };
                 // if id has value then update
                 $.ajax({
@@ -206,7 +206,7 @@ $(function () {
                 $('#second_validation').val(response.second_validation);
                 $('#remarks_2').val(response.remarks_2);
                 $('#other_activity').val(response.other_activity);
-                $('#number_of_brgys').val(response.number_of_brgys);
+                $('#number_of_barangays').val(response.number_of_barangays);
             },
             error: function (e) {
                 Swal.fire({
@@ -285,7 +285,7 @@ $(function () {
         $('#second_validation').val('');
         $('#remarks_2').val('');
         $('#other_activity').val('');
-        $('#number_of_brgys').val('');
+        $('#number_of_barangays').val('');
     }
     $('#modal-add-new-commendation').on('hidden.bs.modal', function (e) {
         clearForm();

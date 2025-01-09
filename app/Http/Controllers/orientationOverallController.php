@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CitiesMunicipalities;
 use App\Models\DepartmentAgency;
-use App\Models\RefCityMun;
-use App\Models\RefProvince;
-use App\Models\RefRegionV2;
-use App\Models\RFOsV2;
+use App\Models\RegionalFieldOffice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\OrientationOverall;
 use App\Models\AuditTrail;
+use App\Models\Province;
+use App\Models\Region;
 
 class orientationOverallController extends Controller
 {
@@ -25,12 +25,12 @@ class orientationOverallController extends Controller
         // get the id of the logged in user
         $user_id = Auth::user()->id;
         // get the regions for the logged in user
-        $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+        $regionData = RegionalFieldOffice::where('user_id', $user_id)->pluck('reg_code');
         if ($userType === 'Administrator') {
-            $regions = RefRegionV2::select('regDesc', 'regCode')->get();
+            $regions = Region::select('reg_desc', 'reg_code')->get();
         } else {
-            $regions = RefRegionV2::select('regDesc', 'regCode')
-                ->whereIn('regCode', $regionData)
+            $regions = Region::select('reg_desc', 'reg_code')
+                ->whereIn('reg_code', $regionData)
                 ->get();
         }
 
@@ -206,18 +206,18 @@ class orientationOverallController extends Controller
             $orderDirection = $request->input('order.0.dir');
 
             $query = OrientationOverall::query()
-                ->join('ref_city_muns', 'orientation_overalls.city_municipality', '=', 'ref_city_muns.citymunCode')
-                ->join('ref_provinces', 'orientation_overalls.province', '=', 'ref_provinces.provCode')
-                ->join('ref_region_v2_s', 'orientation_overalls.region', '=', 'ref_region_v2_s.regCode');
+                ->join('cities_municipalities', 'orientation_overalls.city_municipality', '=', 'cities_municipalities.citymun_code')
+                ->join('provinces', 'orientation_overalls.province', '=', 'provinces.prov_code')
+                ->join('regions', 'orientation_overalls.region', '=', 'regions.reg_code');
 
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
                     $q->where('orientation_overalls.orientation_date', 'like', "%$searchValue%")
                         ->orWhere('orientation_overalls.agency_lgu', 'like', "%$searchValue%")
                         ->orWhere('orientation_overalls.office', 'like', "%$searchValue%")
-                        ->orWhere('ref_city_muns.citymunDesc', 'like', "%$searchValue%")
-                        ->orWhere('ref_provinces.provDesc', 'like', "%$searchValue%")
-                        ->orWhere('ref_region_v2_s.regDesc', 'like', "%$searchValue%")
+                        ->orWhere('cities_municipalities.citymun_desc', 'like', "%$searchValue%")
+                        ->orWhere('provinces.prov_desc', 'like', "%$searchValue%")
+                        ->orWhere('regions.reg_desc', 'like', "%$searchValue%")
                         ->orWhere('orientation_overalls.is_ra_11032', 'like', "%$searchValue%")
                         ->orWhere('orientation_overalls.is_cart', 'like', "%$searchValue%")
                         ->orWhere('orientation_overalls.is_programs_and_services', 'like', "%$searchValue%")
@@ -236,11 +236,11 @@ class orientationOverallController extends Controller
             $user_id = Auth::user()->id;
             $userType = Auth::user()->roles;
             // get the regions for the logged in user
-            $regionData = RFOsv2::where('user_id', $user_id)->pluck('regCode');
+            $regionData = RegionalFieldOffice::where('user_id', $user_id)->pluck('reg_code');
             if ($userType === 'Administrator') {
-                $query->select('orientation_overalls.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc');
+                $query->select('orientation_overalls.*', 'cities_municipalities.citymun_desc', 'provinces.prov_desc', 'regions.reg_desc');
             } else {
-                $query->select('orientation_overalls.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc')
+                $query->select('orientation_overalls.*', 'cities_municipalities.citymun_desc', 'provinces.prov_desc', 'regions.reg_desc')
                     ->whereIn('region', $regionData);
             }
             // order the results
@@ -269,14 +269,14 @@ class orientationOverallController extends Controller
     public function getProvincesByRegion(Request $request)
     {
         $regionCode = $request->region;
-        $provinces = RefProvince::where('regCode', $regionCode)->get();
+        $provinces = Province::where('reg_code', $regionCode)->get();
 
         return response()->json($provinces);
     }
     public function getCityMunicipalityByProvince(Request $request)
     {
         $provinceCode = $request->province;
-        $citymunicipality = RefCityMun::where('provCode', $provinceCode)->get();
+        $citymunicipality = CitiesMunicipalities::where('prov_code', $provinceCode)->get();
 
         return response()->json($citymunicipality);
     }

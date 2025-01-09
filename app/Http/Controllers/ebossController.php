@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\eBOSS;
-use App\Models\RefCityMun;
-use App\Models\RefProvince;
-use App\Models\RefRegionV2;
-use App\Models\RFOsV2;
+use App\Models\CitiesMunicipalities;
+use App\Models\ElectronicBoss;
+use App\Models\RegionalFieldOffice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\AuditTrail;
+use App\Models\Province;
+use App\Models\Region;
 
 class ebossController extends Controller
 {
     public function index()
     {
-        $userType = Auth::user()->roles;
+        try {
+            $userType = Auth::user()->roles;
         if (is_null($userType) || empty($userType) || $userType === 'Guest') {
 
             return view('admin.guest');
@@ -25,35 +26,35 @@ class ebossController extends Controller
         // get the id of the logged in user
         $user_id = Auth::user()->id;
         // get the regions for the logged in user
-        $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+        $regionData = RegionalFieldOffice::where('user_id', $user_id)->pluck('reg_code');
         if ($userType === 'Administrator') {
 
-            $regions = RefRegionV2::select('regDesc', 'regCode')->get();
-            $counts = eBOSS::selectRaw("
-            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyAutomated2023,
-            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as fullyAutomated2024,
-            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as partlyAutomated2023,
-            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as partlyAutomated2024,
-            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as physicalCollocated2023,
-            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as physicalCollocated2024,
-            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as noCollocatedBOSS2023,
-            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as noCollocatedBOSS2024
+            $regions = Region::select('reg_desc', 'reg_code')->get();
+            $counts = ElectronicBoss::selectRaw("
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyautomated2023,
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as fullyautomated2024,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as partlyautomated2023,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as partlyautomated2024,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as physicalcollocated2023,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as physicalcollocated2024,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as nocollocatedboss2023,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as nocollocatedboss2024
             ")
                 ->first();
         } else {
 
-            $regions = RefRegionV2::select('regDesc', 'regCode')
-                ->whereIn('regCode', $regionData)
+            $regions = Region::select('reg_desc', 'reg_code')
+                ->whereIn('reg_code', $regionData)
                 ->get();
-            $counts = eBOSS::selectRaw("
-            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyAutomated2023,
-            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as fullyAutomated2024,
-            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as partlyAutomated2023,
-            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as partlyAutomated2024,
-            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as physicalCollocated2023,
-            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as physicalCollocated2024,
-            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2023 THEN 1 ELSE 0 END) as noCollocatedBOSS2023,
-            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND YEAR(date_of_inspection) = 2024 THEN 1 ELSE 0 END) as noCollocatedBOSS2024
+            $counts = ElectronicBoss::selectRaw("
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as fullyautomated2023,
+            SUM(CASE WHEN type_of_boss = 'Fully-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as fullyautomated2024,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as partlyautomated2023,
+            SUM(CASE WHEN type_of_boss = 'Partly-Automated' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as partlyautomated2024,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as physicalcollocated2023,
+            SUM(CASE WHEN type_of_boss = 'Physical/Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as physicalcollocated2024,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2023 THEN 1 ELSE 0 END) as nocollocatedboss2023,
+            SUM(CASE WHEN type_of_boss = 'No Collocated BOSS' AND EXTRACT(YEAR FROM date_of_inspection) = 2024 THEN 1 ELSE 0 END) as nocollocatedboss2024
             ")
                 ->whereIn('region', $regionData)
                 ->first();
@@ -63,17 +64,27 @@ class ebossController extends Controller
             'user_id' => Auth::user()->id,
             'event' => 'User viewed eBOSS Page.'
         ]);
+
+        // dd($counts);
+        Log::info($counts->toArray());
+        Log::info($regions->toArray());
+
         return view('admin.eboss', [
             'regions'                   => $regions,
-            'fullyAutomated2023'        => $counts->fullyAutomated2023,
-            'fullyAutomated2024'        => $counts->fullyAutomated2024,
-            'partlyAutomated2023'       => $counts->partlyAutomated2023,
-            'partlyAutomated2024'       => $counts->partlyAutomated2024,
-            'physicalCollocated2023'    => $counts->physicalCollocated2023,
-            'physicalCollocated2024'    => $counts->physicalCollocated2024,
-            'noCollocatedBOSS2023'      => $counts->noCollocatedBOSS2023,
-            'noCollocatedBOSS2024'      => $counts->noCollocatedBOSS2024
+            'fullyautomated2023'        => $counts->fullyautomated2023,
+            'fullyautomated2024'        => $counts->fullyautomated2024,
+            'partlyautomated2023'       => $counts->partlyautomated2023,
+            'partlyautomated2024'       => $counts->partlyautomated2024,
+            'physicalcollocated2023'    => $counts->physicalcollocated2023,
+            'physicalcollocated2024'    => $counts->physicalcollocated2024,
+            'nocollocatedboss2023'      => $counts->nocollocatedboss2023,
+            'nocollocatedboss2024'      => $counts->nocollocatedboss2024
         ]);
+        } catch (\Exception $e) {
+            
+            Log::error("Error loading eBOSS: " . $e->getMessage());
+            return response()->json(['message' => 'Internal server error'], 500);
+        }
     }
     public function store(Request $request)
     {
@@ -90,7 +101,7 @@ class ebossController extends Controller
                 'contact_no'                => ['nullable', 'string', 'max:255']
             ]);
             // save record
-            $inspection = new eBOSS;
+            $inspection = new ElectronicBoss;
             $inspection->date_of_inspection        = $request->date_of_inspection;
             $inspection->city_municipality         = $request->city_municipality;
             $inspection->province                  = $request->province;
@@ -122,7 +133,7 @@ class ebossController extends Controller
     public function edit($id)
     {
         try {
-            $data = eBOSS::where('id', $id)->first();
+            $data = ElectronicBoss::where('id', $id)->first();
 
             if (!$data) {
                 return response()->json(['errors' => 'Data not found.'], 404);
@@ -132,6 +143,7 @@ class ebossController extends Controller
                 'user_id' => Auth::user()->id,
                 'event' => 'User edit data for updating (eBOSS Page).'
             ]);
+
             return response()->json($data);
         } catch (\Exception $e) {
             Log::error("Error getting data: " . $e->getMessage());
@@ -141,7 +153,7 @@ class ebossController extends Controller
     public function delete($id)
     {
         try {
-            eBOSS::where('id', $id)->delete();
+            ElectronicBoss::where('id', $id)->delete();
             // log
             AuditTrail::create([
                 'user_id' => Auth::user()->id,
@@ -169,7 +181,7 @@ class ebossController extends Controller
                 'contact_no'                => ['nullable', 'string', 'max:255']
             ]);
 
-            $inspection = eBOSS::findOrFail($id);
+            $inspection = ElectronicBoss::findOrFail($id);
 
             $inspection->date_of_inspection        = $request->date_of_inspection;
             $inspection->city_municipality         = $request->city_municipality;
@@ -206,38 +218,38 @@ class ebossController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = eBOSS::query()
-                ->join('ref_city_muns', 'e_b_o_s_s.city_municipality', '=', 'ref_city_muns.citymunCode')
-                ->join('ref_provinces', 'e_b_o_s_s.province', '=', 'ref_provinces.provCode')
-                ->join('ref_region_v2_s', 'e_b_o_s_s.region', '=', 'ref_region_v2_s.regCode');
+            $query          = ElectronicBoss::query()
+                ->join('cities_municipalities', 'electronic_bosses.city_municipality', '=', 'cities_municipalities.citymun_code')
+                ->join('provinces', 'electronic_bosses.province', '=', 'provinces.prov_code')
+                ->join('regions', 'electronic_bosses.region', '=', 'regions.reg_code');
 
             // search functionality
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
-                    $q->where('e_b_o_s_s.date_of_inspection', 'like', "%$searchValue%")
-                        ->orWhere('ref_city_muns.citymunDesc', 'like', "%$searchValue%")
-                        ->orWhere('ref_provinces.provDesc', 'like', "%$searchValue%")
-                        ->orWhere('ref_region_v2_s.regDesc', 'like', "%$searchValue%")
-                        ->orWhere('e_b_o_s_s.eboss_submission', 'like', "%$searchValue%")
-                        ->orWhere('e_b_o_s_s.type_of_boss', 'like', "%$searchValue%")
-                        ->orWhere('e_b_o_s_s.deadline_of_action_plan', 'like', "%$searchValue%")
-                        ->orWhere('e_b_o_s_s.submission_of_action_plan', 'like', "%$searchValue%")
-                        ->orWhere('e_b_o_s_s.remarks', 'like', "%$searchValue%")
-                        ->orWhere('e_b_o_s_s.bplo_head', 'like', "%$searchValue%")
-                        ->orWhere('e_b_o_s_s.contact_no', 'like', "%$searchValue%");
+                    $q->where('electronic_bosses.date_of_inspection', 'like', "%$searchValue%")
+                        ->orWhere('cities_municipalities.citymun_desc', 'like', "%$searchValue%")
+                        ->orWhere('provinces.prov_desc', 'like', "%$searchValue%")
+                        ->orWhere('regions.reg_desc', 'like', "%$searchValue%")
+                        ->orWhere('electronic_bosses.eboss_submission', 'like', "%$searchValue%")
+                        ->orWhere('electronic_bosses.type_of_boss', 'like', "%$searchValue%")
+                        ->orWhere('electronic_bosses.deadline_of_action_plan', 'like', "%$searchValue%")
+                        ->orWhere('electronic_bosses.submission_of_action_plan', 'like', "%$searchValue%")
+                        ->orWhere('electronic_bosses.remarks', 'like', "%$searchValue%")
+                        ->orWhere('electronic_bosses.bplo_head', 'like', "%$searchValue%")
+                        ->orWhere('electronic_bosses.contact_no', 'like', "%$searchValue%");
                 });
             }
             // select only the necessary columns
             $user_id = Auth::user()->id;
             $userType = Auth::user()->roles;
             // get the regions for the logged in user
-            $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+            $regionData = RegionalFieldOffice::where('user_id', $user_id)->pluck('reg_code');
 
             if ($userType === 'Administrator') {
-                $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc');
+                $query->select('electronic_bosses.*', 'cities_municipalities.citymun_desc', 'provinces.prov_desc', 'regions.reg_desc');
             } else {
-                $query->select('e_b_o_s_s.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc')
-                    ->whereIn('e_b_o_s_s.region', $regionData);
+                $query->select('electronic_bosses.*', 'cities_municipalities.citymun_desc', 'provinces.prov_desc', 'regions.reg_desc')
+                    ->whereIn('electronic_bosses.region', $regionData);
             }
 
             // order the results
@@ -277,13 +289,13 @@ class ebossController extends Controller
     public function getProvincesByRegion(Request $request)
     {
         $regionCode = $request->region;
-        $provinces = RefProvince::where('regCode', $regionCode)->get();
+        $provinces = Province::where('reg_code', $regionCode)->get();
         return response()->json($provinces);
     }
     public function getCityMunicipalityByProvince(Request $request)
     {
         $provinceCode = $request->province;
-        $citymunicipality = RefCityMun::where('provCode', $provinceCode)->get();
+        $citymunicipality = CitiesMunicipalities::where('prov_code', $provinceCode)->get();
 
         return response()->json($citymunicipality);
     }
@@ -301,12 +313,12 @@ class ebossController extends Controller
                 $orderDirection = 'desc';
             }
 
-            $query = eBOSS::query()
-                ->join('ref_city_muns', 'e_b_o_s_s.city_municipality', '=', 'ref_city_muns.citymunCode')
-                ->join('ref_provinces', 'e_b_o_s_s.province', '=', 'ref_provinces.provCode')
-                ->join('ref_region_v2_s', 'e_b_o_s_s.region', '=', 'ref_region_v2_s.regCode');
+            $query = ElectronicBoss::query()
+                ->join('cities_municipalities', 'electronic_bosses.city_municipality', '=', 'cities_municipalities.citymun_code')
+                ->join('provinces', 'electronic_bosses.province', '=', 'provinces.prov_code')
+                ->join('regions', 'electronic_bosses.region', '=', 'regions.reg_code');
 
-            $query->orderBy('e_b_o_s_s.' . $orderColumn, $orderDirection);
+            $query->orderBy('type_of_boss.' . $orderColumn, $orderDirection);
 
             $totalRecords = $query->count();
 

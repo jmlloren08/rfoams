@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rfo_v2', function (Blueprint $table) {
+        Schema::create('barangay', function (Blueprint $table) {
             $table->id();
-            $table->string('rfo');
-            $table->string('focal_person');
-            $table->string('position');
-            $table->integer('contact_number');
-            $table->string('email_address');
+            $table->string('brgyCode');
+            $table->string('brgyDesc');
+            $table->string('regCode');
+            $table->string('provCode');
+            $table->string('citymunCode');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rfo_v2');
+        Schema::dropIfExists('barangay');
     }
 };

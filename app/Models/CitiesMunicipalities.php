@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-class RefCityMun extends Model
+class CitiesMunicipalities extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -16,19 +15,19 @@ class RefCityMun extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'psgcCode',
-        'citymunDesc',
-        'regCode',
-        'provCode',
-        'citymunCode'
+        'psgc_code',
+        'citymun_desc',
+        'reg_code',
+        'prov_code',
+        'citymun_code'
     ];
 
     public function refregion()
     {
-        return $this->belongsTo(RefRegionV2::class);
+        return $this->belongsTo(Region::class);
     }
     public function refprovince()
     {
-        return $this->belongsTo(RefProvince::class);
+        return $this->belongsTo(Province::class);
     }
 }

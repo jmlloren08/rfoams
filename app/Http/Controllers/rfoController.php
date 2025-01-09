@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AuditTrail;
-use App\Models\RFOsV2;
 use App\Models\User;
-use App\Models\RefRegionV2;
+use App\Models\Region;
+use App\Models\RegionalFieldOffice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -21,7 +21,7 @@ class rfoController extends Controller
         }
 
         $users = User::select('id', 'name')->get();
-        $regions = RefRegionV2::select('regDesc', 'regCode')->get();
+        $regions = Region::select('reg_desc', 'reg_code')->get();
         // log
         AuditTrail::create([
             'user_id' => Auth::user()->id,
@@ -41,23 +41,23 @@ class rfoController extends Controller
                 'user_id'           => ['required', 'numeric'],
                 'position'          => ['required', 'string', 'max:255'],
                 'contact_number'    => ['required', 'string', 'regex:/^09\d{9}$/'],
-                'regCode'           => ['required', 'array'],
-                'regCode.*'         => ['required', 'numeric']
+                'reg_code'           => ['required', 'array'],
+                'reg_code.*'         => ['required', 'numeric']
             ]);
             // save record
             $rfo            = $request->rfo;
             $user_id        = $request->user_id;
             $position       = $request->position;
             $contact_number = $request->contact_number;
-            $regCodes       = $request->regCode;
+            $reg_codes       = $request->reg_code;
 
-            foreach ($regCodes as $regCode) {
-                $rfos = new RFOsV2;
+            foreach ($reg_codes as $reg_code) {
+                $rfos = new RegionalFieldOffice;
                 $rfos->rfo               = $rfo;
                 $rfos->user_id           = $user_id;
                 $rfos->position          = $position;
                 $rfos->contact_number    = $contact_number;
-                $rfos->regCode           = $regCode;
+                $rfos->reg_code           = $reg_code;
                 $rfos->save();
             }
             // log
@@ -79,7 +79,7 @@ class rfoController extends Controller
     public function edit($id)
     {
         try {
-            $data = RFOsV2::where('id', $id)->first();
+            $data = RegionalFieldOffice::where('id', $id)->first();
 
             if (!$data) {
                 return response()->json(['errors' => 'Data not found.'], 404);
@@ -104,17 +104,17 @@ class rfoController extends Controller
                 'focal_person'      => ['required', 'string', 'max:255'],
                 'position'          => ['required', 'string', 'max:255'],
                 'contact_number'    => ['required', 'string', 'regex:/^09\d{9}$/'],
-                'regCode'           => ['required', 'array'],
-                'regCode.*'         => ['required', 'numeric']
+                'reg_code'           => ['required', 'array'],
+                'reg_code.*'         => ['required', 'numeric']
             ]);
 
-            $rfos = RFOsV2::findOrFail($id);
+            $rfos = RegionalFieldOffice::findOrFail($id);
 
             $rfos->rfo              = $request->rfo;
             $rfos->focal_person     = $request->focal_person;
             $rfos->position         = $request->position;
             $rfos->contact_number   = $request->contact_number;
-            $rfos->regCode          = $request->regCode;
+            $rfos->reg_code          = $request->reg_code;
             $rfos->save();
             // log the login action
             AuditTrail::create([
@@ -131,7 +131,7 @@ class rfoController extends Controller
     public function delete($id)
     {
         try {
-            RFOsV2::where('id', $id)->delete();
+            RegionalFieldOffice::where('id', $id)->delete();
             // log the login action
             AuditTrail::create([
                 'user_id'   => Auth::user()->id,
@@ -155,24 +155,24 @@ class rfoController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = RFOsV2::query();
+            $query          = RegionalFieldOffice::query();
             // join
-            $query->join('users', 'r_f_os_v2_s.user_id', '=', 'users.id')
-                ->join('ref_region_v2_s', 'r_f_os_v2_s.regCode', '=', 'ref_region_v2_s.regCode');
+            $query->join('users', 'regional_field_offices.user_id', '=', 'users.id')
+                ->join('regions', 'regional_field_offices.reg_code', '=', 'regions.reg_code');
             // search functionality
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
-                    $q->where('r_f_os_v2_s.rfo', 'like', "%$searchValue%")
+                    $q->where('regional_field_offices.rfo', 'like', "%$searchValue%")
                         ->orWhere('users.name', 'like', "%$searchValue%")
-                        ->orWhere('r_f_os_v2_s.position', 'like', "%$searchValue%")
-                        ->orWhere('r_f_os_v2_s.contact_number', 'like', "%$searchValue%")
-                        ->orWhere('ref_region_v2_s.regDesc', 'like', "%$searchValue%");
+                        ->orWhere('regional_field_offices.position', 'like', "%$searchValue%")
+                        ->orWhere('regional_field_offices.contact_number', 'like', "%$searchValue%")
+                        ->orWhere('regions.reg_desc', 'like', "%$searchValue%");
                 });
             }
             // get the total records before pagination and filtering
             $totalRecords = $query->count();
             // select only the necessary columns
-            $query->select('r_f_os_v2_s.*', 'users.name', 'ref_region_v2_s.regDesc');
+            $query->select('regional_field_offices.*', 'users.name', 'regions.reg_desc');
             // order the results
             $query->orderBy($orderColumn, $orderDirection);
             // get total records after filtering

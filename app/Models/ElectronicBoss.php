@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class eBOSS extends Model
+class ElectronicBoss extends Model
 {
     use HasFactory;
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -19,7 +19,7 @@ class eBOSS extends Model
         'city_municipality',
         'province',
         'region',
-        'date_submitted',
+        'eboss_submission',
         'type_of_boss',
         'deadline_of_action_plan',
         'submission_of_action_plan',

@@ -104,14 +104,14 @@
                             </div>
                             <div class="input-group mb-3">
                                 <label>Assign region(s)</label>
-                                <select name="regCode[]" id="regCode[]" class="select2 @if ($errors->has('regCode')) is-invalid @endif" multiple="multiple" data-placeholder="Search region" style="width: 100%;" required>
+                                <select name="reg_code[]" id="reg_code[]" class="select2 @if ($errors->has('reg_code')) is-invalid @endif" multiple="multiple" data-placeholder="Search region" style="width: 100%;" required>
                                     @foreach ($regions as $region)
-                                    <option value="{{ $region->regCode }}">{{ $region->regDesc }}</option>
+                                    <option value="{{ $region->reg_code }}">{{ $region->reg_desc }}</option>
                                     @endforeach
                                 </select>
-                                @if ($errors->has('regCode'))
+                                @if ($errors->has('reg_code'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('regCode') }}
+                                    {{ $errors->first('reg_code') }}
                                 </div>
                                 @endif
                             </div>

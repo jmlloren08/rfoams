@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commendation;
+use App\Models\RegionalFieldOffice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\RFOsV2;
-use App\Models\RefRegionV2;
-use App\Models\RefProvince;
-use App\Models\RefCityMun;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\AuditTrail;
+use App\Models\CitiesMunicipalities;
+use App\Models\Province;
+use App\Models\Region;
 
 class commendationController extends Controller
 {
@@ -23,12 +23,12 @@ class commendationController extends Controller
         }
         $user_id = Auth::user()->id;
         // get the regions for the logged in user
-        $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+        $regionData = RegionalFieldOffice::where('user_id', $user_id)->pluck('reg_code');
         if ($userType === 'Administrator') {
-            $regions = RefRegionV2::select('regDesc', 'regCode')->get();
+            $regions = Region::select('reg_desc', 'reg_code')->get();
         } else {
-            $regions = RefRegionV2::select('regDesc', 'regCode')
-                ->whereIn('regCode', $regionData)
+            $regions = Region::select('reg_desc', 'reg_code')
+                ->whereIn('reg_code', $regionData)
                 ->get();
         }
         AuditTrail::create([
@@ -63,7 +63,7 @@ class commendationController extends Controller
             $commendation->second_validation    = $request->second_Validation;
             $commendation->remarks_2            = $request->remarks_2;
             $commendation->other_activity       = $request->other_activity;
-            $commendation->number_of_brgys      = $request->number_of_brgys;
+            $commendation->number_of_barangays  = $request->number_of_barangays;
             $commendation->save();
             // log
             AuditTrail::create([
@@ -141,7 +141,7 @@ class commendationController extends Controller
             $commendation->second_validation    = $request->second_Validation;
             $commendation->remarks_2            = $request->remarks_2;
             $commendation->other_activity       = $request->other_activity;
-            $commendation->number_of_brgys      = $request->number_of_brgys;
+            $commendation->number_of_barangays  = $request->number_of_barangays;
             $commendation->save();
             // log
             AuditTrail::create([
@@ -171,16 +171,16 @@ class commendationController extends Controller
             $orderDirection = $request->input('order.0.dir');
 
             $query = Commendation::query()
-                ->join('ref_city_muns', 'commendations.city_municipality', '=', 'ref_city_muns.citymunCode')
-                ->join('ref_provinces', 'commendations.province', '=', 'ref_provinces.provCode')
-                ->join('ref_region_v2_s', 'commendations.region', '=', 'ref_region_v2_s.regCode');
+                ->join('cities_municipalities', 'commendations.city_municipality', '=', 'cities_municipalities.citymun_code')
+                ->join('provinces', 'commendations.province', '=', 'provinces.prov_code')
+                ->join('regions', 'commendations.region', '=', 'regions.reg_code');
 
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
                     $q->where('commendations.date_of_commendation', 'like', "%$searchValue%")
-                        ->orWhere('ref_city_muns.citymunDesc', 'like', "%$searchValue%")
-                        ->orWhere('ref_provinces.provDesc', 'like', "%$searchValue%")
-                        ->orWhere('ref_region_v2_s.regDesc', 'like', "%$searchValue%")
+                        ->orWhere('cities_municipalities.citymun_desc', 'like', "%$searchValue%")
+                        ->orWhere('provinces.prov_desc', 'like', "%$searchValue%")
+                        ->orWhere('regions.reg_desc', 'like', "%$searchValue%")
                         ->orWhere('commendations.date_of_inspection', 'like', "%$searchValue%")
                         ->orWhere('commendations.service_provider', 'like', "%$searchValue%")
                         ->orWhere('commendations.first_validation', 'like', "%$searchValue%")
@@ -188,7 +188,7 @@ class commendationController extends Controller
                         ->orWhere('commendations.second_validation', 'like', "%$searchValue%")
                         ->orWhere('commendations.remarks_2', 'like', "%$searchValue%")
                         ->orWhere('commendations.other_activity', 'like', "%$searchValue%")
-                        ->orWhere('commendations.number_of_brgys', 'like', "%$searchValue%");
+                        ->orWhere('commendations.number_of_barangays', 'like', "%$searchValue%");
                 });
             }
             // get the total records before pagination and filtering
@@ -197,11 +197,11 @@ class commendationController extends Controller
             $user_id = Auth::user()->id;
             $userType = Auth::user()->roles;
             // get the regions based on the logged in user id
-            $regionData = RFOsV2::where('user_id', $user_id)->pluck('regCode');
+            $regionData = RegionalFieldOffice::where('user_id', $user_id)->pluck('reg_code');
             if ($userType === 'Administrator') {
-                $query->select('commendations.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc');
+                $query->select('commendations.*', 'cities_municipalities.citymun_desc', 'provinces.prov_desc', 'regions.reg_desc');
             } else {
-                $query->select('commendations.*', 'ref_city_muns.citymunDesc', 'ref_provinces.provDesc', 'ref_region_v2_s.regDesc')
+                $query->select('commendations.*', 'cities_municipalities.citymun_desc', 'provinces.prov_desc', 'regions.reg_desc')
                     ->whereIn('commendations.region', $regionData);
             }
             // order the results
@@ -230,14 +230,14 @@ class commendationController extends Controller
     public function getProvincesByRegion(Request $request)
     {
         $regionCode = $request->region;
-        $provinces = RefProvince::where('regCode', $regionCode)->get();
+        $provinces = Province::where('reg_code', $regionCode)->get();
 
         return response()->json($provinces);
     }
     public function getCityMunicipalityByProvince(Request $request)
     {
         $provinceCode = $request->province;
-        $citymunicipality = RefCityMun::where('provCode', $provinceCode)->get();
+        $citymunicipality = CitiesMunicipalities::where('prov_code', $provinceCode)->get();
 
         return response()->json($citymunicipality);
     }

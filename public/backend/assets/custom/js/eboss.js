@@ -38,9 +38,9 @@ $(function () {
         columns: [
             { data: 'id', visible: false },
             { data: 'date_of_inspection' },
-            { data: 'citymunDesc' },
-            { data: 'provDesc' },
-            { data: 'regDesc' },
+            { data: 'citymun_desc' },
+            { data: 'prov_desc' },
+            { data: 'reg_desc' },
             {
                 data: 'eboss_submission',
                 render: function (data) {
@@ -167,7 +167,7 @@ $(function () {
                 provinceSelect.empty();
                 provinceSelect.append('<option value="" selected disabled>Choose</option>');
                 response.forEach(function (province) {
-                    provinceSelect.append(`<option value = ${province.provCode} > ${province.provDesc} </option>`);
+                    provinceSelect.append(`<option value = ${province.prov_code} > ${province.prov_desc} </option>`);
                 });
             },
             error: function (error) {
@@ -192,7 +192,7 @@ $(function () {
                 citymunicipalitySelect.empty();
                 citymunicipalitySelect.append('<option value="" selected disabled>Choose</option>');
                 response.forEach(function (citymunicipality) {
-                    citymunicipalitySelect.append(`<option value = ${citymunicipality.citymunCode} > ${citymunicipality.citymunDesc} </option>`);
+                    citymunicipalitySelect.append(`<option value = ${citymunicipality.citymun_code} > ${citymunicipality.citymun_desc} </option>`);
                 });
             },
             error: function (error) {
@@ -441,13 +441,13 @@ $(document).ready(function () {
                     label: '2023',
                     backgroundColor: colors[0],
                     borderColor: colors[0],
-                    data: [fullyAutomated2023]
+                    data: [fullyautomated2023]
                 },
                 {
                     label: '2024',
                     backgroundColor: colors[1],
                     borderColor: colors[1],
-                    data: [fullyAutomated2024]
+                    data: [fullyautomated2024]
                 }
             ];
             var $faChart = $('#fa-chart')
@@ -511,13 +511,13 @@ $(document).ready(function () {
                     label: '2023',
                     backgroundColor: colors[0],
                     borderColor: colors[0],
-                    data: [partlyAutomated2023]
+                    data: [partlyautomated2023]
                 },
                 {
                     label: '2024',
                     backgroundColor: colors[1],
                     borderColor: colors[1],
-                    data: [partlyAutomated2024]
+                    data: [partlyautomated2024]
                 }
             ];
             var $paChart = $('#pa-chart')
@@ -581,13 +581,13 @@ $(document).ready(function () {
                     label: '2023',
                     backgroundColor: colors[0],
                     borderColor: colors[0],
-                    data: [physicalCollocated2023]
+                    data: [physicalcollocated2023]
                 },
                 {
                     label: '2024',
                     backgroundColor: colors[1],
                     borderColor: colors[1],
-                    data: [physicalCollocated2024]
+                    data: [physicalcollocated2024]
                 }
             ];
             var $pcChart = $('#pc-chart')
@@ -651,13 +651,13 @@ $(document).ready(function () {
                     label: '2023',
                     backgroundColor: colors[0],
                     borderColor: colors[0],
-                    data: [noCollocatedBOSS2023]
+                    data: [nocollocatedboss2023]
                 },
                 {
                     label: '2024',
                     backgroundColor: colors[1],
                     borderColor: colors[1],
-                    data: [noCollocatedBOSS2024]
+                    data: [nocollocatedboss2024]
                 }
             ];
             var $ncChart = $('#nc-chart')

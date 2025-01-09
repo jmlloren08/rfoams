@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RefBrgy;
-use App\Models\RefCityMun;
-use App\Models\RefProvince;
-use App\Models\RefRegionV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AuditTrail;
+use App\Models\Barangay;
+use App\Models\CitiesMunicipalities;
+use App\Models\Province;
+use App\Models\Region;
 
 class lguController extends Controller
 {
@@ -37,13 +37,13 @@ class lguController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = RefRegionV2::query();
+            $query          = Region::query();
 
             if (!empty($searchValue)) {
                 $query->whereAny([
-                    'psgcCode',
-                    'regDesc',
-                    'regCode'
+                    'psgc_code',
+                    'reg_desc',
+                    'reg_code'
                 ], 'like', "%$searchValue%")->get();
             }
 
@@ -79,14 +79,14 @@ class lguController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = RefProvince::query();
+            $query          = Province::query();
 
             if (!empty($searchValue)) {
                 $query->whereAny([
-                    'psgcCode',
-                    'provDesc',
-                    'regCode',
-                    'provCode'
+                    'psgc_code',
+                    'prov_desc',
+                    'reg_code',
+                    'prov_code'
                 ], 'like', "%$searchValue%")->get();
             }
 
@@ -122,15 +122,15 @@ class lguController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = RefCityMun::query();
+            $query          = CitiesMunicipalities::query();
 
             if (!empty($searchValue)) {
                 $query->whereAny([
-                    'psgcCode',
-                    'citymunDesc',
-                    'regCode',
-                    'provCode',
-                    'citymunCode'
+                    'psgc_code',
+                    'citymun_desc',
+                    'reg_code',
+                    'prov_code',
+                    'citymun_code'
                 ], 'like', "%$searchValue%")->get();
             }
 
@@ -151,7 +151,7 @@ class lguController extends Controller
             return response()->json($response, 200);
         } catch (\Exception $e) {
 
-            Log::error("Error fetching citiesmunicipalities: " . $e->getMessage());
+            Log::error("Error fetching cities/municipalities: " . $e->getMessage());
             return response()->json(['message' => 'Internal server error'], 500);
         }
     }
@@ -166,15 +166,15 @@ class lguController extends Controller
             $orderColumn    = $request->input("columns.{$request->input('order.0.column')}.data");
             $orderDirection = $request->input('order.0.dir');
 
-            $query          = RefBrgy::query();
+            $query          = Barangay::query();
 
             if (!empty($searchValue)) {
                 $query->whereAny([
-                    'brgyCode',
-                    'brgyDesc',
-                    'regCode',
-                    'provCode',
-                    'citymunCode'
+                    'brgy_code',
+                    'brgy_desc',
+                    'reg_code',
+                    'prov_code',
+                    'citymun_code'
                 ], 'like', "%$searchValue%")->get();
             }
 

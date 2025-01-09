@@ -14,9 +14,9 @@ $(document).ready(function () {
                 },
                 columns: [
                     { data: 'id', visible: false },
-                    { data: 'psgcCode' },
-                    { data: 'regDesc' },
-                    { data: 'regCode' },
+                    { data: 'psgc_code' },
+                    { data: 'reg_desc' },
+                    { data: 'reg_code' },
                     {
                         data: '',
                         defaultContent: `<td class="text-right py-0 align-middle">
@@ -51,10 +51,10 @@ $(document).ready(function () {
                 },
                 columns: [
                     { data: 'id', visible: false },
-                    { data: 'psgcCode' },
-                    { data: 'provDesc' },
-                    { data: 'regCode' },
-                    { data: 'provCode' },
+                    { data: 'psgc_code' },
+                    { data: 'prov_desc' },
+                    { data: 'reg_code' },
+                    { data: 'prov_code' },
                     {
                         data: '',
                         defaultContent: `<td class="text-right py-0 align-middle">
@@ -89,11 +89,11 @@ $(document).ready(function () {
                 },
                 columns: [
                     { data: 'id', visible: false },
-                    { data: 'psgcCode' },
-                    { data: 'citymunDesc' },
-                    { data: 'regCode' },
-                    { data: 'provCode' },
-                    { data: 'citymunCode' },
+                    { data: 'psgc_code' },
+                    { data: 'citymun_desc' },
+                    { data: 'reg_code' },
+                    { data: 'prov_code' },
+                    { data: 'citymun_code' },
                     {
                         data: '',
                         defaultContent: `<td class="text-right py-0 align-middle">
@@ -128,11 +128,11 @@ $(document).ready(function () {
                 },
                 columns: [
                     { data: 'id', visible: false },
-                    { data: 'brgyCode' },
-                    { data: 'brgyDesc' },
-                    { data: 'regCode' },
-                    { data: 'provCode' },
-                    { data: 'citymunCode' },
+                    { data: 'brgy_code' },
+                    { data: 'brgy_desc' },
+                    { data: 'reg_code' },
+                    { data: 'prov_code' },
+                    { data: 'citymun_code' },
                     {
                         data: '',
                         defaultContent: `<td class="text-right py-0 align-middle">

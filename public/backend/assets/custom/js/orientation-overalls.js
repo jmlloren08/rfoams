@@ -15,9 +15,9 @@ $(() => {
             { data: 'orientation_date' },
             { data: 'agency_lgu' },
             { data: 'office' },
-            { data: 'citymunDesc' },
-            { data: 'provDesc' },
-            { data: 'regDesc' },
+            { data: 'citymun_desc' },
+            { data: 'prov_desc' },
+            { data: 'reg_desc' },
             { data: 'is_ra_11032' },
             { data: 'is_cart' },
             { data: 'is_programs_and_services' },
@@ -89,7 +89,7 @@ $(() => {
                 citymunicipalitySelect.empty();
                 citymunicipalitySelect.append('<option value="" selected disabled>Choose</option>');
                 response.forEach((province) => {
-                    provinceSelect.append(`<option value = ${province.provCode} > ${province.provDesc} </option>`);
+                    provinceSelect.append(`<option value = ${province.prov_code} > ${province.prov_desc} </option>`);
                 });
             },
             error: (error) => {
@@ -114,7 +114,7 @@ $(() => {
                 citymunicipalitySelect.empty();
                 citymunicipalitySelect.append('<option value="" selected disabled>Choose</option>');
                 response.forEach((citymunicipality) => {
-                    citymunicipalitySelect.append(`<option value = ${citymunicipality.citymunCode} > ${citymunicipality.citymunDesc} </option>`);
+                    citymunicipalitySelect.append(`<option value = ${citymunicipality.citymun_code} > ${citymunicipality.citymun_desc} </option>`);
                 });
             },
             error: (error) => {

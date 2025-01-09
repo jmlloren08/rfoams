@@ -66,7 +66,7 @@
                                 <select class="form-control custom-select" name="region" id="region" required>
                                     <option value="" selected disabled>Choose</option>
                                     @foreach ($regions_overall as $regions)
-                                    <option value="{{ $regions->regCode }}">{{ $regions->regDesc }}</option>
+                                    <option value="{{ $regions->reg_code }}">{{ $regions->reg_desc }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('region'))

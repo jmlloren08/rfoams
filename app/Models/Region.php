@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-class RefRegionV2 extends Model
+class Region extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -16,8 +15,8 @@ class RefRegionV2 extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'psgcCode',
-        'regDesc',
-        'regCode'
+        'psgc_code',
+        'reg_desc',
+        'reg_code'
     ];
 }
